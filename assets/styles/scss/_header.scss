@@ -1,0 +1,48 @@
+@import "variables";
+@import "mixins";
+
+header {
+  align-self: center;
+  background-color: $beige-oskar;
+  display: flex;
+  max-width: 1280px;
+  padding: 2rem;
+  width: 100%;
+
+  nav {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+
+    ul {
+      border-bottom: 2px solid black;
+      border-top: 2px solid black;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(5, 1fr);
+      list-style: none;
+      padding: 0.5rem;
+      position: relative;
+      max-width: 1280px;
+      width: 100dvw;
+
+      :nth-child(3) {
+        justify-self: center;
+        text-transform: uppercase;
+      }
+
+      li {
+        justify-self: center;
+
+        a {
+          color: $black;
+          font-size: 1.5rem;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+}

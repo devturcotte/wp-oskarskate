@@ -1,0 +1,32 @@
+@import "variables";
+@import "mixins";
+
+.homepage-banner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-weight: 300;
+    line-height: 1.5;
+    max-width: 960px;
+    text-align: center;
+  }
+
+  button {
+    @include button-reset;
+    background-color: $red;
+    color: $white;
+    border: 1px solid $beige-oskar;
+    border-radius: 5px;
+    box-shadow: 4px 4px 0 0 $black;
+    font-size: 1.2rem;
+    padding: 0.8rem 2.5rem;
+    text-transform: uppercase;
+  }
+}

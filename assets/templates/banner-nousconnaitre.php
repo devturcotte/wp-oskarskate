@@ -12,8 +12,10 @@
             $image = get_field('image');
             $imageUrl = $image['url'];
     ?>
-        <img src="<?php echo esc_url($imageUrl) ?>" alt="Bannière page nous connaitre">
-        <h2><?php the_field('titre'); ?></h2>
+        <section>
+            <img src="<?php echo esc_url($imageUrl) ?>" alt="Bannière page nous connaitre">
+            <h2><?php the_field('titre'); ?></h2>
+        </section>
         <p><?php the_field('texte'); ?></p>
     <?php
         }

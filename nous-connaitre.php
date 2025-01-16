@@ -6,21 +6,21 @@ Template Name: Nous Connaitre
 
 <?php get_header(); ?>
 
-<main>
+<main class="main_nous-connaitre">
     <!-- IMAGE ENTÊTE & TITRE -->
-    <?php get_template_part('/assets/templates/banner-nousconnaitre'); ?>
+    <?php get_template_part('/assets/templates/banner-nous-connaitre'); ?>
 
-    <!-- SECTION IMAGE AVEC TITRE & DESCRIPTION -->
+    <!-- SECTION CARTES  -->
+    <?php get_template_part('/assets/templates/cards_nous-connaitre'); ?>
 
     <!-- SECTION ÉQUIPE OSKAR -->
+    <?php get_template_part('/assets/templates/equipe'); ?>
 
     <!-- SECTION FAQ -->
+    <?php get_template_part('/assets/templates/faq'); ?>
 
     <!-- SECTION AUTRES QUESTIONS -->
-    <section class="en-discuter">
-        <h2>Tu as d'autres questions? Contacte-nous pour en discuter!</h2>
-        <button>Contactez-nous</button>
-    </section>
+    <?php get_template_part('/assets/templates/en-discuter'); ?>
 </main>
 
 <?php get_footer(); ?>

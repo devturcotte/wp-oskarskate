@@ -1,13 +1,10 @@
-@import "variables";
-@import "mixins";
-
 footer {
   background-color: $black;
   color: $beige-oskar;
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  padding: 2rem;
+  padding: 3rem 2rem;
 
   .footer-top,
   .footer-bottom {

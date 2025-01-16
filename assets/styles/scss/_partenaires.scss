@@ -1,0 +1,22 @@
+.partenaires {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2.5rem;
+
+  h2 {
+    font-size: 2rem;
+    text-transform: uppercase;
+  }
+
+  ul {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    max-width: 1280px;
+    padding: 0 2rem;
+    width: 100%;
+  }
+}

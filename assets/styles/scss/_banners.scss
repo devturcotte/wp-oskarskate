@@ -3,9 +3,11 @@
 
 .banner-homepage {
   align-items: center;
+  align-self: center;
   display: flex;
   flex-direction: column;
   gap: 4rem;
+  max-width: 1280px;
 
   img {
     max-width: 1280px;
@@ -51,6 +53,8 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-width: 1280px;
+  padding: 0 2rem;
   width: 85%;
 
   section {
@@ -65,6 +69,7 @@
     }
 
     h2 {
+      font-size: 1.6rem;
       padding: 2rem 4.5rem;
       position: absolute;
       text-transform: uppercase;
@@ -83,8 +88,9 @@
     h2 {
       background-color: $yellow;
       border-radius: 0 0.5rem 0.5rem 0;
-      bottom: 2rem;
+      bottom: 6rem;
       left: 0;
+      transform: skew(0, -14deg);
     }
   }
 
@@ -92,8 +98,9 @@
     h2 {
       background-color: $pink;
       border-radius: 0.5rem 0 0 0.5rem;
-      bottom: 3rem;
+      bottom: 6rem;
       right: 0;
+      transform: skew(0deg, 10deg);
     }
   }
 
@@ -111,9 +118,10 @@
     h2 {
       background-color: $blue;
       border-radius: 0.5rem 0 0 0.5rem;
-      bottom: 1.5rem;
+      bottom: 4rem;
       color: $beige-oskar;
       right: 0;
+      transform: skew(0deg, 8deg);
     }
   }
 }

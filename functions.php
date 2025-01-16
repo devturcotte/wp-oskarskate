@@ -36,6 +36,21 @@ function create_posttype() {
         )
     );
 
+    register_post_type( 'fun-facts',
+        array(
+            'labels' => array(
+                'name' => __( 'Fun-Facts' ),
+                'singular_name' => __( 'Fun-Facts' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'menu_icon' => 'dashicons-buddicons-topics',
+            'rewrite' => array('slug' => 'fun-facts'),
+            'show_in_rest' => true,
+            'supports' => array('title', 'id'),   
+        )
+    );
+
     register_post_type( 'infos-contact',
         array(
             'labels' => array(

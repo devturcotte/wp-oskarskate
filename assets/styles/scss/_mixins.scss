@@ -4,3 +4,43 @@
   cursor: pointer;
   padding: 0;
 }
+
+@mixin btn-red {
+  background-color: $red;
+  border-radius: 0.5rem;
+  box-shadow: 6px 6px 0 0 $black;
+  color: $beige-oskar;
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  width: fit-content;
+}
+
+@mixin btn-blue {
+  background-color: $blue;
+  border-radius: 0.5rem;
+  box-shadow: 6px 6px 0 0 $black;
+  color: $beige-oskar;
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  width: fit-content;
+}
+
+@mixin btn-pink {
+  background-color: $pink;
+  border-radius: 0.5rem;
+  box-shadow: 6px 6px 0 0 $black;
+  color: $beige-oskar;
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  width: fit-content;
+}
+
+@mixin btn-yellow {
+  background-color: $yellow;
+  border-radius: 0.5rem;
+  box-shadow: 6px 6px 0 0 $black;
+  color: $beige-oskar;
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  width: fit-content;
+}

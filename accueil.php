@@ -8,7 +8,7 @@ Template Name: Accueil
 
 <main>
     <!-- SECTION IMAGE ENTÊTE -->
-    <?php get_template_part('/assets/templates/homepage-banner'); ?>
+    <?php get_template_part('/assets/templates/banner-homepage'); ?>
 
     <!-- SECTION TITRE, TEXTE, CTA -->
 

@@ -8,6 +8,7 @@ Template Name: Nous Connaitre
 
 <main>
     <!-- IMAGE ENTÊTE & TITRE -->
+    <?php get_template_part('/assets/templates/banner-nousconnaitre'); ?>
 
     <!-- SECTION IMAGE AVEC TITRE & DESCRIPTION -->
 

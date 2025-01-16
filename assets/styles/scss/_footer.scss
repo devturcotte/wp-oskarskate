@@ -17,9 +17,9 @@ footer {
   }
 
   .footer-top {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    padding: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
 
     nav {
       ul {

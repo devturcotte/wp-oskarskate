@@ -14,12 +14,6 @@
                 ?>
             </nav>
 
-            <section class="infolettre">
-                <h2>Inscrivez-vous à l'infolettre</h2>
-                <input type="text" placeholder="Entrez votre courriel">
-                <button class="btn-infolettre" aria-label="Inscription à l'infolettre">Soumettre</button>
-            </section>
-
             <?php get_template_part('/assets/templates/footer-contact'); ?>
         </div>
         

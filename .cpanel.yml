@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/becmaweb/oskar.becmaweb.ca/wp-content/themes/wp-oskarskate
+    - export DEPLOYPATH=/home/becmaweb/oskar.becmaweb.ca/wp-content/themes/oskarskate
     - /bin/cp -R /home/becmaweb/repositories/wp-oskarskate/* $DEPLOYPATH

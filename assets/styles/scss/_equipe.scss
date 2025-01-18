@@ -1,0 +1,10 @@
+.equipe {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  h2 {
+    align-self: center;
+    width: fit-content;
+  }
+}

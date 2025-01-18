@@ -1,10 +1,37 @@
 .faq {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
   width: 100%;
 
   h2 {
     align-self: center;
     width: fit-content;
+  }
+
+  .categories-container {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style: none;
+
+    .categorie {
+      display: flex;
+      gap: 2rem;
+
+      .questions-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        list-style: none;
+
+        .question {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+    }
   }
 }

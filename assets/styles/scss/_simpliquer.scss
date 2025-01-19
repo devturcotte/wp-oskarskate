@@ -1,5 +1,5 @@
 .main_simpliquer {
-  gap: 8rem;
+  gap: 12rem;
 
   button {
     @include button-reset;
@@ -42,36 +42,116 @@
   }
 
   .histoire {
+    align-items: center;
     align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     max-width: 1024px;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    button {
+      @include btn-pink;
+    }
   }
 
   .plus-dinfos {
     align-self: center;
+    border-radius: 1px solid $black;
     display: flex;
+    gap: 2rem;
     max-width: 1024px;
 
-    .ctas {
+    img {
+      border: 2px solid $black;
+      border-radius: 0.5rem;
+      box-shadow: 4px 4px 4px 0 $black-shadow;
+    }
+
+    div {
       display: flex;
-      gap: 2rem;
+      flex-direction: column;
+      justify-content: space-between;
 
-      .btn-left {
-        @include btn-red;
+      p {
+        font-size: 1.1rem;
+        font-weight: 300;
+        line-height: 1.5;
       }
 
-      .btn-right {
-        @include btn-blue;
+      .img-1 {
+        height: 670px;
+        object-fit: cover;
+        width: 440px;
       }
+
+      .ctas {
+        flex-direction: row;
+        justify-content: flex-start;
+
+        gap: 2rem;
+
+        .btn-left {
+          @include btn-red;
+          font-size: 1.4rem;
+        }
+
+        .btn-right {
+          @include btn-blue;
+          font-size: 1.4rem;
+        }
+      }
+    }
+
+    .img-2 {
+      height: 400px;
+      object-fit: cover;
+      width: 670px;
     }
   }
 
   .benevolat {
     align-self: center;
     display: flex;
+    gap: 2rem;
     max-width: 1024px;
 
-    button {
-      @include btn-red;
+    img {
+      border: 2px solid $black;
+      border-radius: 0.5rem;
+      height: 360px;
+      object-fit: cover;
+      width: 550px;
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem 0;
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+        font-weight: 300;
+        line-height: 1.5;
+      }
+
+      button {
+        @include btn-red;
+      }
     }
   }
 

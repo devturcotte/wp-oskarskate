@@ -108,9 +108,10 @@
     h2 {
       background-color: $red;
       border-radius: 0 0.5rem 0.5rem 0;
-      bottom: 0;
+      bottom: 8rem;
       color: $beige-oskar;
-      left: 10rem;
+      left: 0;
+      transform: skew(0, -16deg);
     }
   }
 

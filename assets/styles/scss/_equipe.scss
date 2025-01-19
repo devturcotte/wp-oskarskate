@@ -2,7 +2,7 @@
   background-color: $beige-fonce;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
   padding: 8rem 0;
   position: relative;
   width: 100%;
@@ -17,7 +17,7 @@
     align-self: center;
     background-color: $blue-navy;
     height: 2px;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
     opacity: 0.7;
     width: 75%;
   }
@@ -92,6 +92,15 @@
         justify-content: center;
         padding: 1.5rem;
         width: 480px;
+      }
+
+      .membre-photo {
+        bottom: 8rem;
+        max-height: 450px;
+        left: -35rem;
+        object-fit: cover;
+        position: absolute;
+        width: 400px;
       }
 
       .contenu {

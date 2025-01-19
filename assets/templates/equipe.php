@@ -20,6 +20,7 @@
 
         <section class="membre">
             <h3 class="nom">Team OSKAR</h3>
+            <img src="<?php echo get_template_directory_uri() ?>/assets/wp_media-library/team-oskar.png" alt="Team Oskar" class="membre-photo">
             <div class="contenu">
                 <section class="fun-stats">
                     <h4>Fun stats</h4>

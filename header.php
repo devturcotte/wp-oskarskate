@@ -25,5 +25,6 @@
                     'theme_location' => 'primary'
                 ));
             ?>
+            <div class="mask"></div>
         </nav>
     </header>

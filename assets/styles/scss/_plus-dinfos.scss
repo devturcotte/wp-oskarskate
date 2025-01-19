@@ -1,0 +1,57 @@
+.plus-dinfos {
+  align-self: center;
+  border-radius: 1px solid $black;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  max-width: 1024px;
+  width: 100%;
+
+  img {
+    border: 2px solid $black;
+    border-radius: 0.5rem;
+    box-shadow: 4px 4px 4px 0 $black-shadow;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+
+    p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .img-1 {
+      height: 670px;
+      object-fit: cover;
+      width: 440px;
+    }
+
+    .ctas {
+      flex-direction: row;
+      justify-content: flex-start;
+
+      gap: 2rem;
+
+      .btn-left {
+        @include btn-red;
+        font-size: 1.4rem;
+      }
+
+      .btn-right {
+        @include btn-blue;
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .img-2 {
+    height: 400px;
+    object-fit: cover;
+    width: 670px;
+  }
+}

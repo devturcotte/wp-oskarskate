@@ -2,12 +2,17 @@
 @import "header";
 @import "footer";
 
-@import "banners";
-@import "equipe";
-@import "faq";
-@import "partenaires";
-
+/* ----- STYLES DES PAGES ----- */
 @import "activites";
 @import "dons";
 @import "nous-connaitre";
 @import "simpliquer";
+
+/* ----- STYLES DES TEMPLATES ----- */
+@import "banners";
+@import "benevolat";
+@import "equipe";
+@import "faq";
+@import "histoire";
+@import "partenaires";
+@import "plus-dinfos";

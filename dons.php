@@ -14,7 +14,7 @@ Template Name: Dons
 
     <!-- SECTION 'MERCI D'AVOIR CONTRIBUÉ' -->
 
-    <!-- SECTION À QUOI SERVENT VOS DONS -->
+    <?php get_template_part('/assets/templates/campagne-dons'); ?>
 
     <!-- SECTION NOS PARTENAIRES -->
     <?php get_template_part('/assets/templates/partenaires'); ?>

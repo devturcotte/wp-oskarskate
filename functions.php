@@ -76,8 +76,27 @@ function create_posttype() {
             'supports' => array('title', 'id'),   
         )
     );
+    register_post_type( 'campagne-dons',
+        array(
+            'labels' => array(
+                'name' => __( 'Campagne-dons' ),
+                'singular_name' => __( 'Campagne-dons' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'menu_icon' => 'dashicons-feedback',
+            'rewrite' => array('slug' => 'campagne-dons'),
+            'show_in_rest' => true,
+            'supports' => array('title', 'id', 'thumbnail', 'custom-fields'),
+        )
+    );
+}
+
+function remove_wysiwyg() {
+    remove_post_type_support( 'page', 'editor' );
 }
 
 add_action('init', 'create_posttype');
+add_action('init', 'remove_wysiwyg');
 
 ?>

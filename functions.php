@@ -2,21 +2,6 @@
 
 function create_posttype() {
 
-    register_post_type( 'faq',
-        array(
-            'labels' => array(
-                'name' => __( 'FAQ' ),
-                'singular_name' => __( 'FAQ' )
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'menu_icon' => 'dashicons-info',
-            'rewrite' => array('slug' => 'faq'),
-            'show_in_rest' => true,
-            'supports' => array('title', 'id'),   
-        )
-    );
-
     register_post_type( 'infos-contact',
         array(
             'labels' => array(
@@ -44,6 +29,36 @@ function create_posttype() {
             'rewrite' => array('slug' => 'campagne-dons'),
             'show_in_rest' => true,
             'supports' => array('title', 'id', 'thumbnail', 'custom-fields'),
+        )
+    );
+
+    register_post_type( 'equipe',
+        array(
+            'labels' => array(
+                'name' => __( 'Équipe' ),
+                'singular_name' => __( 'Équipe' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'menu_icon' => 'dashicons-groups',
+            'rewrite' => array('slug' => 'equipe'),
+            'show_in_rest' => true,
+            'supports' => array('title', 'id', 'thumbnail', 'custom-fields'),
+        )
+    );
+
+    register_post_type( 'faq',
+        array(
+            'labels' => array(
+                'name' => __( 'FAQ' ),
+                'singular_name' => __( 'FAQ' )
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'menu_icon' => 'dashicons-info',
+            'rewrite' => array('slug' => 'faq'),
+            'show_in_rest' => true,
+            'supports' => array('title', 'id'),   
         )
     );
 }

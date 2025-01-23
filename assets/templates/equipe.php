@@ -3,16 +3,21 @@
 
     $sticker = $equipe["sticker"];
     $stickerUrl = $sticker["url"];
+
+    $logo = $equipe["logo"];
+    $logoUrl = $logo["url"];
 ?>
 <section class="equipe-main-container">
     <h2><?php echo $equipe["titre"] ?></h2>
     <div class="hr"></div>
+
     <div class="equipe-secondary-container">
+        <img src="<?php echo esc_url($stickerUrl); ?>" alt="Sticker" class="sticker">
+        
         <figure>
             <img src="<?php echo get_template_directory_uri() ?>/assets/wp_media-library/bg-equipe-1.svg" alt="background">
         </figure>
-        <img src="<?php echo esc_url($stickerUrl); ?>" alt="Sticker" class="sticker">
-    
+        
         <div class="membres-nav">
             <i class="fa-solid fa-chevron-left fa-xl"></i>
             <ul>
@@ -42,6 +47,7 @@
             </div>
         </section>
 
-        <img src="<?php echo get_template_directory_uri() ?>/assets/images/logo-footer.png" alt="Logo Oskar" class="logo">
+        <img src="<?php echo esc_url($logoUrl); ?>" alt="Logo Oskar" class="logo">
     </div>
+
 </section>

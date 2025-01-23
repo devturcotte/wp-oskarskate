@@ -72,6 +72,8 @@
           img {
             border: 2px solid $white;
             border-radius: 0.5rem;
+            object-fit: cover;
+            width: 100px;
           }
         }
       }

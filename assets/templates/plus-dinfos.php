@@ -1,11 +1,19 @@
+<?php
+    $infos = get_field('infos');
+    $image1 = $infos["image_1"];
+    $image1Url = $image1["url"];
+
+    $image2 = $infos["image_2"];
+    $image2Url = $image2["url"];
+?>
 <div class="plus-dinfos">
         <div>
-            <img src="<?php echo get_template_directory_uri() ?>/assets/wp_media-library/image-info-1.png" alt="img">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <img src="<?php echo esc_url($image1Url); ?>" alt="img">
+            <p><?php echo $infos["texte"]; ?></p>
             <div class="ctas">
-                <button class="btn-left">Faire un don</button>
-                <button class="btn-right">Nous Connaître</button>
+                <button class="btn-left"><?php echo $infos["bouton_gauche"]; ?></button>
+                <button class="btn-right"><?php echo $infos["bouton_droit"]; ?></button>
             </div>
         </div>
-        <img src="<?php echo get_template_directory_uri() ?>/assets/wp_media-library/image-info-2.png" alt="img-2">
+        <img src="<?php echo esc_url($image2Url); ?>" alt="img-2">
 </div>

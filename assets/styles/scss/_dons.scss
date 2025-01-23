@@ -1,64 +1,75 @@
-@import 'variables';
+@import "variables";
 
 .main_dons {
   display: flex;
   flex-direction: column;
   gap: 8rem;
-  max-width: 1280px;
+
   img {
     width: 100%;
     height: auto;
   }
-  .campagne{
-    h2{
+
+  .campagne {
+    align-self: center;
+    max-width: 1280px;
+
+    h2 {
       padding-bottom: 4rem;
     }
+
     ul {
       display: grid;
       gap: 4rem;
-      @include media-query('tablet'){
+
+      @include media-query("tablet") {
         grid-template-columns: repeat(2, 1fr);
       }
-      @include media-query('desktop'){
+
+      @include media-query("desktop") {
         grid-template-columns: repeat(3, 1fr);
       }
-      li{
+
+      li {
         z-index: 1;
         background-color: $beige-oskar;
         border-radius: 0.625rem;
         border: 1px solid $black;
-        max-width: 26.875rem; 
-        min-height:32.375rem ;
+        max-width: 26.875rem;
+        min-height: 32.375rem;
         max-height: 32.375rem;
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        gap : 2rem;
-        position:relative;
-        &::after{
+        gap: 2rem;
+        position: relative;
+
+        &::after {
           z-index: 0;
           position: absolute;
-          content: '';
+          content: "";
           width: 100%;
           height: 100%;
           border-radius: 0.625rem;
           border: 1px solid $black;
           top: 8px;
           left: 8px;
-
         }
       }
+
       div:first-of-type {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
       }
-      div:last-child{
-        margin-top: auto; 
+
+      div:last-child {
+        margin-top: auto;
       }
     }
+
     img {
-      max-width: 25.625rem ;
+      max-width: 25.625rem;
     }
   }
 }

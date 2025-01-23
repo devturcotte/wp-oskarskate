@@ -13,10 +13,25 @@
   ul {
     align-items: center;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4rem;
+    justify-content: center;
     list-style: none;
     max-width: 1280px;
-    padding: 0 2rem;
     width: 100%;
+
+    a {
+      &:hover {
+        img {
+          transform: scale(0.9);
+        }
+      }
+
+      img {
+        transition: 0.3s;
+        width: 100%;
+      }
+    }
   }
 }

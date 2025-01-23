@@ -1,27 +1,22 @@
-<?php 
-
-?>
 <div class="cards-container">
-    <div class="card _1">
-        <figure>
-            <img src="<?php echo get_template_directory_uri() ?>/assets/wp_media-library/nous-connaitre_img-2-1.png" alt="Image Carte 1">
-        </figure>
-        <section>
-            <h3>Créer des liens</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum </p>
-        </section>
-    </div>
-
-    <div class="card _2">
-        <figure>
-            <img src="<?php echo get_template_directory_uri() ?>/assets/wp_media-library/nous-connaitre_img-2.png" alt="Image Carte 2">
-        </figure>
-        <section>
-            <h3>Tester ses limites</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum </p>
-        </section>
-    </div>
+    <?php
+        $i = 1;
+        while($i <= 2){
+        $carte = get_field("carte-".$i);
+        $image = $carte["image"];
+        $imageUrl = $image["url"];
+    ?>
+        <div class="card _<?php echo $i; ?>">
+            <figure>
+                <img src="<?php echo esc_url($imageUrl); ?>" alt="Carte">
+            </figure>
+            <section>
+                <h3><?php echo $carte["titre"]; ?></h3>
+                <p><?php echo $carte["texte"]; ?></p>
+            </section>
+        </div>
+    <?php
+        $i++;
+        }
+    ?>
 </div>
-<?php
-
-?>

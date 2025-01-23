@@ -1,41 +1,15 @@
 {
-    "key": "group_678e6833088e2",
-    "title": "Campagne Dons",
+    "key": "group_6785b80d29715",
+    "title": "Infos Contact",
     "fields": [
         {
-            "key": "field_678e68334381e",
-            "label": "image",
-            "name": "image",
+            "key": "field_6788787b47ee3",
+            "label": "Titre",
+            "name": "titre",
             "aria-label": "",
-            "type": "image",
+            "type": "text",
             "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "allow_in_bindings": 1,
-            "preview_size": "medium"
-        },
-        {
-            "key": "field_678e6911b61d2",
-            "label": "description",
-            "name": "description",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -43,32 +17,50 @@
                 "id": ""
             },
             "default_value": "",
-            "maxlength": 370,
-            "allow_in_bindings": 1,
-            "rows": "",
-            "placeholder": "",
-            "new_lines": ""
-        },
-        {
-            "key": "field_678e74b39d4af",
-            "label": "objectif",
-            "name": "objectif",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": "",
-            "max": "",
+            "maxlength": "",
             "allow_in_bindings": 0,
             "placeholder": "",
-            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6785b80d622d4",
+            "label": "Courriel",
+            "name": "courriel",
+            "aria-label": "",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6785b842622d5",
+            "label": "Téléphone",
+            "name": "telephone",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
             "prepend": "",
             "append": ""
         }
@@ -78,7 +70,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "campagne-dons"
+                "value": "infos-contact"
             }
         ]
     ],
@@ -91,5 +83,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737570188
+    "modified": 1737561646
 }

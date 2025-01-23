@@ -1,10 +1,10 @@
 {
     "key": "group_678fbb0db1f9c",
-    "title": "Module dons",
+    "title": "Module Dons",
     "fields": [
         {
             "key": "field_678fbb0d34e21",
-            "label": "Titre de sections",
+            "label": "Titre de section",
             "name": "don_section_title",
             "aria-label": "",
             "type": "text",
@@ -42,5 +42,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737473706
+    "modified": 1737570081
 }

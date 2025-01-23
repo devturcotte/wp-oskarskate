@@ -1,41 +1,15 @@
 {
-    "key": "group_678e6833088e2",
-    "title": "Campagne Dons",
+    "key": "group_6785b60ad0f83",
+    "title": "FAQ",
     "fields": [
         {
-            "key": "field_678e68334381e",
-            "label": "image",
-            "name": "image",
+            "key": "field_67892bf07a01e",
+            "label": "Catégorie",
+            "name": "categorie",
             "aria-label": "",
-            "type": "image",
+            "type": "text",
             "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "allow_in_bindings": 1,
-            "preview_size": "medium"
-        },
-        {
-            "key": "field_678e6911b61d2",
-            "label": "description",
-            "name": "description",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -43,34 +17,53 @@
                 "id": ""
             },
             "default_value": "",
-            "maxlength": 370,
-            "allow_in_bindings": 1,
-            "rows": "",
-            "placeholder": "",
-            "new_lines": ""
-        },
-        {
-            "key": "field_678e74b39d4af",
-            "label": "objectif",
-            "name": "objectif",
-            "aria-label": "",
-            "type": "number",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": "",
-            "max": "",
+            "maxlength": "",
             "allow_in_bindings": 0,
             "placeholder": "",
-            "step": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_6785b60b8475a",
+            "label": "Question",
+            "name": "question",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6785b6198475b",
+            "label": "Réponse",
+            "name": "reponse",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
         }
     ],
     "location": [
@@ -78,7 +71,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "campagne-dons"
+                "value": "faq"
             }
         ]
     ],
@@ -91,5 +84,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737570188
+    "modified": 1737561667
 }

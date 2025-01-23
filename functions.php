@@ -2,21 +2,6 @@
 
 function create_posttype() {
 
-    register_post_type( 'bannieres',
-        array(
-            'labels' => array(
-                'name' => __( 'Bannières' ),
-                'singular_name' => __( 'Banniere' )
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'menu_icon' => 'dashicons-format-image',
-            'rewrite' => array('slug' => 'bannieres'),
-            'show_in_rest' => true,
-            'supports' => array('title', 'id'),   
-        )
-    );
-
     register_post_type( 'faq',
         array(
             'labels' => array(
@@ -27,21 +12,6 @@ function create_posttype() {
             'has_archive' => true,
             'menu_icon' => 'dashicons-info',
             'rewrite' => array('slug' => 'faq'),
-            'show_in_rest' => true,
-            'supports' => array('title', 'id'),   
-        )
-    );
-
-    register_post_type( 'fun-facts',
-        array(
-            'labels' => array(
-                'name' => __( 'Fun-Facts' ),
-                'singular_name' => __( 'Fun-Facts' )
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'menu_icon' => 'dashicons-buddicons-topics',
-            'rewrite' => array('slug' => 'fun-facts'),
             'show_in_rest' => true,
             'supports' => array('title', 'id'),   
         )
@@ -62,25 +32,11 @@ function create_posttype() {
         )
     );
 
-    register_post_type( 'partenaires',
-        array(
-            'labels' => array(
-                'name' => __( 'Partenaires' ),
-                'singular_name' => __( 'Partenaires' )
-            ),
-            'public' => true,
-            'has_archive' => true,
-            'menu_icon' => 'dashicons-groups',
-            'rewrite' => array('slug' => 'partenaires'),
-            'show_in_rest' => true,
-            'supports' => array('title', 'id'),   
-        )
-    );
     register_post_type( 'campagne-dons',
         array(
             'labels' => array(
-                'name' => __( 'Campagne-dons' ),
-                'singular_name' => __( 'Campagne-dons' )
+                'name' => __( 'Campagne-Dons' ),
+                'singular_name' => __( 'Campagne-Dons' )
             ),
             'public' => true,
             'has_archive' => true,

@@ -7,10 +7,7 @@ Template Name: Accueil
 <?php get_header(); ?>
 
 <main class="main_accueil">
-    <!-- SECTION IMAGE ENTÊTE -->
     <?php get_template_part('/assets/templates/banner-homepage'); ?>
-
-    <!-- SECTION TITRE, TEXTE, CTA -->
 
     <!-- SECTION ACTUALITÉ -->
 

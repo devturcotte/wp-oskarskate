@@ -1,6 +1,6 @@
 .main_simpliquer {
+  background-color: transparent;
   position: relative;
-  z-index: -10;
 
   button {
     @include button-reset;
@@ -13,7 +13,7 @@
     padding-bottom: 16rem;
     position: relative;
 
-    .fun-facts {
+    .fun-stats {
       align-self: center;
       display: flex;
       max-width: 1024px;
@@ -54,7 +54,7 @@
       left: 0;
       position: absolute;
       width: 100%;
-      z-index: -5;
+      z-index: -1;
     }
   }
 

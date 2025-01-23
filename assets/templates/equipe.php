@@ -1,11 +1,17 @@
+<?php 
+    $equipe = get_field("equipe");
+
+    $sticker = $equipe["sticker"];
+    $stickerUrl = $sticker["url"];
+?>
 <section class="equipe-main-container">
-    <h2>L'équipe derrière Oskar</h2>
+    <h2><?php echo $equipe["titre"] ?></h2>
     <div class="hr"></div>
     <div class="equipe-secondary-container">
         <figure>
             <img src="<?php echo get_template_directory_uri() ?>/assets/wp_media-library/bg-equipe-1.svg" alt="background">
         </figure>
-        <img src="<?php echo get_template_directory_uri() ?>/assets/wp_media-library/ananas.svg" alt="Sticker" class="sticker">
+        <img src="<?php echo esc_url($stickerUrl); ?>" alt="Sticker" class="sticker">
     
         <div class="membres-nav">
             <i class="fa-solid fa-chevron-left fa-xl"></i>

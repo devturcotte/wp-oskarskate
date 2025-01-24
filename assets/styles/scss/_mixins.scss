@@ -46,20 +46,24 @@
 }
 
 @mixin media-query($breakpoint) {
-  @if $breakpoint == "mobile" {
-    @media (max-width: 768px) {
+  @if $breakpoint == "xs-mobile" {
+    @media (min-width: $xs-screen) {
+      @content;
+    }
+  } @else if $breakpoint == "mobile" {
+    @media (min-width: $s-screen) {
       @content;
     }
   } @else if $breakpoint == "tablet" {
-    @media (min-width: 769px) and (max-width: 1024px) {
+    @media (min-width: $m-screen) {
       @content;
     }
   } @else if $breakpoint == "desktop" {
-    @media (min-width: 1025px) and (max-width: 1440px) {
+    @media (min-width: $l-screen) {
       @content;
     }
   } @else if $breakpoint == "desktop-xl" {
-    @media (min-width: 1441px) {
+    @media (min-width: $xl-screen) {
       @content;
     }
   }

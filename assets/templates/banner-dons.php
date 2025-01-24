@@ -4,11 +4,11 @@
         $image = $banniere["image"];
         $imageUrl = $image["url"];
         $texte = $banniere["texte"];
+        $bouton = $banniere["bouton"];
 ?>
 <section class="banner dons">
     <section>
         <img src="<?php echo esc_url($imageUrl); ?>" alt="Bannière">
         <h2><?php echo $titre ?></h2>
     </section>
-    <p><?php echo $texte ?></p>
 </section>

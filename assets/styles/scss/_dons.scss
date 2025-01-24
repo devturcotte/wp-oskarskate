@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .main_dons {
   display: flex;
@@ -9,7 +10,11 @@
     width: 100%;
     height: auto;
   }
-
+  .banner.dons{
+    button{
+      @include btn-red;
+    }
+  }
   .campagne {
     align-self: center;
     max-width: 1280px;
@@ -31,7 +36,6 @@
       }
 
       li {
-        z-index: 1;
         background-color: $beige-oskar;
         border-radius: 0.625rem;
         border: 1px solid $black;
@@ -41,30 +45,14 @@
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        gap: 2rem;
-        position: relative;
+        justify-content: space-between;
+        box-shadow: 6px 6px 0px 0px $blue-navy;
 
-        &::after {
-          z-index: 0;
-          position: absolute;
-          content: "";
-          width: 100%;
-          height: 100%;
-          border-radius: 0.625rem;
-          border: 1px solid $black;
-          top: 8px;
-          left: 8px;
-        }
       }
 
       div:first-of-type {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
-      }
-
-      div:last-child {
-        margin-top: auto;
       }
     }
 
@@ -72,4 +60,26 @@
       max-width: 25.625rem;
     }
   }
+
+  .module-investir{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    max-width: 1280px;
+    align-items: center;
+    align-self: center;
+    h2 {
+      font-size: 2rem;
+    }
+    p {
+      font-weight: 300;
+      line-height: 1.5;
+      max-width: 960px;
+      text-align: center;
+    }
+    .btn-investir {
+      @include btn-red;
+    }
+  }
 }
+

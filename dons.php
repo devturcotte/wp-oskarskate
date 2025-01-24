@@ -9,6 +9,8 @@ Template Name: Dons
 <main class="main_dons">
     <?php get_template_part('/assets/templates/banner-dons'); ?>
 
+    <?php get_template_part('/assets/templates/module_investir'); ?>
+
     <?php get_template_part('/assets/templates/campagne-dons'); ?>
 
     <?php get_template_part('/assets/templates/partenaires'); ?>

@@ -49,7 +49,7 @@
         <?php 
             $equipe = new WP_Query([
                 'post_type' => 'equipe',
-                'posts_per_page' => 1,
+                'posts_per_page' => -1,
             ]);
             $template = rand(1, 5);
             $j = 1;
@@ -77,29 +77,32 @@
                 $photoUrl = $photo["url"];
 
         ?>
-        <figure>
-            <img src="<?php echo esc_url($bgImageUrl); ?>" alt="background">
-        </figure>
-
-        <section class="membre template-<?php echo $template; ?>" id="<?php echo $j; ?>">
-            <h3 class="nom"><?php echo $nom; ?></h3>
+        <div class="membre-container" id="<?php echo $j; ?>">
             <figure>
-                <img src="<?php echo esc_url($photoUrl); ?>" alt="Team Oskar" class="membre-photo">
+                <img src="<?php echo esc_url($bgImageUrl); ?>" alt="background">
             </figure>
-            <div class="contenu">
-                <section class="fun-stats">
-                    <h4><?php echo $statsTitre; ?></h4>
-                </section>
-                <section class="anecdote">
-                    <h4><?php echo $anecdoteTitre; ?></h4>
-                    <p><?php echo $anecdoteTexte; ?></p>
-                </section>
-                <section class="description">
-                    <h4><?php echo $descriptionTitre; ?></h4>
-                    <p><?php echo $descriptionTexte; ?></p>
-                </section>
-            </div>
-        </section>   
+
+            <section class="membre template-<?php echo $template; ?>">
+                <h3 class="nom"><?php echo $nom; ?></h3>
+                <figure>
+                    <img src="<?php echo esc_url($photoUrl); ?>" alt="Team Oskar" class="membre-photo">
+                </figure>
+                <div class="contenu"> 
+                    <section class="fun-stats">
+                        <h4><?php echo $statsTitre; ?></h4>
+                    </section>
+                    <section class="anecdote">
+                        <h4><?php echo $anecdoteTitre; ?></h4>
+                        <p><?php echo $anecdoteTexte; ?></p>
+                    </section>
+                    <section class="description">
+                        <h4><?php echo $descriptionTitre; ?></h4>
+                        <p><?php echo $descriptionTexte; ?></p>
+                    </section>
+                </div>
+            </section>  
+        </div>
+         
         <?php
         $j++;
             };

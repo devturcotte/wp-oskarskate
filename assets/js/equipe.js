@@ -1,7 +1,12 @@
 const btnMembre = document.querySelectorAll(".btn-membre");
+const membres = document.querySelectorAll(".membre-container");
 btnMembre.forEach((btn) => {
   btn.addEventListener("click", () => {
-    console.log(btn.id);
+    membres.forEach((membre) => {
+      if (btn.id === membre.id) {
+        console.log(membre, btn);
+      }
+    });
   });
 });
 

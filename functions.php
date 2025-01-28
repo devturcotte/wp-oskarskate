@@ -67,7 +67,38 @@ function remove_wysiwyg() {
     remove_post_type_support( 'page', 'editor' );
 }
 
+function oskar_enqueue_scripts() {
+    wp_enqueue_script(
+        'equipe',
+        get_template_directory_uri() . '/assets/js/equipe.js'
+    );
+
+    wp_enqueue_script(
+        'faq',
+        get_template_directory_uri() . '/assets/js/faq.js'
+    );
+
+    wp_enqueue_script(
+        'banners',
+        get_template_directory_uri() . '/assets/js/banners.js'
+    );
+}
+
+function defer_script($tag, $handle) {
+    if ('equipe' === $handle) {
+        return str_replace('src', 'defer="defer" src', $tag);
+    }
+    if ('faq' === $handle) {
+        return str_replace('src', 'defer="defer" src', $tag);
+    }
+    if ('banners' === $handle) {
+        return str_replace('src', 'defer="defer" src', $tag);
+    }
+    return $tag;
+}
+
+add_action('wp_enqueue_scripts', 'oskar_enqueue_scripts');
+add_filter('script_loader_tag', 'defer_script', 10, 2);
 add_action('init', 'create_posttype');
 add_action('init', 'remove_wysiwyg');
-
 ?>

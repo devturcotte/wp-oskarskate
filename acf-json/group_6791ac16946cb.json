@@ -145,7 +145,7 @@
                     "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -153,7 +153,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "maxlength": "",
+                    "maxlength": 280,
                     "allow_in_bindings": 0,
                     "rows": "",
                     "placeholder": "",
@@ -205,7 +205,7 @@
                     "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -213,7 +213,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "maxlength": "",
+                    "maxlength": 280,
                     "allow_in_bindings": 0,
                     "rows": "",
                     "placeholder": "",
@@ -257,8 +257,314 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": ""
+                },
+                {
+                    "key": "field_6796a222c8373",
+                    "label": "Stat 1",
+                    "name": "stat_1",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6796a23cc8374",
+                            "label": "Titre",
+                            "name": "titre",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_6796a248c8375",
+                            "label": "Quantité",
+                            "name": "quantite",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "0\/5": "0\/5",
+                                "1\/5": "1\/5",
+                                "2\/5": "2\/5",
+                                "3\/5": "3\/5",
+                                "4\/5": "4\/5",
+                                "5\/5": "5\/5"
+                            },
+                            "default_value": "0\/5",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "allow_in_bindings": 0,
+                            "layout": "vertical",
+                            "save_other_choice": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "field_6796a3697fd61",
+                    "label": "Stat 2",
+                    "name": "stat_2",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6796a3697fd62",
+                            "label": "Titre",
+                            "name": "titre",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_6796a3697fd63",
+                            "label": "Quantité",
+                            "name": "quantite",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "0\/5": "0\/5",
+                                "1\/5": "1\/5",
+                                "2\/5": "2\/5",
+                                "3\/5": "3\/5",
+                                "4\/5": "4\/5",
+                                "5\/5": "5\/5"
+                            },
+                            "default_value": "0\/5",
+                            "return_format": "",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "allow_in_bindings": 0,
+                            "layout": "",
+                            "save_other_choice": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "field_6796a37f7fd64",
+                    "label": "Stat 3",
+                    "name": "stat_3",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6796a37f7fd65",
+                            "label": "Titre 3",
+                            "name": "titre_3",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_6796a37f7fd66",
+                            "label": "Quantité 3",
+                            "name": "quantite_3",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "0\/5": "0\/5",
+                                "1\/5": "1\/5",
+                                "2\/5": "2\/5",
+                                "3\/5": "3\/5",
+                                "4\/5": "4\/5",
+                                "5\/5": "5\/5"
+                            },
+                            "default_value": "0\/5",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "allow_in_bindings": 0,
+                            "layout": "vertical",
+                            "save_other_choice": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "field_6796a3837fd67",
+                    "label": "Stat 4",
+                    "name": "stat_4",
+                    "aria-label": "",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6796a3837fd68",
+                            "label": "Titre",
+                            "name": "titre",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_6796a3837fd69",
+                            "label": "Quantité",
+                            "name": "quantite",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "0\/5": "0\/5",
+                                "1\/5": "1\/5",
+                                "2\/5": "2\/5",
+                                "3\/5": "3\/5",
+                                "4\/5": "4\/5",
+                                "5\/5": "5\/5"
+                            },
+                            "default_value": "0\/5",
+                            "return_format": "",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "allow_in_bindings": 0,
+                            "layout": "",
+                            "save_other_choice": 0
+                        }
+                    ]
                 }
             ]
+        },
+        {
+            "key": "field_67967eca778e8",
+            "label": "Thème du membre",
+            "name": "theme_du_membre",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Navy_Beige": "Navy_Beige",
+                "Vert_Rose": "Vert_Rose",
+                "Bleu_Jaune": "Bleu_Jaune",
+                "Rouge_Blanc": "Rouge_Blanc",
+                "Gris_Bleu-Pale": "Gris_Bleu-Pale"
+            },
+            "default_value": "Navy_Beige",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -279,5 +585,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737906807
+    "modified": 1737944807
 }

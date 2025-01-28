@@ -82,6 +82,23 @@
     line-height: 1.5;
     text-align: center;
     width: 90%;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  button {
+    @include button-reset;
+    border: 1px solid $beige-oskar;
+    border-radius: 0.5rem;
+    box-shadow: 4px 4px 0 0 $black;
+    font-size: 1.1rem;
+    padding: 1rem 2.2rem;
+
+    &.hidden {
+      display: none;
+    }
   }
 
   &.activites {
@@ -92,6 +109,12 @@
       left: 0;
       transform: skew(0, -14deg);
     }
+
+    button {
+      background-color: $yellow;
+      border-color: $black;
+      color: $black;
+    }
   }
 
   &.simpliquer {
@@ -101,6 +124,11 @@
       bottom: 6rem;
       right: 0;
       transform: skew(0deg, 10deg);
+    }
+
+    button {
+      background-color: $pink;
+      color: $beige-oskar;
     }
   }
 
@@ -113,6 +141,12 @@
       left: 0;
       transform: skew(0, -16deg);
     }
+
+    button {
+      background-color: $red;
+      border-color: $beige-oskar;
+      color: $beige-oskar;
+    }
   }
 
   &.nous-connaitre {
@@ -123,6 +157,12 @@
       color: $beige-oskar;
       right: 0;
       transform: skew(0deg, 8deg);
+    }
+
+    button {
+      background-color: $blue;
+      border-color: $beige-oskar;
+      color: $beige-oskar;
     }
   }
 }

@@ -77,6 +77,11 @@ function oskar_enqueue_scripts() {
         'faq',
         get_template_directory_uri() . '/assets/js/faq.js'
     );
+
+    wp_enqueue_script(
+        'banners',
+        get_template_directory_uri() . '/assets/js/banners.js'
+    );
 }
 
 function defer_script($tag, $handle) {
@@ -84,6 +89,9 @@ function defer_script($tag, $handle) {
         return str_replace('src', 'defer="defer" src', $tag);
     }
     if ('faq' === $handle) {
+        return str_replace('src', 'defer="defer" src', $tag);
+    }
+    if ('banners' === $handle) {
         return str_replace('src', 'defer="defer" src', $tag);
     }
     return $tag;

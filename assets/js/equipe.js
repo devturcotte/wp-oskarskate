@@ -54,3 +54,29 @@ function setActif() {
     }
   });
 }
+
+function setStats() {
+  const quantites = document.querySelectorAll(".quantite");
+  const checkedMapping = {
+    _1: 1,
+    _2: 2,
+    _3: 3,
+    _4: 4,
+  };
+
+  quantites.forEach((quantite) => {
+    let checkedCount = 5;
+    for (const className in checkedMapping) {
+      if (quantite.classList.contains(className)) {
+        checkedCount = checkedMapping[className];
+        break;
+      }
+    }
+
+    quantite.innerHTML = `
+      ${'<div class="circle checked"></div>'.repeat(checkedCount)}
+      ${'<div class="circle"></div>'.repeat(5 - checkedCount)}
+    `;
+  });
+}
+setStats();

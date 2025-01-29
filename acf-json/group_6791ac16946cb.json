@@ -298,7 +298,7 @@
                         {
                             "key": "field_6796a248c8375",
                             "label": "Quantité",
-                            "name": "quantite",
+                            "name": "quantite-1",
                             "aria-label": "",
                             "type": "radio",
                             "instructions": "",
@@ -309,15 +309,15 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "choices": {
-                                "0\/5": "0\/5",
-                                "1\/5": "1\/5",
-                                "2\/5": "2\/5",
-                                "3\/5": "3\/5",
-                                "4\/5": "4\/5",
-                                "5\/5": "5\/5"
-                            },
-                            "default_value": "0\/5",
+                            "choices": [
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ],
+                            "default_value": 0,
                             "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
@@ -367,7 +367,7 @@
                         {
                             "key": "field_6796a3697fd63",
                             "label": "Quantité",
-                            "name": "quantite",
+                            "name": "quantite-2",
                             "aria-label": "",
                             "type": "radio",
                             "instructions": "",
@@ -378,20 +378,20 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "choices": {
-                                "0\/5": "0\/5",
-                                "1\/5": "1\/5",
-                                "2\/5": "2\/5",
-                                "3\/5": "3\/5",
-                                "4\/5": "4\/5",
-                                "5\/5": "5\/5"
-                            },
-                            "default_value": "0\/5",
-                            "return_format": "",
+                            "choices": [
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ],
+                            "default_value": 0,
+                            "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
                             "allow_in_bindings": 0,
-                            "layout": "",
+                            "layout": "vertical",
                             "save_other_choice": 0
                         }
                     ]
@@ -435,8 +435,8 @@
                         },
                         {
                             "key": "field_6796a37f7fd66",
-                            "label": "Quantité 3",
-                            "name": "quantite_3",
+                            "label": "Quantité",
+                            "name": "quantite-3",
                             "aria-label": "",
                             "type": "radio",
                             "instructions": "",
@@ -447,15 +447,15 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "choices": {
-                                "0\/5": "0\/5",
-                                "1\/5": "1\/5",
-                                "2\/5": "2\/5",
-                                "3\/5": "3\/5",
-                                "4\/5": "4\/5",
-                                "5\/5": "5\/5"
-                            },
-                            "default_value": "0\/5",
+                            "choices": [
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ],
+                            "default_value": 0,
                             "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
@@ -505,7 +505,7 @@
                         {
                             "key": "field_6796a3837fd69",
                             "label": "Quantité",
-                            "name": "quantite",
+                            "name": "quantite-4",
                             "aria-label": "",
                             "type": "radio",
                             "instructions": "",
@@ -516,20 +516,20 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "choices": {
-                                "0\/5": "0\/5",
-                                "1\/5": "1\/5",
-                                "2\/5": "2\/5",
-                                "3\/5": "3\/5",
-                                "4\/5": "4\/5",
-                                "5\/5": "5\/5"
-                            },
-                            "default_value": "0\/5",
-                            "return_format": "",
+                            "choices": [
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ],
+                            "default_value": 0,
+                            "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
                             "allow_in_bindings": 0,
-                            "layout": "",
+                            "layout": "vertical",
                             "save_other_choice": 0
                         }
                     ]
@@ -585,5 +585,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1738113855
+    "modified": 1738166861
 }

@@ -50,7 +50,6 @@
                     'post_type' => 'equipe',
                     'posts_per_page' => -1,
                 ]);
-                $template = rand(1, 5);
                 $j = 1;
                 if ($equipe->have_posts()) {
                 while ($equipe->have_posts()) { 
@@ -63,6 +62,22 @@
                     $nom = get_field("nom");
                     $stats = get_field("fun-stats");
                     $statsTitre = $stats["titre_section"];
+
+                    $stat1 = $stats["stat-1"];
+                    $stat_t_1 = $stat1["titre-stat-1"];
+                    $stat_q_1 = $stat1["quantite-1"];
+
+                    $stat2 = $stats["stat-2"];
+                    $stat_t_2 = $stat2["titre-stat-2"];
+                    $stat_q_2 = $stat2["quantite-2"];
+
+                    $stat3 = $stats["stat-3"];
+                    $stat_t_3 = $stat3["titre-stat-3"];
+                    $stat_q_3 = $stat3["quantite-3"];
+
+                    $stat4 = $stats["stat-4"];
+                    $stat_t_4 = $stat4["titre-stat-4"];
+                    $stat_q_4 = $stat4["quantite-4"];
 
                     $anecdote = get_field("anecdote");
                     $anecdoteTitre = $anecdote["titre_section"];
@@ -93,43 +108,23 @@
                             <h4><?php echo $statsTitre; ?></h4>
                             <div class="stats-container">
                                 <div class="stat">
-                                    <h5>Test</h5>
-                                    <div class="quantite">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
+                                    <h5><?php echo $stat_t_1; ?></h5>
+                                    <div class="quantite _<?php echo $stat_q_1; ?>">
                                     </div>
                                 </div>
                                 <div class="stat">
-                                    <h5>Balance</h5>
-                                    <div class="quantite">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
+                                    <h5><?php echo $stat_t_2; ?></h5>
+                                    <div class="quantite _<?php echo $stat_q_2; ?>">
                                     </div>
                                 </div>
                                 <div class="stat">
-                                    <h5>Ollie</h5>
-                                    <div class="quantite">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
+                                    <h5><?php echo $stat_t_3; ?></h5>
+                                    <div class="quantite _<?php echo $stat_q_3; ?>">
                                     </div>
                                 </div>
                                 <div class="stat">
-                                    <h5>Speed</h5>
-                                    <div class="quantite">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
+                                    <h5><?php echo $stat_t_4; ?></h5>
+                                    <div class="quantite _<?php echo $stat_q_4; ?>">
                                     </div>
                                 </div>
                             </div>

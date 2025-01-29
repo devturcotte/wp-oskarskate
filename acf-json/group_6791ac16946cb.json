@@ -261,7 +261,7 @@
                 {
                     "key": "field_6796a222c8373",
                     "label": "Stat 1",
-                    "name": "stat_1",
+                    "name": "stat-1",
                     "aria-label": "",
                     "type": "group",
                     "instructions": "",
@@ -277,7 +277,7 @@
                         {
                             "key": "field_6796a23cc8374",
                             "label": "Titre",
-                            "name": "titre",
+                            "name": "titre-stat-1",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -330,7 +330,7 @@
                 {
                     "key": "field_6796a3697fd61",
                     "label": "Stat 2",
-                    "name": "stat_2",
+                    "name": "stat-2",
                     "aria-label": "",
                     "type": "group",
                     "instructions": "",
@@ -346,7 +346,7 @@
                         {
                             "key": "field_6796a3697fd62",
                             "label": "Titre",
-                            "name": "titre",
+                            "name": "titre-stat-2",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -399,7 +399,7 @@
                 {
                     "key": "field_6796a37f7fd64",
                     "label": "Stat 3",
-                    "name": "stat_3",
+                    "name": "stat-3",
                     "aria-label": "",
                     "type": "group",
                     "instructions": "",
@@ -414,8 +414,8 @@
                     "sub_fields": [
                         {
                             "key": "field_6796a37f7fd65",
-                            "label": "Titre 3",
-                            "name": "titre_3",
+                            "label": "Titre",
+                            "name": "titre-stat-3",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -468,7 +468,7 @@
                 {
                     "key": "field_6796a3837fd67",
                     "label": "Stat 4",
-                    "name": "stat_4",
+                    "name": "stat-4",
                     "aria-label": "",
                     "type": "group",
                     "instructions": "",
@@ -484,7 +484,7 @@
                         {
                             "key": "field_6796a3837fd68",
                             "label": "Titre",
-                            "name": "titre",
+                            "name": "titre-stat-4",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -585,5 +585,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737944807
+    "modified": 1738113855
 }

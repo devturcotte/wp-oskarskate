@@ -42,7 +42,7 @@
                 {
                     "key": "field_67919c98c306b",
                     "label": "Sticker",
-                    "name": "sticker",
+                    "name": "sticker-1",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -53,7 +53,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "array",
+                    "return_format": "url",
                     "library": "all",
                     "min_width": "",
                     "min_height": "",
@@ -112,5 +112,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737599931
+    "modified": 1738114936
 }

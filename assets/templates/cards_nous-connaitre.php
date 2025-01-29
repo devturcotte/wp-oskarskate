@@ -3,7 +3,7 @@
         $i = 1;
         while($i <= 2){
         $carte = get_field("carte-".$i);
-        $image = $carte["image"];
+        $image = $carte["image-".$i];
         $imageUrl = $image["url"];
     ?>
         <div class="card _<?php echo $i; ?>">

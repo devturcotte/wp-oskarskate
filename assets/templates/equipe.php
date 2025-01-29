@@ -1,8 +1,7 @@
 <?php 
     $equipe = get_field("equipe");
 
-    $sticker = $equipe["sticker"];
-    $stickerUrl = $sticker["url"];
+    $sticker1 = $equipe["sticker-1"];
 
     $logo = $equipe["logo"];
     $logoUrl = $logo["url"];
@@ -11,7 +10,7 @@
     <h2><?php echo $equipe["titre"] ?></h2>
     <div class="hr"></div>
     <div class="equipe-secondary-container">
-        <img src="<?php echo esc_url($stickerUrl); ?>" alt="Sticker" class="sticker">
+        <img src="<?php echo esc_url($sticker1); ?>" alt="Sticker" class="sticker">
 
         <div class="membres-nav">
             <button class="btn-previous">
@@ -94,7 +93,17 @@
                             <h4><?php echo $statsTitre; ?></h4>
                             <div class="stats-container">
                                 <div class="stat">
-                                    <h5>Ollie</h5>
+                                    <h5>Test</h5>
+                                    <div class="quantite">
+                                        <input type="radio">
+                                        <input type="radio">
+                                        <input type="radio">
+                                        <input type="radio">
+                                        <input type="radio">
+                                    </div>
+                                </div>
+                                <div class="stat">
+                                    <h5>Balance</h5>
                                     <div class="quantite">
                                         <input type="radio">
                                         <input type="radio">
@@ -114,17 +123,7 @@
                                     </div>
                                 </div>
                                 <div class="stat">
-                                    <h5>Ollie</h5>
-                                    <div class="quantite">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                        <input type="radio">
-                                    </div>
-                                </div>
-                                <div class="stat">
-                                    <h5>Ollie</h5>
+                                    <h5>Speed</h5>
                                     <div class="quantite">
                                         <input type="radio">
                                         <input type="radio">

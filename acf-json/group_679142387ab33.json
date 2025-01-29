@@ -42,7 +42,7 @@
                 {
                     "key": "field_67918c8b23133",
                     "label": "Image",
-                    "name": "image",
+                    "name": "image-1",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -53,8 +53,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "",
-                    "library": "",
+                    "return_format": "array",
+                    "library": "all",
                     "min_width": "",
                     "min_height": "",
                     "min_size": "",
@@ -104,7 +104,7 @@
                 {
                     "key": "field_67918cdb23136",
                     "label": "Image",
-                    "name": "image",
+                    "name": "image-2",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -115,8 +115,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "",
-                    "library": "",
+                    "return_format": "array",
+                    "library": "all",
                     "min_width": "",
                     "min_height": "",
                     "min_size": "",
@@ -166,7 +166,7 @@
                 {
                     "key": "field_67918cde23139",
                     "label": "Image",
-                    "name": "image",
+                    "name": "image-3",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -177,8 +177,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "",
-                    "library": "",
+                    "return_format": "array",
+                    "library": "all",
                     "min_width": "",
                     "min_height": "",
                     "min_size": "",
@@ -228,7 +228,7 @@
                 {
                     "key": "field_67918ce12313c",
                     "label": "Image",
-                    "name": "image",
+                    "name": "image-4",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -297,5 +297,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737592765
+    "modified": 1738110072
 }

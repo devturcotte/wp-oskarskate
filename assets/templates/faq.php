@@ -1,8 +1,8 @@
-<?php
-    $moduleFaq = get_field("module_faq");
-    $titreFaq = $moduleFaq["titre"];
-?>
 <section class="faq">
+    <?php
+        $moduleFaq = get_field("module_faq");
+        $titreFaq = $moduleFaq["titre-faq"];
+    ?>
     <h2 class="titre-principal"><?php echo $titreFaq; ?></h2>
     
     <ul class="questions-container">

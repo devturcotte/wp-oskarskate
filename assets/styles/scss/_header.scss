@@ -2,12 +2,13 @@ header {
   align-self: center;
   background-color: $beige-oskar;
   max-width: 1280px;
-  padding: 2rem;
+  padding: 1rem;
   width: 100%;
   border-bottom: 1px solid $black;
   @include media-query("desktop") {
     display: flex;
     border-bottom: none;
+    padding: 2rem;
   }
 
   .desktop-nav {

@@ -86,6 +86,10 @@ function oskar_enqueue_scripts() {
         'dialog',
         get_template_directory_uri() . '/assets/js/dialog.js'
     );
+    wp_enqueue_script(
+        'slider',
+        get_template_directory_uri() . '/assets/js/slider.js'
+    );
 }
 
 function defer_script($tag, $handle) {

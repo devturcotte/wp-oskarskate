@@ -1,12 +1,10 @@
-<?php 
-    $equipe = get_field("equipe");
-
-    $sticker1 = $equipe["sticker-1"];
-
-    $logo = $equipe["logo"];
-    $logoUrl = $logo["url"];
-?>
 <section class="equipe-main-container">
+    <?php 
+        $equipe = get_field("equipe");
+        $sticker1 = $equipe["sticker-1"];
+        $logo = $equipe["logo"];
+        $logoUrl = $logo["url"];
+    ?>
     <h2><?php echo $equipe["titre"] ?></h2>
     <div class="hr"></div>
     <div class="equipe-secondary-container">

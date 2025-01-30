@@ -76,7 +76,7 @@ function oskar_enqueue_scripts() {
 
 function defer_script($tag, $handle) {
     if ('main' === $handle) {
-        return str_replace('type="text/javascript" src', 'type="module" defer="defer" src', $tag);
+        return str_replace('type="text/javascript" src', 'type="module" defer src', $tag);
     }
     return $tag;
 }

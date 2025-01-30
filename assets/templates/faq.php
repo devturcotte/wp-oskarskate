@@ -1,6 +1,6 @@
 <section class="faq">
     <h2 class="titre-principal"><?php the_field("titre_section_faq"); ?></h2>
-    
+
     <ul class="questions-container">
         <?php 
         $faq = new WP_Query([

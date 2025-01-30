@@ -1,32 +1,41 @@
 <section class="campagne">
-<h2><?php the_field('section_campagne_don') ?></h2>
-<ul>
-    <?php 
-        $donations = new WP_Query([
-            'post_type' => 'campagne-dons',
-            'posts_per_page' => 3,
-        ]);
+    <h2><?php the_field('section_campagne_don') ?></h2>
+    <div class="slider-container"> 
+        <ul class="slider_slides">
+            <?php 
+                $donations = new WP_Query([
+                'post_type' => 'campagne-dons',
+                'posts_per_page' => 3,
+                ]);
 
-        if ($donations->have_posts()) :
-            while ($donations->have_posts()) : $donations->the_post();
-                $image = get_field('image');
-                $imageUrl = $image['url'];
-    ?>
+                if ($donations->have_posts()) :
+                    while ($donations->have_posts()) : $donations->the_post();
+                        $image = get_field('image');
+                        $imageUrl = $image['url'];
+                ?>
 
-        <li>
-            <img src="<?php echo esc_url($imageUrl); ?>" alt="<?php the_title(); ?>">
-            <div>
-            <h3><?php the_title(); ?></h3>
-            <p><?php the_field('description'); ?></p>
-            </div>
-            <div>
-                <span>fond nécessaire :</span> <span><?php the_field('objectif'); ?>$</span>
-            </div>
-        </li>
+                <li class="slider_slide">
+                    <figure>
+                        <img src="<?php echo esc_url($imageUrl); ?>" alt="<?php the_title(); ?>">
+                    </figure>
+                    <div>
+                        <h3><?php the_title(); ?></h3>
+                        <p><?php the_field('description'); ?></p>
+                    </div>
+                </li>
 
-    <?php
-            endwhile;
-        endif;
-    ?>
-</ul>
+            <?php
+                    endwhile;
+                endif;
+            ?>
+        </ul>
+        <div>
+            <button class="control--previous">
+                <i class="fa-solid fa-angle-left"></i>
+            </button>  
+            <button class="control--next">
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
+        </div>
+    </div>
 </section>

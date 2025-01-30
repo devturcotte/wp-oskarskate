@@ -3,11 +3,11 @@
     "title": "Module FAQ",
     "fields": [
         {
-            "key": "field_6793b192bb6ad",
-            "label": "Module FAQ",
-            "name": "module_faq",
+            "key": "field_6799a17ab602d",
+            "label": "Titre Section FAQ",
+            "name": "titre_section_faq",
             "aria-label": "",
-            "type": "group",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,30 +16,12 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "block",
-            "sub_fields": [
-                {
-                    "key": "field_6793b1a4bb6ae",
-                    "label": "Titre",
-                    "name": "titre-faq",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "allow_in_bindings": 0,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                }
-            ]
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -60,5 +42,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1738111767
+    "modified": 1738121606
 }

@@ -3,8 +3,12 @@ footer {
   color: $beige-oskar;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
   padding: 3rem 2rem;
+  @include media-query('desktop') {
+     gap: 4rem;
+  }
+
 
   .footer-top,
   .footer-bottom {
@@ -15,10 +19,27 @@ footer {
 
   .footer-top {
     display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 1rem;
+    @include media-query('desktop') {
+      justify-content: space-between;
+      padding: 0 1rem;
+      flex-direction: row;
+      text-align: start;
+      align-items: start;
+      .logo-mobile{
+        display: block;
+        padding-bottom: 1rem;
+        @include media-query('desktop') {
+          display: none;
+        }
+      }
+    }
 
     nav {
+
       ul {
         display: flex;
         flex-direction: column;
@@ -112,20 +133,29 @@ footer {
     }
 
     .content {
-      align-self: center;
-      align-items: center;
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
+      display: flex;
+      justify-content: space-between;
+      @include media-query('desktop') {
+        align-self: center;
+        align-items: center;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+      }
+
 
       .copyright {
         font-size: 0.8rem;
         font-weight: 300;
       }
 
-      .logo {
-        align-self: center;
-        justify-self: center;
-        transition: 0.3s;
+      .logo-desktop {
+        display: none;
+        @include media-query('desktop') {
+          align-self: center;
+          justify-self: center;
+          transition: 0.3s;
+          display: block;
+        }
 
         &:hover {
           transform: scale(0.9);

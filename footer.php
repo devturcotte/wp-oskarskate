@@ -5,6 +5,9 @@
     <footer>
         <div class="footer-top">
             <nav>
+                <a href="<?php echo site_url(); ?>" class="logo-mobile">
+                    <img src="<?php bloginfo('template_url'); ?>/assets/images/logo-footer.png" alt="Logo Oskar Skate & Art">
+                </a>
                 <?php
                     wp_nav_menu( $arg = array (
                         'menu' => 'Footer',
@@ -21,7 +24,7 @@
             <div class="hr"></div>
             <div class="content">
                 <p class="copyright">© <?php echo date("Y");?> OSKAR Skate & ART - Tous droits réservés</p>
-                <a href="<?php echo site_url(); ?>" class="logo">
+                <a href="<?php echo site_url(); ?>" class="logo-desktop">
                     <img src="<?php bloginfo('template_url'); ?>/assets/images/logo-footer.png" alt="Logo Oskar Skate & Art">
                 </a>
                 <ul class="socials">

@@ -2,6 +2,10 @@
 @import "mixins";
 @import "fonts";
 
+html{
+margin: 0 !important;
+}
+
 * {
   box-sizing: border-box;
   font-family: $oswald;
@@ -30,6 +34,8 @@ body {
 
   a {
     text-decoration: none;
+    color: inherit;
+    font-family: $oswald;
   }
   li {
     list-style-type: none;

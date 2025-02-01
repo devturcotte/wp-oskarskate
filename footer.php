@@ -39,6 +39,7 @@
             </div>
         </div>
     </footer>
-    
+    <?php get_template_part('assets/templates/modal-activites'); ?>
+    <?php wp_footer(); ?>
 </body>
 </html>

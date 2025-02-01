@@ -1,3 +1,422 @@
 .main_activites {
   gap: 2rem;
 }
+
+.hidden {
+  display: none !important;
+}
+
+/* Classes pour cacher les éléments au départ */
+.hiddenAtStart {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal-ctrl-adresse {
+  display: flex;
+}
+
+.story-ctrl-adresse {
+  display: flex;
+}
+
+.fa-location-dot {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  padding-left: 10px;
+  color: orange;
+}
+
+.ctl-story {
+  display: flex;
+  padding-bottom: 2%;
+}
+
+.ctl-story-left {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ctl-story-right {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.my-icon-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/*Custom stories*/
+.my-story-rebuilt {
+  display: flex;
+  position: relative;
+
+  .story-date {
+    .ctl-labels-left {
+      display: flex;
+      flex-direction: row;
+      left: calc(100% + var(--ctw-ibx-size) * 2) !important;
+      align-items: center;
+
+      .triangle-left {
+        display: flex;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-right: 15px solid $black;
+      }
+    }
+
+    .ctl-labels-right {
+      display: flex;
+      flex-direction: row;
+      right: calc(100% + var(--ctw-ibx-size) * 2) !important;
+      justify-content: center !important;
+      align-items: center;
+
+      .triangle-right {
+        display: flex;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 15px solid $black;
+      }
+    }
+
+    .ctl-labels {
+      top: calc(
+        var(--ctw-ibx-position) * 1% - var(--ctw-ibx-size) *
+          var(--ctw-ibx-position) / 100 -(var(--ctw-lbl-big-size) / 2 -
+              var(--ctw-ibx-size) / 1.7)
+      ) !important;
+      gap: 0;
+
+      .ctl-label-big {
+        background-color: $black;
+        width: fit-content !important;
+        padding: 10px;
+        color: $white !important;
+        font-size: 38px;
+        font-weight: 400;
+        border-radius: 10px;
+      }
+      .ctl-label-big-left {
+        transform-origin: left !important;
+      }
+    }
+  }
+
+  .my-story-content {
+    width: 100%;
+    background-color: $white;
+    flex-direction: column;
+    width: 30vw;
+    align-items: flex-start;
+    -webkit-box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  .my-story-img {
+    position: relative;
+    display: flex;
+
+    .story-image {
+      object-fit: contain;
+      display: block;
+      width: 100%;
+      height: auto;
+      min-width: 0px;
+      -webkit-border-top-left-radius: 3px;
+      -webkit-border-top-right-radius: 3px;
+      -moz-border-radius-topleft: 3px;
+      -moz-border-radius-topright: 3px;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+    .img-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: $black;
+      opacity: 70%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .img-overlay p {
+      color: $white;
+      margin-bottom: 1rem;
+    }
+
+    .btn-aller-voir {
+      background: $white;
+      color: $black;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: $white;
+      cursor: pointer;
+    }
+  }
+
+  .my-story-title {
+    display: flex;
+    padding: 10px;
+    padding-left: 25px;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .my-location-name {
+    display: flex;
+    padding: 5px;
+    padding-left: 25px;
+    padding-bottom: 0;
+    font-weight: 400;
+  }
+
+  .my-location-address {
+    display: flex;
+    padding: 5px;
+    padding-left: 25px;
+    font-weight: 400;
+  }
+
+  .my-story-description {
+    max-height: 5rem;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    padding: 10px 25px;
+    font-size: 14px;
+    text-align: start;
+
+    p {
+      display: flex;
+      margin: 0 !important;
+      font-weight: 300;
+    }
+
+    /* Le fondu blanc au bas */
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3rem;
+
+      /*Dégradé blanc*/
+      background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Les trois points "..." en bas à droite */
+    &::after {
+      content: "...";
+      position: absolute;
+      bottom: 0.5rem;
+      right: 1rem;
+      font-size: 1.2rem;
+      color: #555;
+      pointer-events: none;
+    }
+  }
+
+  .my-story-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+
+    .footer-social {
+      display: flex;
+      width: 40%;
+      flex-direction: row !important;
+
+      .btn-social {
+        display: flex;
+        padding-left: 20px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+
+        .fa-facebook {
+          display: flex;
+          color: $fb-blue;
+          font-size: 30px;
+        }
+
+        .fa-instagram {
+          display: flex;
+          color: $insta-purple;
+          font-size: 30px;
+        }
+      }
+    }
+
+    .footer-btn-savoir {
+      display: flex;
+      background-color: $yellow;
+      color: $black;
+      flex-wrap: nowrap !important;
+      border-radius: 10px;
+      text-align: center;
+      padding: 10px 40px 10px 40px;
+      -webkit-box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+      box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+
+      .readmore-link {
+        color: $black;
+        text-overflow: initial;
+        text-wrap: nowrap !important;
+      }
+    }
+  }
+}
+
+/*Modal d'activités*/
+
+.my-modal-overlay {
+  display: none;
+  position: absolute;
+  z-index: 500;
+  justify-content: center;
+  align-items: center;
+}
+.my-modal-overlay.open {
+  display: flex;
+}
+.modal-content {
+  background: $white;
+  padding: 2rem;
+  border-radius: 4px;
+  position: relative;
+  -webkit-box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: row;
+  max-width: 61vw;
+  width: 61vw;
+
+  .modal-image {
+    width: 33% !important;
+    min-width: unset !important;
+  }
+
+  .modal-infos {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    text-align: start;
+
+    .modal-header {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  z-index: 510;
+}
+.my-over-title {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 1rem;
+}
+
+.atcb-placeholder {
+  background: #000 !important;
+}
+
+// Sytles custom pour le Add To Calendar Button
+add-to-calendar-button {
+  ::part(atcb-button-text) {
+    display: none;
+  }
+
+  /* 2. Positionner le wrapper du bouton en relative
+     pour que le dropdown (liste) en absolute se positionne correctement */
+  ::part(atcb-button-wrapper) {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* 3. Personnaliser la liste déroulante */
+  ::part(atcb-list-wrapper) {
+    position: absolute;
+    top: calc(100% + 5px); // 5px d'espace entre le bouton et la liste
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none; // Masquée par défaut
+  }
+
+  /* 4. Quand le composant est ouvert (on suppose qu'il reçoit la classe "open"),
+     on affiche la liste déroulante */
+  &.open {
+    ::part(atcb-list-wrapper) {
+      display: block;
+    }
+  }
+
+  /* 5. Styles pour chaque élément de la liste */
+  ::part(atcb-list-item) {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  ::part(atcb-list-item):hover {
+    background-color: #f0f0f0;
+  }
+
+  /* 6. Style de l'icône dans la liste */
+  ::part(atcb-list-icon) {
+    width: 1em;
+    height: 1em;
+    margin-right: 8px;
+  }
+
+  /* 7. Style du texte (nom du calendrier) dans la liste */
+  ::part(atcb-list-text) {
+    font-size: 14px;
+    color: #333;
+  }
+}

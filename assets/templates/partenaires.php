@@ -5,7 +5,7 @@
             $i=1;
             while($i<=4){
             $partenaire = get_field('partenaire-'.$i);
-            $image = $partenaire["image"];
+            $image = $partenaire["image-".$i];
             $imageUrl = $image["url"];
 
             $url = $partenaire["url"];

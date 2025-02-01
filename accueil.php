@@ -9,10 +9,6 @@ Template Name: Accueil
 <main class="main_accueil">
     <?php get_template_part('/assets/templates/banner-homepage'); ?>
 
-    <!-- SECTION ACTUALITÉ -->
-
-    <!-- SECTION ACTIVITÉS -->
-
     <img src="<?php echo get_template_directory_uri() ?>/assets/images/rails.png" alt="Skate Rails" class="rails">
 </main>
 

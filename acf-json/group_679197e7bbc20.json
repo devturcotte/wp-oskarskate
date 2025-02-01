@@ -63,7 +63,7 @@
                 {
                     "key": "field_67919868e7d79",
                     "label": "Image",
-                    "name": "image",
+                    "name": "image-1",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -74,8 +74,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "",
-                    "library": "",
+                    "return_format": "array",
+                    "library": "all",
                     "min_width": "",
                     "min_height": "",
                     "min_size": "",
@@ -149,7 +149,7 @@
                 {
                     "key": "field_67919875e7d7d",
                     "label": "Image",
-                    "name": "image",
+                    "name": "image-2",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -193,5 +193,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737595349
+    "modified": 1738110877
 }

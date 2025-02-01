@@ -99,30 +99,14 @@ function create_posttype()
 }
 function oskar_enqueue_scripts() {
     wp_enqueue_script(
-        'equipe',
-        get_template_directory_uri() . '/assets/js/equipe.js'
-    );
-
-    wp_enqueue_script(
-        'faq',
-        get_template_directory_uri() . '/assets/js/faq.js'
-    );
-
-    wp_enqueue_script(
-        'banners',
-        get_template_directory_uri() . '/assets/js/banners.js'
+        'main',
+        get_template_directory_uri() . '/assets/js/main.js'
     );
 }
 
 function defer_script($tag, $handle) {
-    if ('equipe' === $handle) {
-        return str_replace('src', 'defer="defer" src', $tag);
-    }
-    if ('faq' === $handle) {
-        return str_replace('src', 'defer="defer" src', $tag);
-    }
-    if ('banners' === $handle) {
-        return str_replace('src', 'defer="defer" src', $tag);
+    if ('main' === $handle) {
+        return str_replace('type="text/javascript" src', 'type="module" defer src', $tag);
     }
     return $tag;
 }

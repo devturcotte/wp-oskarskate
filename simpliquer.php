@@ -8,7 +8,7 @@ Template Name: S'impliquer
 
 <main class="main_simpliquer">
     <div class="bg-container">
-        <?php get_template_part('/assets/templates/banner-simpliquer'); ?>
+        <?php get_template_part('/assets/templates/banner'); ?>
 
         <?php get_template_part('/assets/templates/fun-stats'); ?>
 

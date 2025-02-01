@@ -25,12 +25,36 @@ footer {
         gap: 0.5rem;
 
         :nth-child(2) {
+          opacity: 0.5;
           padding-bottom: 2rem;
+          pointer-events: none;
         }
 
-        a {
-          font-weight: 300;
-          text-transform: uppercase;
+        li {
+          transition: 0.3s;
+
+          &:hover {
+            transform: translate(0.5rem, 0);
+
+            a {
+              text-decoration: underline;
+            }
+          }
+
+          a {
+            font-weight: 300;
+            text-transform: uppercase;
+            transition: 0.3s;
+            width: 100%;
+          }
+
+          &.current_page_item {
+            pointer-events: none;
+
+            a {
+              text-decoration: underline;
+            }
+          }
         }
       }
     }
@@ -101,6 +125,11 @@ footer {
       .logo {
         align-self: center;
         justify-self: center;
+        transition: 0.3s;
+
+        &:hover {
+          transform: scale(0.9);
+        }
       }
 
       .socials {
@@ -110,6 +139,11 @@ footer {
 
         i {
           transform: scale(2);
+          transition: 0.3s;
+
+          &:hover {
+            transform: scale(1.7);
+          }
         }
       }
     }

@@ -1,5 +1,5 @@
 <section class="campagne">
-<h2><?php the_field('don_section_title') ?></h2>
+<h2><?php the_field('section_campagne_don') ?></h2>
 <ul>
     <?php 
         $donations = new WP_Query([
@@ -17,10 +17,10 @@
             <img src="<?php echo esc_url($imageUrl); ?>" alt="<?php the_title(); ?>">
             <div>
             <h3><?php the_title(); ?></h3>
-            <p><?php the_field('description', $donations->ID); ?></p>
+            <p><?php the_field('description'); ?></p>
             </div>
             <div>
-                <span>fond nécessaire :</span> <span><?php the_field('objectif', $donations->ID); ?>$</span>
+                <span>fond nécessaire :</span> <span><?php the_field('objectif'); ?>$</span>
             </div>
         </li>
 

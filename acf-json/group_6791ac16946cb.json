@@ -261,7 +261,7 @@
                 {
                     "key": "field_6796a222c8373",
                     "label": "Stat 1",
-                    "name": "stat_1",
+                    "name": "stat-1",
                     "aria-label": "",
                     "type": "group",
                     "instructions": "",
@@ -277,7 +277,7 @@
                         {
                             "key": "field_6796a23cc8374",
                             "label": "Titre",
-                            "name": "titre",
+                            "name": "titre-stat-1",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -298,7 +298,7 @@
                         {
                             "key": "field_6796a248c8375",
                             "label": "Quantité",
-                            "name": "quantite",
+                            "name": "quantite-1",
                             "aria-label": "",
                             "type": "radio",
                             "instructions": "",
@@ -309,15 +309,15 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "choices": {
-                                "0\/5": "0\/5",
-                                "1\/5": "1\/5",
-                                "2\/5": "2\/5",
-                                "3\/5": "3\/5",
-                                "4\/5": "4\/5",
-                                "5\/5": "5\/5"
-                            },
-                            "default_value": "0\/5",
+                            "choices": [
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ],
+                            "default_value": 0,
                             "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
@@ -330,7 +330,7 @@
                 {
                     "key": "field_6796a3697fd61",
                     "label": "Stat 2",
-                    "name": "stat_2",
+                    "name": "stat-2",
                     "aria-label": "",
                     "type": "group",
                     "instructions": "",
@@ -346,7 +346,7 @@
                         {
                             "key": "field_6796a3697fd62",
                             "label": "Titre",
-                            "name": "titre",
+                            "name": "titre-stat-2",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -367,7 +367,7 @@
                         {
                             "key": "field_6796a3697fd63",
                             "label": "Quantité",
-                            "name": "quantite",
+                            "name": "quantite-2",
                             "aria-label": "",
                             "type": "radio",
                             "instructions": "",
@@ -378,20 +378,20 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "choices": {
-                                "0\/5": "0\/5",
-                                "1\/5": "1\/5",
-                                "2\/5": "2\/5",
-                                "3\/5": "3\/5",
-                                "4\/5": "4\/5",
-                                "5\/5": "5\/5"
-                            },
-                            "default_value": "0\/5",
-                            "return_format": "",
+                            "choices": [
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ],
+                            "default_value": 0,
+                            "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
                             "allow_in_bindings": 0,
-                            "layout": "",
+                            "layout": "vertical",
                             "save_other_choice": 0
                         }
                     ]
@@ -399,7 +399,7 @@
                 {
                     "key": "field_6796a37f7fd64",
                     "label": "Stat 3",
-                    "name": "stat_3",
+                    "name": "stat-3",
                     "aria-label": "",
                     "type": "group",
                     "instructions": "",
@@ -414,8 +414,8 @@
                     "sub_fields": [
                         {
                             "key": "field_6796a37f7fd65",
-                            "label": "Titre 3",
-                            "name": "titre_3",
+                            "label": "Titre",
+                            "name": "titre-stat-3",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -435,8 +435,8 @@
                         },
                         {
                             "key": "field_6796a37f7fd66",
-                            "label": "Quantité 3",
-                            "name": "quantite_3",
+                            "label": "Quantité",
+                            "name": "quantite-3",
                             "aria-label": "",
                             "type": "radio",
                             "instructions": "",
@@ -447,15 +447,15 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "choices": {
-                                "0\/5": "0\/5",
-                                "1\/5": "1\/5",
-                                "2\/5": "2\/5",
-                                "3\/5": "3\/5",
-                                "4\/5": "4\/5",
-                                "5\/5": "5\/5"
-                            },
-                            "default_value": "0\/5",
+                            "choices": [
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ],
+                            "default_value": 0,
                             "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
@@ -468,7 +468,7 @@
                 {
                     "key": "field_6796a3837fd67",
                     "label": "Stat 4",
-                    "name": "stat_4",
+                    "name": "stat-4",
                     "aria-label": "",
                     "type": "group",
                     "instructions": "",
@@ -484,7 +484,7 @@
                         {
                             "key": "field_6796a3837fd68",
                             "label": "Titre",
-                            "name": "titre",
+                            "name": "titre-stat-4",
                             "aria-label": "",
                             "type": "text",
                             "instructions": "",
@@ -505,7 +505,7 @@
                         {
                             "key": "field_6796a3837fd69",
                             "label": "Quantité",
-                            "name": "quantite",
+                            "name": "quantite-4",
                             "aria-label": "",
                             "type": "radio",
                             "instructions": "",
@@ -516,20 +516,20 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "choices": {
-                                "0\/5": "0\/5",
-                                "1\/5": "1\/5",
-                                "2\/5": "2\/5",
-                                "3\/5": "3\/5",
-                                "4\/5": "4\/5",
-                                "5\/5": "5\/5"
-                            },
-                            "default_value": "0\/5",
-                            "return_format": "",
+                            "choices": [
+                                "0",
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5"
+                            ],
+                            "default_value": 0,
+                            "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
                             "allow_in_bindings": 0,
-                            "layout": "",
+                            "layout": "vertical",
                             "save_other_choice": 0
                         }
                     ]
@@ -585,5 +585,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1737944807
+    "modified": 1738166861
 }

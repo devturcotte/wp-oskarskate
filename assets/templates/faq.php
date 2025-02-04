@@ -1,10 +1,6 @@
-<?php
-    $moduleFaq = get_field("module_faq");
-    $titreFaq = $moduleFaq["titre"];
-?>
 <section class="faq">
-    <h2 class="titre-principal"><?php echo $titreFaq; ?></h2>
-    
+    <h2 class="titre-principal"><?php the_field("titre_section_faq"); ?></h2>
+
     <ul class="questions-container">
         <?php 
         $faq = new WP_Query([
@@ -26,6 +22,7 @@
                 <p class="reponse hidden"><?php echo $reponse; ?></p>
             </li>
         <?php
+            wp_reset_postdata();
             };
         } 
         else{ ?>

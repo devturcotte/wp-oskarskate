@@ -7,7 +7,7 @@ Template Name: Activites
 <?php get_header(); ?>
 
 <main class="main_activites">
-    <?php get_template_part('/assets/templates/banner-activites'); ?>
+<?php get_template_part('/assets/templates/banner'); ?>
 
 
     <?php
@@ -18,7 +18,6 @@ Template Name: Activites
     // 3) Afficher le HTML modifié
     echo $timeline_output;
     ?>
-    <?php get_template_part('/assets/templates/banner'); ?>
 </main>
 
 <?php get_footer(); ?>

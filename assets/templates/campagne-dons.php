@@ -5,7 +5,7 @@
             <?php 
                 $donations = new WP_Query([
                 'post_type' => 'campagne-dons',
-                'posts_per_page' => 3,
+                'posts_per_page' => -1,
                 ]);
 
                 if ($donations->have_posts()) :

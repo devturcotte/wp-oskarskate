@@ -2,6 +2,108 @@
   gap: 2rem;
 }
 
+/* Bouton pour afficher/cacher les activités passées */
+.toggle-passed-button {
+  background-color: transparent;
+  border: none;
+  color: $black;
+  padding: 0.5em 1em;
+  font-size:large;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+.toggle-passed-button:hover {
+text-decoration: underline;
+}
+.toggle-passed-button.active {
+
+  color: $blue;
+}
+
+/* Bouton "Filtres" placé dans timeline-main-title */
+.timeline-main-title {
+  position: relative;
+}
+.ctrl-btn-filters {
+  left: 0;
+  top: 0;
+.filter-button {
+  background-color: transparent;
+  border: none;
+  color: Gray;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 0.5em;
+  transition: color 0.3s;
+}
+.filter-button:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+/* Dropdown pour le filtre de type d'activité */
+.filter-dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: $white;
+  border: 1px solid $beige-fonce;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+
+  .filter-item {
+    display: flex;
+    align-self: start;
+    width: 100%;
+    padding: 0.5em 1em;
+    font-size: medium;
+    font-weight: 400;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+  }
+
+  .close-dropdown {
+    float: right;
+    align-self: flex-end;
+    background-color: transparent;
+    border: none;
+    color: $black;
+    font-size: 24px;
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  .reset-button {
+    align-self: center;
+    background-color: $yellow;
+    border: none;
+    color: $black;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 5px;
+    -webkit-box-shadow: 4px 4px 1px 1px #4A4A4A; 
+box-shadow: 4px 4px 1px 1px #4A4A4A;
+  }
+}
+
+/* Chaque élément du dropdown */
+.filter-item {
+  padding: 0.5em 1em;
+  font-size: medium;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s;
+}
+.filter-item:hover {
+  background-color: #f2f2f2;
+}
+}
 .hidden {
   display: none !important;
 }
@@ -56,7 +158,32 @@
   display: flex;
   position: relative;
 
+  .story-modal {
+  }
+  .story-date-mobile {
+    display: hidden !important;
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    background-color: $black;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    z-index: 10;
+    transform-origin: bottom;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
   .story-date {
+    display: none;
+    margin-top: -5px;
+
     .ctl-labels-left {
       display: flex;
       flex-direction: row;
@@ -113,7 +240,7 @@
     width: 100%;
     background-color: $white;
     flex-direction: column;
-    width: 30vw;
+    width: 75vw;
     align-items: flex-start;
     -webkit-box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
@@ -123,6 +250,7 @@
   .my-story-img {
     position: relative;
     display: flex;
+    align-items: center;
 
     .story-image {
       object-fit: contain;
@@ -175,14 +303,28 @@
     }
   }
 
-  .my-story-title {
+  .my-story-header {
     display: flex;
-    padding: 10px;
-    padding-left: 25px;
-    font-size: 20px;
-    font-weight: 400;
-  }
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 25px;
 
+    .my-story-title {
+      display: flex;
+      padding: 10px;
+      padding-left: 25px;
+      font-size: 20px;
+      font-weight: 400;
+    }
+    p {
+      color: $pink;
+      font-size: x-large;
+      font-weight: bolder;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.4);
+    }
+  }
   .my-location-name {
     display: flex;
     padding: 5px;
@@ -213,7 +355,6 @@
       font-weight: 300;
     }
 
-    /* Le fondu blanc au bas */
     &::before {
       content: "";
       position: absolute;
@@ -221,8 +362,6 @@
       left: 0;
       width: 100%;
       height: 3rem;
-
-      /*Dégradé blanc*/
       background: linear-gradient(
         0deg,
         rgba(255, 255, 255, 1) 0%,
@@ -231,7 +370,6 @@
       pointer-events: none;
     }
 
-    /* Les trois points "..." en bas à droite */
     &::after {
       content: "...";
       position: absolute;
@@ -243,16 +381,45 @@
     }
   }
 
+  .my-story-content:not(.my-story-content-passed) .my-story-completed {
+    display: none;
+  }
+
+  .my-story-content-passed .my-story-description::before {
+    background: linear-gradient(
+      0deg,
+      rgba(170, 168, 156, 1) 0%,
+      rgba(170, 168, 156, 0) 100%
+    );
+  }
+}
+
+.my-story-content-passed {
+  display: flex;
+  position: relative;
+  background-color: $gray !important;
+  flex-direction: column;
+  width: 75vw;
+  align-items: flex-start;
+  -webkit-box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+
   .my-story-footer {
     display: flex;
+    width: 100%;
     justify-content: space-between;
-    align-items: center;
+    align-items: center !important;
     padding: 25px;
+    flex-direction: column-reverse;
 
     .footer-social {
       display: flex;
       width: 40%;
       flex-direction: row !important;
+      padding-top: 25px;
+      width: 100%;
+      justify-content: end;
 
       .btn-social {
         display: flex;
@@ -269,28 +436,71 @@
 
         .fa-instagram {
           display: flex;
-          color: $insta-purple;
+          background: $insta-purple !important;
+          background-clip: text !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
           font-size: 30px;
         }
       }
     }
+  }
+}
 
-    .footer-btn-savoir {
+.my-story-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center !important;
+  padding: 25px;
+  flex-direction: column-reverse;
+
+  .footer-social {
+    display: flex;
+    width: 40%;
+    flex-direction: row !important;
+    padding-top: 25px;
+    width: 100%;
+    justify-content: end;
+
+    .btn-social {
       display: flex;
-      background-color: $yellow;
-      color: $black;
-      flex-wrap: nowrap !important;
-      border-radius: 10px;
-      text-align: center;
-      padding: 10px 40px 10px 40px;
-      -webkit-box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
-      box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+      padding-left: 20px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
 
-      .readmore-link {
-        color: $black;
-        text-overflow: initial;
-        text-wrap: nowrap !important;
+      .fa-facebook {
+        display: flex;
+        color: $fb-blue;
+        font-size: 30px;
       }
+
+      .fa-instagram {
+        display: flex;
+        background: $insta-purple !important;
+        background-clip: text !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        font-size: 30px;
+      }
+    }
+  }
+
+  .footer-btn-savoir {
+    display: flex;
+    background-color: $yellow;
+    color: $black;
+    flex-wrap: nowrap !important;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px 40px 10px 40px;
+    -webkit-box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 7px 7px 2px 0px rgba(0, 0, 0, 0.2);
+
+    .readmore-link {
+      color: $black;
+      text-overflow: initial;
+      text-wrap: nowrap !important;
     }
   }
 }
@@ -301,6 +511,7 @@
   display: none;
   position: absolute;
   z-index: 500;
+  margin: 0;
   justify-content: center;
   align-items: center;
 }
@@ -318,32 +529,174 @@
 
 .modal-body {
   display: flex;
-  flex-direction: row;
-  max-width: 61vw;
-  width: 61vw;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  pointer-events: auto;
 
   .modal-image {
-    width: 33% !important;
+    display: flex !important;
+    width: 100% !important;
     min-width: unset !important;
+    align-self: center !important;
+    padding-bottom: 15px;
   }
 
   .modal-infos {
     display: flex;
+    justify-content: space-evenly;
     flex-direction: column;
-    padding-left: 20px;
     text-align: start;
+
+    .modal-infos-content > * {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
 
     .modal-header {
       display: flex;
-      flex-direction: row;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: start;
+
+      .ctrl-header-date {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+      }
+    }
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      width: 100%;
+
+      .modal-footer-social {
+        display: flex;
+        justify-content: flex-start;
+        padding-top: 0px;
+
+        .modal-btn-social {
+          background: none;
+          border: none;
+
+          .fa-facebook {
+            display: flex;
+            color: $fb-blue;
+            font-size: 30px;
+          }
+
+          .fa-instagram {
+            display: flex;
+            background: $insta-purple !important;
+            background-clip: text !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            font-size: 30px;
+            padding-left: 20px;
+          }
+        }
+      }
+
+      .footer-btn-participer {
+        display: flex;
+        background-color: $yellow;
+        color: $black;
+        flex-wrap: nowrap !important;
+        border-radius: 10px;
+        text-align: center;
+        padding: 10px 40px 10px 40px;
+        -webkit-box-shadow: 4px 4px 1px 1px #4A4A4A; 
+        box-shadow: 4px 4px 1px 1px #4A4A4A;
+
+        .registrer-link {
+          color: $black;
+          text-overflow: initial;
+          text-wrap: nowrap !important;
+        }
+      }
     }
   }
 }
 
+.registration-form-overlay {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  padding-top: 15px;
+  .registration-form {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding-top: 10px !important;
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 10px;
+    border: 1px solid #4A4A4A;
+    border-radius: 5px;
+    flex-wrap: nowrap !important;
+      label {
+        font-size: 16px;
+        font-weight: 400;
+        padding-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid $beige-fonce;
+        border-radius: 5px;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid $beige-fonce;
+        border-radius: 5px;
+      }
+
+      .form-checkbox {
+        display: flex;
+        align-self: center;
+        gap: 10px;
+        padding-top: 10px;
+        .label {
+          display: flex!important;
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+
+      .ctrl-form-buttons {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+      button {
+        background-color: $yellow;
+        color: $black;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        &:hover {
+          background-color: $beige-fonce;
+        }
+      }
+      .close-registration {
+        color: $white;
+        background-color: $red !important;
+      }
+
+    }
+  }
+}
+
+
 .modal-close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0rem;
+  right: 0.5rem;
   background: none;
   border: none;
   font-size: 1.5em;
@@ -360,63 +713,398 @@
   background: #000 !important;
 }
 
-// Sytles custom pour le Add To Calendar Button
-add-to-calendar-button {
-  ::part(atcb-button-text) {
-    display: none;
-  }
+// Styles custom pour le Add To Calendar Button
+.ctrl-atcb {
+  position: relative;
 
-  /* 2. Positionner le wrapper du bouton en relative
-     pour que le dropdown (liste) en absolute se positionne correctement */
-  ::part(atcb-button-wrapper) {
-    position: relative;
-    display: inline-block;
-  }
-
-  /* 3. Personnaliser la liste déroulante */
-  ::part(atcb-list-wrapper) {
-    position: absolute;
-    top: calc(100% + 5px); // 5px d'espace entre le bouton et la liste
-    left: 0;
-    background: #fff;
-    border: 1px solid #ccc;
+  .dynamic-atcb-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    padding-left: 0;
+    border: none;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    display: none; // Masquée par défaut
-  }
+    background-color: transparent;
+    color: $gray;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 
-  /* 4. Quand le composant est ouvert (on suppose qu'il reçoit la classe "open"),
-     on affiche la liste déroulante */
-  &.open {
-    ::part(atcb-list-wrapper) {
-      display: block;
+    &:hover {
+      color: $blue;
     }
   }
 
-  /* 5. Styles pour chaque élément de la liste */
-  ::part(atcb-list-item) {
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
+  .calendar-dropdown {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+    z-index: 1000;
+    width: max-content;
+    display: none;
+
+    &.open {
+      display: block;
+    }
+
+    .calendar-options {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        a {
+          display: block;
+          padding: 0.5rem 1rem;
+          color: #333;
+          text-decoration: none;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: #f2f2f2;
+          }
+        }
+      }
+    }
+  }
+}
+
+.year-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: $black 3px solid;
+}
+
+.year-button {
+  background: transparent;
+  border: none;
+  color: gray;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding-bottom: 15px;
+}
+
+.year-button.selected {
+  color: black;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+//Media queries pour tout le css
+
+@media (max-width: 639px) {
+}
+@media (min-width: 640px) {
+}
+@media (max-width: $m-screen) {
+}
+@media (min-width: 1024px) {
+  .timeline-main-title {
+    position: relative;
+  }
+  .ctrl-btn-filters {
+    position: absolute;
+    left: 0;
+    top: 0;
+  .filter-button {
+    background-color: transparent;
+    border: none;
+    color: Gray;
+    font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 0.5em;
+    margin-left: 1em;
+    transition: color 0.3s;
+  }
+  .filter-button:hover {
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  /* Dropdown pour le filtre de type d'activité */
+  .filter-dropdown {
+    position: absolute;
+    left: 30px;
+    transform: translateX(0);
+    background-color: $light-blue;
+    border: 1px solid $beige-fonce;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+
+    .reset-button {
+      margin-top: 10px;
+    }
+  }
+  
+  /* Chaque élément du dropdown */
+  .filter-item {
+    padding: 0.5em 1em;
+    font-size: medium;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+  }
+  .filter-item:hover {
+    background-color: #f2f2f2;
+  }
   }
 
-  ::part(atcb-list-item):hover {
-    background-color: #f0f0f0;
+  .my-story-rebuilt {
+    .my-story-content {
+      width: 40vw;
+    }
+
+    .story-date {
+      display: flex !important;
+    }
+    .story-date-mobile {
+      display: none !important;
+    }
+  }
+  .story-modal {
+    width: 90vw;
+    .modal-content {
+      width: 100% !important;
+      .modal-body {
+        flex-direction: row;
+        width: 100% !important;
+        img {
+          width: 50% !important;
+        }
+        .modal-infos {
+          padding-left: 20px;
+          padding-right: 20px;
+          width: 50% !important;
+          .registration-form-overlay {
+            padding-top: 0px;
+            .registration-form {
+              padding-left: 25px!important;
+              padding: 0px;
+              gap: 0px;
+              .ctrl-form-buttons {
+                button {
+                  padding: 5px;
+                }
+              }
+            }
+          }
+          .modal-header {
+            flex-direction: row !important;
+            width: 100%;
+            h2 {
+              display: flex;
+              font-size: 24px;
+              font-weight: 400;
+              text-wrap: nowrap;
+            }
+            .ctrl-header-date {
+              display: flex;
+              flex-direction: row-reverse;
+              align-items: center;
+              justify-content: space-evenly;
+              width: 100%;
+
+              .modal-date {
+                font-size: 20px;
+                font-weight: 300;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 1280px) {
+  .my-story-footer {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+
+    .footer-social {
+      display: flex;
+      justify-content: flex-start !important;
+      padding-top: 0px !important;
+    }
+  }
+}
+
+// custom media queries pour bloquer le plugin
+
+@media only screen and (max-width: 1024px) {
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-inner-line,
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-timeline:before {
+    left: calc(5% - var(--ctw-line-width) / 1) !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper:not(.ctl-one-sided) .ctl-start,
+  .ctl-wrapper .ctl-vertical-wrapper:not(.ctl-one-sided) .ctl-end {
+    left: calc(5% - var(--ctw-line-width) + 6px) !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-start,
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-end {
+    left: calc(
+      5% - var(--ctw-line-width) / 2 - var(--ctw-line-width) * 1.6
+    ) !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper.ctl-one-sided {
+    padding-left: 0px !important;
+  }
+  .ctl-vertical-wrapper .ctl-pagination a,
+  .ctl-vertical-wrapper .ctl-pagination span {
+    margin: 2px 0px !important;
+  }
+  .ctl-wrapper
+    .ctl-vertical-wrapper:not(.ctl-compact-wrapper)
+    .ctl-label-small {
+    margin-bottom: -15px !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-icondot,
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-story.ctl-story-left .ctl-icondot {
+    left: calc(var(--ctw-ibx-size) / 2 - var(--ctw-ibx-size) * 1.85) !important;
+  }
+  .ctl-wrapper
+    .ctl-vertical-wrapper:where(.ctl-timeline:before, .ctl-inner-line) {
+    left: calc(
+      0px - var(--ctw-line-width) / 2 + var(--ctw-ibx-size) / 2
+    ) !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-year {
+    justify-content: flex-start !important;
+    left: calc(5% - var(--ctw-line-width) / 1) !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-year .ctl-year-text:after {
+    left: calc(
+      0px + var(--ctw-ibx-size) / 2 - var(--ctw-line-width) / 2 +
+        var(--ctw-line-bd-width) / 2
+    ) !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-story {
+    width: calc(100% - var(--ctw-ibx-size) * 1.5) !important;
+    float: unset !important;
+    text-align: left !important;
+    margin-bottom: calc(var(--ctw-cbx-bottom-margin)) !important;
+    top: 0;
+    left: calc(5% - var(--ctw-line-width) / 1 + 45px) !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper.ctl-one-sided .ctl-icondot {
+    left: calc(var(--ctw-ibx-size) / 2 - var(--ctw-ibx-size) * 1.85) !important;
   }
 
-  /* 6. Style de l'icône dans la liste */
-  ::part(atcb-list-icon) {
-    width: 1em;
-    height: 1em;
-    margin-right: 8px;
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-icon {
+    top: calc(
+      var(--ctw-ibx-position) * 1% - var(--ctw-ibx-size) *
+        var(--ctw-ibx-position) / 100 +
+        (
+          var(--ctw-lbl-big-size) + var(--ctw-lbl-small-size) +
+            var(--ctw-lbl-gap) - 20px
+        ) -
+        (
+          (
+              var(--ctw-lbl-big-size) + var(--ctw-lbl-small-size) +
+                var(--ctw-lbl-gap) + 12px
+            ) * var(--ctw-ibx-position) / 100
+        ) - 5px + var(--lbl-bd-width) * 2
+    ) !important;
+    transform: translateY(-50%) !important;
+    left: calc(var(--ctw-ibx-size) / 2 - var(--ctw-ibx-size) * 2.05) !important;
   }
 
-  /* 7. Style du texte (nom du calendrier) dans la liste */
-  ::part(atcb-list-text) {
-    font-size: 14px;
-    color: #333;
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-labels ~ .ctl-icon {
+    top: calc(
+      var(--ctw-ibx-position) * 1% - var(--ctw-ibx-size) *
+        var(--ctw-ibx-position) / 100 +
+        (
+          var(--ctw-lbl-big-size) + var(--ctw-lbl-small-size) +
+            var(--ctw-lbl-gap) + -8px
+        ) -
+        (
+          (
+              var(--ctw-lbl-big-size) + var(--ctw-lbl-small-size) +
+                var(--ctw-lbl-gap)
+            ) * var(--ctw-ibx-position) / 100
+        ) + 16px + var(--lbl-bd-width) * 2 + var(--ctw-cbx-date-line-height)
+    );
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-labels ~ .ctl-icondot {
+    top: calc(
+      var(--ctw-ibx-size) * var(--ctw-ibx-position) + var(--ctw-ibx-size) / 2 +
+        (
+          var(--ctw-lbl-big-size) + var(--ctw-lbl-small-size) +
+            var(--ctw-lbl-gap) + -7px
+        ) -
+        (
+          (
+              var(--ctw-lbl-big-size) + var(--ctw-lbl-small-size) +
+                var(--ctw-lbl-gap)
+            ) * var(--ctw-ibx-position) / 10
+        ) + var(--lbl-bd-width) * 2 + var(--ctw-cbx-date-line-height) - 15px
+    );
+  }
+
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-story.ctl-story-left {
+    float: unset;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-story.ctl-story-left .ctl-labels {
+    right: 0;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-story.ctl-story-left .ctl-icon {
+    left: calc(var(--ctw-ibx-size) / 2.5 - var(--ctw-ibx-size) * 2);
+    right: auto;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-story .ctl-title {
+    text-align: left;
+    justify-content: left !important;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-story.ctl-story-left .ctl-media {
+    justify-content: var(--ctw-cbx-img-align, var(--ctw-cbx-text-align));
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-story.ctl-story-left .ctl-button {
+    justify-content: var(--ctw-cbx-btn-align, var(--ctw-cbx-text-align));
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-year .ctl-year-text {
+    position: relative;
+    overflow: visible;
+    left: calc(
+      var(--ctw-ibx-size) - var(--ctw-line-width) / 10 +
+        var(--ctw-line-bd-width) * 1px
+    );
+    right: auto;
+  }
+  .ctl-wrapper .ctl-vertical-wrapper .ctl-year .ctl-year-text:before {
+    height: var(--ctw-line-width);
+    left: auto;
+    right: calc(95% + var(--ctw-ybx-bd-width)) !important;
+    width: calc(
+      var(--ctw-ibx-size) - var(--ctw-line-width) / 10 +
+        var(--ctw-line-bd-width) * 1px
+    );
+    background-color: var(--ctw-line-bg);
+    opacity: 1;
+    z-index: -1;
+  }
+  .ctl-wrapper
+    .cool-timeline-wrapper.ctl-vertical-wrapper.ctl-one-sided
+    .ctl-story {
+    left: -4px;
+    width: calc(94% - var(--ctw-ibx-size)) !important;
+  }
+
+  .ctl-wrapper .ctl-vertical-wrapper.ctl-one-sided .ctl-icon {
+    left: calc(var(--ctw-ibx-size) / 2.2 - var(--ctw-ibx-size) * 2) !important;
+  }
+
+  .ctl-wrapper .cool-timeline-wrapper .ctl-vertical-wrapper .ctl-year {
+    left: calc(5% - 22px) !important;
   }
 }

@@ -16,6 +16,7 @@
             </a>
         </li>
         <?php
+            wp_reset_postdata();
             $i++;
             }
         ?>

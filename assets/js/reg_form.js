@@ -1,20 +1,34 @@
+/**
+ * reg_form.js
+ *
+ * 1) Gère l'inscription (envoi AJAX) pour un événement (eventSlug).
+ * 2) Évite les doublons en vérifiant le localStorage ET en demandant au serveur d'écraser l'entrée précédente.
+ * 3) Permet d'annuler l'inscription (annule sur le serveur ET dans le localStorage).
+ *
+ * NOTE: On suppose que cct.js (ou custom-cool-timeline.js) appelle window.afficherFormulaireVide(...)
+ *       pour insérer le <form> dans un overlay. Aussi, en cliquant sur "Participer", on appelle la fonction
+ *       toggleRegistrationOverlay(...) qui appelle window.afficherFormulaireVide().
+ */
 document.addEventListener("DOMContentLoaded", function () {
   /*******************************************
-   * GESTION DU LOCAL STORAGE PAR ÉVÉNEMENT
+   * FONCTIONS LOCAL STORAGE
    *******************************************/
   function getRegistrations() {
     const regData = localStorage.getItem("registrationData");
     return regData ? JSON.parse(regData) : {};
   }
+
   function getRegistrationForEvent(eventId) {
     const regs = getRegistrations();
     return regs[eventId] || null;
   }
+
   function saveRegistrationForEvent(eventId, data) {
     const regs = getRegistrations();
     regs[eventId] = data;
     localStorage.setItem("registrationData", JSON.stringify(regs));
   }
+
   function clearRegistrationForEvent(eventId) {
     const regs = getRegistrations();
     delete regs[eventId];
@@ -22,64 +36,66 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /*******************************************
-   * RENDERING THE “VOUS ÊTES INSCRIT” MESSAGE
+   * MESSAGE "VOUS ÊTES DÉJÀ INSCRIT" + BOUTONS
    *******************************************/
-  function renderRegistrationMessage(container, regData, eventId) {
-    // Show a simple message + 2 buttons
+  function afficherMessageDejaInscrit(container, regData, eventId) {
     container.innerHTML = `
-      <p>Vous êtes inscrit avec l'adresse : ${regData.email}</p>
+      <p>Vous êtes déjà inscrit avec l'adresse : ${regData.email}</p>
       <button id="cancelParticipation">Annuler ma participation</button>
       <button id="registerOther">Inscrire un autre nom ?</button>
     `;
 
-    // Handle “Annuler ma participation”
-    container.querySelector("#cancelParticipation").addEventListener("click", function () {
+    const btnCancel = container.querySelector("#cancelParticipation");
+    btnCancel.addEventListener("click", function () {
       const formData = new FormData();
       formData.set("storyId", eventId);
       formData.set("email", regData.email);
-      // Also pass the slug if needed
       formData.set("eventSlug", regData.eventSlug || "");
+      // IMPORTANT: on ajoute l'action dans le POST
+      formData.set("action", "cancel_registration");
 
-      fetch("/wp-oskarskate/wp-admin/admin-ajax.php?action=cancel_registration", {
+      fetch("/wp-oskarskate/wp-admin/admin-ajax.php", {
         method: "POST",
         body: formData,
+        credentials: "same-origin"
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
+        .then((r) => r.json())
+        .then((resp) => {
+          if (resp.success) {
             clearRegistrationForEvent(eventId);
-            // Option 1: Reset the modal form in place
-            renderEmptyForm(container, eventId, regData.eventTitle);
+            container.innerHTML = `<p>Inscription annulée.</p>`;
           } else {
-            console.error("Erreur lors de l'annulation :", data.message);
+            console.error("Erreur lors de l'annulation :", resp.data);
           }
         })
-        .catch((error) => console.error("Erreur AJAX lors de l'annulation :", error));
+        .catch((err) => {
+          console.error("Erreur AJAX lors de l'annulation :", err);
+        });
     });
 
-    // Handle “Inscrire un autre nom ?”
-    container.querySelector("#registerOther").addEventListener("click", function () {
-      // Just clear local storage for this event
+    const btnOther = container.querySelector("#registerOther");
+    btnOther.addEventListener("click", function () {
       clearRegistrationForEvent(eventId);
-      // Re-show an empty form (no page reload):
-      renderEmptyForm(container, eventId, regData.eventTitle);
+      afficherFormulaireVide(container, eventId, regData.eventTitle);
     });
   }
 
   /*******************************************
-   * RENDERING AN EMPTY FORM (NO PAGE RELOAD)
+   * AFFICHAGE D'UN FORMULAIRE VIDE
    *******************************************/
-  function renderEmptyForm(container, eventId, eventTitle) {
-    // This is the original HTML for the registration form
-    // Adjust as needed
+  function afficherFormulaireVide(container, eventId, eventTitle) {
     container.innerHTML = `
       <form class="registration-form">
-        <h3>Inscription à l'événement</h3>
-        <input type="hidden" name="eventTitle" value="${eventTitle}" />
-        <label>Prénom : <input type="text" name="firstName" required></label>
-        <label>Nom : <input type="text" name="lastName" required></label>
-        <label>Email : <input type="email" name="email" required></label>
-        <label>Confirmez votre email : <input type="email" name="confirmEmail" required></label>
+        <header class="form-header">
+          <h3>Inscription à l'événement</h3>
+        </header>
+        <div class="form-inputs-labels">
+          <input type="hidden" name="eventTitle" value="${eventTitle || ""}" />
+          <label>Prénom : <input type="text" name="firstName" required></label>
+          <label>Nom : <input type="text" name="lastName" required></label>
+          <label>Email : <input type="email" name="email" required></label>
+          <label>Confirmez votre email : <input type="email" name="confirmEmail" required></label>
+        </div>
         <div class="form-checkbox">
           <label>
             <p>Bénévole</p>
@@ -93,9 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
       </form>
     `;
   }
+  window.afficherFormulaireVide = afficherFormulaireVide;
 
-  // A helper function to transform a string into a “slug”
-  function sanitizeTitle(str) {
+  function assainirTitre(str) {
     return (str || "")
       .toLowerCase()
       .trim()
@@ -104,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /*******************************************
-   * FORM SUBMISSION LOGIC
+   * SOUMISSION DU FORMULAIRE
    *******************************************/
   document.addEventListener("submit", function (e) {
     if (!e.target.matches(".registration-form")) return;
@@ -112,75 +128,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const form = e.target;
     const modalEl = form.closest(".story-modal");
-    if (!modalEl) return;
-
-    // Retrieve event info from the modal
-    const eventId = modalEl.getAttribute("data-parent-story");
-    const eventTitle = modalEl.getAttribute("data-event-title") || "Event_" + eventId;
-    const eventSlug = sanitizeTitle(eventTitle);
-
-    // Update the hidden eventTitle field if it exists
-    const eventTitleInput = form.querySelector('input[name="eventTitle"]');
-    if (eventTitleInput) {
-      eventTitleInput.value = eventTitle;
-    }
-
-    // Build FormData
-    const formData = new FormData(form);
-    const formDataObj = Object.fromEntries(formData.entries());
-
-    // Normalize the email
-    const emailSub = (formDataObj.email || "").trim().toLowerCase();
-
-    // Check if there's already a registration for this event
-    const existingReg = getRegistrationForEvent(eventId);
-    if (existingReg && (existingReg.email || "").trim().toLowerCase() === emailSub) {
-      // Already registered
-      const container = form.closest(".registration-form-overlay") || form.parentNode;
-      renderRegistrationMessage(container, existingReg, eventId);
+    if (!modalEl) {
+      console.warn("Impossible de trouver le modal parent pour l'inscription.");
       return;
     }
 
-    // Determine if user is “benevole”
+    const eventId = modalEl.getAttribute("data-parent-story") || "";
+    const rawTitle = modalEl.getAttribute("data-event-title") || `Event_${eventId}`;
+    const eventSlug = assainirTitre(rawTitle);
+
+    const hiddenTitle = form.querySelector('input[name="eventTitle"]');
+    if (hiddenTitle) {
+      hiddenTitle.value = rawTitle;
+    }
+
+    const formData = new FormData(form);
+    const formObj = Object.fromEntries(formData.entries());
+    const emailLower = (formObj.email || "").trim().toLowerCase();
+
+    const existingReg = getRegistrationForEvent(eventId);
+    if (existingReg && (existingReg.email || "").toLowerCase() === emailLower) {
+      const container = form.closest(".registration-form-overlay") || form.parentNode;
+      afficherMessageDejaInscrit(container, existingReg, eventId);
+      return;
+    }
+
     const isBenevole = formData.get("benevolat") === "1";
     formData.set("registrationType", isBenevole ? "benevole" : "participant");
     formData.set("storyId", eventId);
     formData.set("eventSlug", eventSlug);
+    // IMPORTANT: ajouter l'action dans le POST pour que le handler la détecte
+    formData.set("action", "my_registration");
 
-    // Also store them in formDataObj for local storage
-    formDataObj.eventSlug = eventSlug;
-    formDataObj.email = emailSub; // overwrite with normalized
+    formObj.email = emailLower;
+    formObj.eventSlug = eventSlug;
+    formObj.eventTitle = rawTitle;
 
-    // Send via AJAX
-    fetch("/wp-oskarskate/wp-admin/admin-ajax.php?action=my_registration", {
+    fetch("/wp-oskarskate/wp-admin/admin-ajax.php", {
       method: "POST",
       body: formData,
+      credentials: "same-origin"
     })
-      .then((resp) => resp.json())
-      .then((data) => {
-        if (data.success) {
-          // Save to local storage
+      .then((r) => r.json())
+      .then((resp) => {
+        if (resp.success) {
           saveRegistrationForEvent(eventId, {
-            firstName: formDataObj.firstName,
-            lastName: formDataObj.lastName,
-            email: emailSub,
+            firstName: formObj.firstName,
+            lastName: formObj.lastName,
+            email: emailLower,
             eventSlug: eventSlug,
-            eventTitle: eventTitle,
+            eventTitle: rawTitle,
           });
-          const container = form.closest(".registration-form-overlay") || form.parentNode;
-          renderRegistrationMessage(container, formDataObj, eventId);
+          const overlay = form.closest(".registration-form-overlay") || form.parentNode;
+          afficherMessageDejaInscrit(overlay, formObj, eventId);
         } else {
-          console.error("Erreur serveur :", data.message);
+          console.error("Erreur serveur :", resp.data);
         }
       })
-      .catch((error) => console.error("Erreur lors de l'inscription :", error));
+      .catch((err) => {
+        console.error("Erreur lors de l'inscription :", err);
+      });
   });
 
-  // “Annuler” button inside the form
-  document.addEventListener("click", function (e) {
-    if (!e.target.matches(".close-registration")) return;
-    e.preventDefault();
-    const form = e.target.closest("form.registration-form");
+  /*******************************************
+   * BOUTON "ANNULER" DANS LE FORMULAIRE
+   *******************************************/
+  document.addEventListener("click", function (ev) {
+    if (!ev.target.matches(".close-registration")) return;
+    ev.preventDefault();
+    const form = ev.target.closest("form.registration-form");
     if (form) form.reset();
   });
 });

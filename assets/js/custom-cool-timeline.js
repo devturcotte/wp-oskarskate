@@ -2,15 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
   /*******************************************
    * VARIABLES GLOBALES
    *******************************************/
-  // Le toggle s'applique uniquement pour l'année en cours.
+  // Contrôle pour afficher ou non les événements passés (uniquement pour l'année en cours).
   let showPassed = false;
-  // Ensemble des types d'activités sélectionnés (valeurs telles que "atelier", "mentorat", etc.)
+  // Ensemble des types d'activités sélectionnés pour le filtre (ex.: "atelier", "mentorat", etc.).
   let selectedTypes = new Set();
 
   /*******************************************
    * FONCTIONS UTILES
    *******************************************/
-  // Formate une chaîne de date en "jour mois année" (ex. : 2 octobre 2024)
+  // Formater une date ISO en "jour mois année" (ex. : 2 octobre 2024).
   function formatDateReadable(dateStr) {
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return "Date inconnue";
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Applique ou retire la classe "my-story-content-passed" selon que l'événement soit passé ou non
+  // Ajouter ou enlever la classe "my-story-content-passed" si l'événement est passé.
   function markPassedEvents() {
     const today = new Date();
     document.querySelectorAll(".ctl-story").forEach((story) => {
@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /*******************************************
-   * FONCTIONS POUR LES MODALS
+   * FONCTIONS GÉNÉRIQUES POUR LES MODALS
    *******************************************/
-  // Ferme tous les modals ouverts
+  // Fermer tous les modals existants.
   function closeAllModals() {
     document.querySelectorAll(".story-modal.open").forEach((modalEl) => {
       const parentStoryId = modalEl.getAttribute("data-parent-story");
@@ -54,46 +54,41 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Crée un placeholder transparent pour conserver l'espace dans le layout
+  // Créer un « placeholder » transparent pour conserver la hauteur de la story quand on affiche le modal.
   function createPlaceholder(storyEl) {
     const storyCard = storyEl.querySelector(".my-story-rebuilt");
     if (!storyCard) return null;
-    let placeholder = document.createElement("div");
+    const placeholder = document.createElement("div");
     placeholder.className = "story-placeholder";
-    // Hauteur initiale : celle de la story
     placeholder.style.height = storyCard.offsetHeight + "px";
-    // Insertion du placeholder juste avant la story
     storyCard.parentNode.insertBefore(placeholder, storyCard);
     return placeholder;
   }
 
-  // Ajuste la hauteur du placeholder pour qu'elle corresponde à la hauteur du modal
+  // Ajuster la hauteur du placeholder pour qu'elle corresponde à la hauteur du modal.
   function adjustPlaceholderHeight(modalEl, placeholder) {
     if (placeholder && modalEl) {
       placeholder.style.height = modalEl.offsetHeight + "px";
     }
   }
 
-  // Ouvre le modal pour la story cliquée et le positionne correctement
+  // Ouvrir le modal associé à une story précise et le positionner correctement.
   function openStoryModal(storyEl, storyData) {
-    // Ferme tous les autres modals ouverts
+    // Close any other modals first.
     closeAllModals();
-
+  
     const modalEl = storyEl.querySelector(".story-modal");
     if (!modalEl) {
-      console.warn("Aucun .story-modal trouvé pour cette story.");
-      return;
+      console.warn("No .story-modal found for this story.");
+      return null;
     }
-
-      // Set necessary attributes on the modal.
-  modalEl.setAttribute("data-parent-story", storyEl.id);
-  // *** Set the event title from storyData.title ***
-  modalEl.setAttribute("data-event-title", storyData.title);
-
-    // Prépare le contenu du modal
-    const displayStartDate = storyData.date
-      ? formatDateReadable(storyData.date)
-      : "Date à venir";
+  
+    // Set necessary attributes on the modal.
+    modalEl.setAttribute("data-parent-story", storyEl.id);
+    modalEl.setAttribute("data-event-title", storyData.title);
+  
+    // Build dynamic modal header (title, dates, etc.)
+    const displayStartDate = storyData.date ? formatDateReadable(storyData.date) : "Date à venir";
     const calURLs = CalendarUtils.generateCalendarURLs({
       title: storyData.title || "Titre Inconnu",
       startDate: storyData.date,
@@ -101,136 +96,152 @@ document.addEventListener("DOMContentLoaded", function () {
       endDate: storyData.endDate,
       endTime: storyData.endTime || "23:30",
       description: storyData.descriptionHtml || "",
-      location: storyData.locationAddress || "",
+      location: storyData.locationAddress || ""
     });
     const calendarOptionsHTML = CalendarUtils.buildCalendarDropdown(calURLs);
+  
+    // Build social links if available.
     let socialHTMLModal = "";
     if (storyData.evenementFacebook && storyData.lienFacebook) {
-      socialHTMLModal += `<a href="${storyData.lienFacebook}" target="_blank">
-                              <button class="modal-btn-social fb">
-                                <i class="fa-brands fa-facebook"></i>
-                              </button>
-                            </a>`;
+      socialHTMLModal += `
+        <a href="${storyData.lienFacebook}" target="_blank">
+          <button class="modal-btn-social fb">
+            <i class="fa-brands fa-facebook"></i>
+          </button>
+        </a>`;
     }
     if (storyData.evenementInstagram && storyData.lienInstagram) {
-      socialHTMLModal += `<a href="${storyData.lienInstagram}" target="_blank">
-                              <button class="modal-btn-social insta">
-                                <i class="fa-brands fa-instagram"></i>
-                              </button>
-                            </a>`;
+      socialHTMLModal += `
+        <a href="${storyData.lienInstagram}" target="_blank">
+          <button class="modal-btn-social insta">
+            <i class="fa-brands fa-instagram"></i>
+          </button>
+        </a>`;
     }
+  
+    // Build the main modal content.
     modalEl.querySelector(".modal-body").innerHTML = `
-      <img src="${storyData.imageUrl || ""}" alt="Story ${
-      storyData.id
-    }" class="modal-image" />
-      <div class="modal-infos">
-        <div class="modal-header">
-          <h2>${storyData.title || "Titre Inconnu"}</h2>
-          <div class="ctrl-header-date">
-            <div class="modal-date">${displayStartDate}</div>
-            <div class="ctrl-atcb">
-              <button class="dynamic-atcb-button">
-                <i class="fa-regular fa-calendar-plus"></i>
-              </button>
-              <div class="calendar-dropdown" style="display: none;">
-                ${calendarOptionsHTML}
+      <div class="ctrl-modal-content">
+        <img src="${storyData.imageUrl || ""}" alt="Story ${storyData.id}" class="modal-image" />
+        <div class="modal-infos">
+          <div class="modal-header">
+            <h2>${storyData.title || "Titre Inconnu"}</h2>
+            <div class="ctrl-header-date">
+              <div class="modal-date">${displayStartDate}</div>
+              <div class="ctrl-atcb">
+                <button class="dynamic-atcb-button">
+                  <i class="fa-regular fa-calendar-plus"></i>
+                </button>
+                <div class="calendar-dropdown" style="display: none;">
+                  ${calendarOptionsHTML}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-infos-content">
-          <div class="modal-times">
-            <p><strong>De :</strong> ${storyData.startTime || "N/A"}</p>
-            <p><strong>À :</strong> ${storyData.endTime || "N/A"}</p>
+          <div class="modal-infos-content">
+            <div class="modal-times">
+              <p><strong>De :</strong> ${storyData.startTime || "N/A"}</p>
+              <p><strong>À :</strong> ${storyData.endTime || "N/A"}</p>
+            </div>
+            <p class="modal-organizer">${storyData.organizer || "N/A"}</p>
+            <p>${storyData.locationName || "?"}</p>
+            <div class="modal-ctrl-adresse">
+              <p>${storyData.locationAddress || "?"}</p>
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <div class="modal-description">
+              ${storyData.descriptionHtml || ""}
+            </div>
           </div>
-          <p class="modal-organizer">${storyData.organizer || "N/A"}</p>
-          <p>${storyData.locationName || "?"}</p>
-          <div class="modal-ctrl-adresse">
-            <p>${storyData.locationAddress || "?"}</p>
-            <i class="fa-solid fa-location-dot"></i>
-          </div>
-          <div class="modal-description">${
-            storyData.descriptionHtml || ""
-          }</div>
-        </div>
-        <div class="modal-footer">
-          <div class="modal-footer-social">
-            ${socialHTMLModal}
-          </div>
-          <div class="footer-btn-participer">
-            <a href="#" class="registrer-link">Participer</a>
+          <div class="modal-footer">
+            <div class="modal-footer-social">
+              ${socialHTMLModal}
+            </div>
+            <div class="footer-btn-participer">
+              <a href="#" class="registrer-link">Participer</a>
+            </div>
           </div>
         </div>
       </div>
     `;
-    // Ferme le modal si on clique sur le fond du modal
-    modalEl.addEventListener(
-      "click",
-      function modalBackdropHandler(e) {
-        if (e.target === modalEl) {
-          closeStoryModal(storyEl);
-          console.log("Modal fermé en cliquant sur le fond.");
-        }
-      },
-      { once: true }
-    );
-
-    // Crée le placeholder et l'insère dans la story
+  
+    const maxParticipants = storyEl.getAttribute("data-nb-places-participants") || "0";
+    const maxBenevoles = storyEl.getAttribute("data-nb-places-benevoles") || "0";
+    const currentParticipants = 0;
+    const currentBenevoles = 0;
+    const registrationInfoHTML = `
+      <div class="registration-info">
+        <p>Places disponibles: <span id="current-participants">${currentParticipants}</span> / ${maxParticipants}</p>
+        <p>Bénévoles demandés: <span id="current-benevoles">${currentBenevoles}</span> / ${maxBenevoles}</p>
+      </div>
+    `;
+    // Append the registration info block at the end of the modal body.
+    const modalBody = modalEl.querySelector(".modal-infos-content");
+    if (modalBody) {
+      modalBody.insertAdjacentHTML("beforeend", registrationInfoHTML);
+    }
+    // --- End NEW BLOCK ---
+  
+    // Setup modal backdrop click to close.
+    modalEl.addEventListener("click", function modalBackdropHandler(e) {
+      if (e.target === modalEl) {
+        closeStoryModal(storyEl);
+        console.log("Modal closed by clicking the backdrop.");
+      }
+    }, { once: true });
+  
+    // Create a placeholder to preserve the layout.
     const placeholder = createPlaceholder(storyEl);
-    // Rend la story invisible tout en conservant son espace (on utilise visibility pour ne pas retirer le flux)
     const storyCard = storyEl.querySelector(".my-story-rebuilt");
     if (storyCard) storyCard.style.visibility = "hidden";
-
-    /***** POSITIONNEMENT DU MODAL *****/
-    // Calcul de la position absolue de la story
+  
+    // Position the modal.
     const rect = storyEl.getBoundingClientRect();
     const absoluteTop = rect.top + window.scrollY;
-    // Pour centrer le modal, on définit une largeur fixe (ici 80% de la largeur de la fenêtre)
     const modalWidth = window.innerWidth * 0.8;
-    // Positionnement horizontal : centrer dans la fenêtre
     const absoluteLeft = (window.innerWidth - modalWidth) / 2;
     modalEl.style.position = "absolute";
     modalEl.style.top = absoluteTop + "px";
     modalEl.style.left = absoluteLeft + "px";
     modalEl.style.width = modalWidth + "px";
     modalEl.style.zIndex = "1000";
-    /***** FIN POSITIONNEMENT *****/
-
-    // Insère le modal dans le body pour qu'il soit indépendant du conteneur
-    modalEl.setAttribute("data-parent-story", storyEl.id);
+  
+    // Append the modal to the body.
     document.body.appendChild(modalEl);
     modalEl.style.display = "block";
     modalEl.classList.remove("hidden");
     modalEl.classList.add("open");
-    console.log(`Modal opened for story #${storyData.id}. Event title: ${storyData.title}`);
-
-    // Après l'ouverture du modal, on ajuste rapidement la hauteur du placeholder
+    console.log(`Modal opened for story #${storyData.id}, Title: ${storyData.title}`);
+  
+    // Adjust placeholder height after modal is open.
     setTimeout(() => {
       adjustPlaceholderHeight(modalEl, placeholder);
     }, 50);
-
-    // Gestion du dropdown du calendrier dans le modal
+  
+    // Set up calendar dropdown.
     const calendarButton = modalEl.querySelector(".dynamic-atcb-button");
     const dropdown = modalEl.querySelector(".calendar-dropdown");
     if (calendarButton && dropdown) {
-      calendarButton.addEventListener("click", function (e) {
+      calendarButton.addEventListener("click", (e) => {
         e.stopPropagation();
-        dropdown.style.display =
-          dropdown.style.display === "flex" ? "none" : "flex";
+        dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
       });
     }
+  
+    // When "Participer" is clicked, show the registration overlay.
     const registerBtn = modalEl.querySelector(".registrer-link");
     if (registerBtn) {
       registerBtn.addEventListener("click", function (e) {
-        e.stopPropagation();
         e.preventDefault();
-        toggleRegistrationForm(modalEl, storyData);
+        e.stopPropagation();
+        toggleRegistrationOverlay(modalEl, storyData);
       });
     }
+  
+    return modalEl;
   }
 
-  // Ferme le modal et restaure la story en supprimant le placeholder,
-  // puis replace le modal dans la story pour pouvoir le rouvrir plus tard.
+  // Fermer un modal et restaurer la story (retirer le placeholder, etc.).
   function closeStoryModal(storyEl) {
     const modalEl = document.querySelector(
       `.story-modal[data-parent-story="${storyEl.id}"]`
@@ -239,67 +250,43 @@ document.addEventListener("DOMContentLoaded", function () {
       modalEl.classList.remove("open");
       modalEl.classList.add("hidden");
       modalEl.style.display = "none";
-      // Restaure la visibilité de la story
+
+      // Rendre la story visible de nouveau
       const storyCard = storyEl.querySelector(".my-story-rebuilt");
       if (storyCard) storyCard.style.visibility = "visible";
-      // Supprime le placeholder
+
+      // Supprimer le placeholder
       const placeholder = storyEl.querySelector(".story-placeholder");
-      if (placeholder) placeholder.parentNode.removeChild(placeholder);
-      // Remet le modal dans la story d'origine pour le réutiliser ultérieurement
+      if (placeholder) placeholder.remove();
+
+      // Ré-insérer le modal dans la story d'origine pour un futur usage
       storyEl.appendChild(modalEl);
       console.log("Modal fermé et story restaurée.");
     }
   }
 
-  // Affiche ou masque le formulaire d'inscription dans le modal
-  function toggleRegistrationForm(modalEl, storyData) {
-    const formOverlay = modalEl.querySelector(".registration-form-overlay");
-    if (formOverlay) {
-      formOverlay.style.display =
-        formOverlay.style.display === "flex" ? "none" : "flex";
+  /**
+   * Au lieu de créer un second formulaire, on crée ou affiche un conteneur (.registration-form-overlay).
+   * C'est le script reg_form.js qui va insérer le vrai <form> dedans si nécessaire.
+   */
+  function toggleRegistrationOverlay(modalEl, storyData) {
+    let overlay = modalEl.querySelector(".registration-form-overlay");
+    if (overlay) {
+      // toggle visible/invisible
+      overlay.style.display = (overlay.style.display === "flex") ? "none" : "flex";
       return;
     }
-    const formHtml = `
-  <div class="registration-form-overlay" style="display: flex;">
-    <form class="registration-form">
-      <h3>Inscription à l'événement</h3>
-      <!-- Hidden input for event title -->
-      <input type="hidden" name="eventTitle" value="">
-      <label>Prénom : <input type="text" name="firstName" required></label>
-      <label>Nom : <input type="text" name="lastName" required></label>
-      <label>Email : <input type="email" name="email" required></label>
-      <label>Confirmez votre email : <input type="email" name="confirmEmail" required></label>
-      <div class="form-checkbox">
-        <label>
-          <p>Bénévole</p>
-          <input type="checkbox" name="benevolat" value="1">
-        </label>
-      </div>
-      <div class="ctrl-form-buttons">
-        <button type="submit">Valider</button>
-        <button type="button" class="close-registration">Annuler</button>
-      </div>
-    </form>
-  </div>
-    `;
-    const modalBody = modalEl.querySelector(".modal-body");
-    modalBody.insertAdjacentHTML("beforeend", formHtml);
-    const newFormOverlay = modalEl.querySelector(".registration-form-overlay");
-    newFormOverlay.classList.add("drawer-up");
-    const closeFormBtn = newFormOverlay.querySelector(".close-registration");
-    closeFormBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      newFormOverlay.style.display = "none";
-    });
-    const registrationForm = newFormOverlay.querySelector(".registration-form");
-    registrationForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const formData = new FormData(registrationForm);
-      console.log(
-        "Données du formulaire d'inscription :",
-        Object.fromEntries(formData.entries())
-      );
-    });
+    overlay = document.createElement("div");
+    overlay.className = "registration-form-overlay";
+    overlay.style.display = "flex";
+    modalEl.querySelector(".modal-body").appendChild(overlay);
+  
+    // ICI on appelle la fonction globale
+    if (window.afficherFormulaireVide) {
+      window.afficherFormulaireVide(overlay, storyData.id, storyData.title);
+    } else {
+      console.log("renderEmptyForm n'est pas défini dans window.");
+    }
   }
 
   /*******************************************
@@ -949,9 +936,11 @@ document.addEventListener("DOMContentLoaded", function () {
         endTime: endTime,
         timeZone: timeZone,
         organizer: organizer,
-        evenementFacebook: storyEl.getAttribute("data-evenement-facebook") || "",
+        evenementFacebook:
+          storyEl.getAttribute("data-evenement-facebook") || "",
         lienFacebook: storyEl.getAttribute("data-lien-facebook") || "",
-        evenementInstagram: storyEl.getAttribute("data-evenement-instagram") || "",
+        evenementInstagram:
+          storyEl.getAttribute("data-evenement-instagram") || "",
         lienInstagram: storyEl.getAttribute("data-lien-instagram") || "",
       };
       console.log("Données de la story pour le modal :", storyData);
@@ -961,7 +950,6 @@ document.addEventListener("DOMContentLoaded", function () {
         modalElement.setAttribute("data-event-title", storyData.title);
       }
     });
-    
 
     const newOverlay = storyEl.querySelector(".img-overlay");
     const closeOverlayBtn = newOverlay?.querySelector(".overlay-close");

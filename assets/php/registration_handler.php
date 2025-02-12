@@ -2,93 +2,275 @@
 /**
  * registration_handler.php
  *
- * This script receives the registration data from your form via POST,
- * then creates (or uses an existing) folder for the event in your theme’s
- * assets/forms directory. It writes (or appends) the registration data into a
- * CSV file within that event’s folder.
+ * Ce fichier gère via AJAX l'inscription et l'annulation d'inscription à un événement.
+ * Les inscriptions sont enregistrées dans un fichier CSV unique par événement, organisé en deux sections :
+ * - La section "Participants" (en haut)
+ * - La section "Bénévoles" (en bas)
+ *
+ * Chaque ligne a le format : firstName,lastName,email,registrationType,timestamp
  */
 
 header('Content-Type: application/json');
 
-// -----------------------------------------------------------------
-// 1. Load WordPress functions if needed
-// -----------------------------------------------------------------
-// If this file is accessed directly, you might need to load WP functions.
-// Adjust the path if necessary.
-// require_once( dirname(__FILE__, 3) . '/wp-load.php' );
+// Si ce fichier est appelé directement (hors contexte WP), décommentez la ligne suivante
+// require_once dirname(__FILE__, 3) . '/wp-load.php';
 
-// -----------------------------------------------------------------
-// 2. Retrieve and sanitize the form data
-// -----------------------------------------------------------------
-$registrationData = $_POST;
+/* ---------------------- INSCRIPTION ------------------------- */
+if (isset($_POST['action']) && $_POST['action'] == 'my_registration') {
 
-if (!isset($registrationData['storyId']) || !isset($registrationData['registrationType'])) {
-    echo json_encode(['success' => false, 'message' => 'Missing data.']);
+    // Vérification de base
+    if (empty($_POST['storyId']) || empty($_POST['registrationType'])) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Données manquantes (storyId, registrationType).'
+        ]);
+        exit;
+    }
+
+    // Sanitize des données
+    $storyId = sanitize_text_field($_POST['storyId']);
+    $registrationType = sanitize_text_field($_POST['registrationType']); // "participant" ou "benevole"
+    $firstName = isset($_POST['firstName']) ? sanitize_text_field($_POST['firstName']) : '';
+    $lastName = isset($_POST['lastName']) ? sanitize_text_field($_POST['lastName']) : '';
+    $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+
+    // Détermination du nom de l'événement et du dossier associé
+    if (!empty($_POST['eventTitle'])) {
+        $eventName = $_POST['eventTitle'];
+    } else {
+        $eventName = "event_{$storyId}";
+    }
+    $folderName = sanitize_title($eventName);
+
+    // Construction du chemin
+    $formsDir = get_template_directory() . '/assets/forms';
+    $eventDir = $formsDir . '/' . $folderName;
+    if (!file_exists($eventDir) && !mkdir($eventDir, 0755, true)) {
+        wp_send_json_error("Impossible de créer le dossier de l'événement à : $eventDir");
+        exit;
+    }
+    $filePath = $eventDir . '/event_registrations.csv';
+
+    // Vérification que l'événement accepte les inscriptions (champ ACF "besoin_dinscriptions")
+    $besoin_dinscriptions = get_field('besoin_dinscriptions', $storyId);
+    error_log("DEBUG besoin_dinscriptions for post $storyId: " . print_r($besoin_dinscriptions, true));
+    
+    // Determine if inscriptions are open.
+    $inscriptions_open = false;
+    if ( is_array($besoin_dinscriptions) ) {
+        // If it returns an array, check if "Oui" or "1" is present.
+        foreach ( $besoin_dinscriptions as $item ) {
+            if ( is_array($item) ) {
+                // In case of "Both" return type (an array with keys "value" and "label")
+                if ( isset($item['value']) && ( $item['value'] === 'Oui' || $item['value'] === '1' ) ) {
+                    $inscriptions_open = true;
+                    break;
+                }
+            } else {
+                if ( trim($item) === 'Oui' || trim($item) === '1' ) {
+                    $inscriptions_open = true;
+                    break;
+                }
+            }
+        }
+    } else {
+        // If it's not an array, compare directly.
+        $inscriptions_open = ( trim($besoin_dinscriptions) === 'Oui' || trim($besoin_dinscriptions) === '1' );
+    }
+    
+    if ( ! $inscriptions_open ) {
+        wp_send_json_error('Les inscriptions sont fermées pour cet événement.');
+        exit;
+    }
+
+    // Évite les doublons en supprimant toute inscription existante pour cet email
+    removeByEmail($participants, $email);
+    removeByEmail($benevoles, $email);
+
+    // Prépare la nouvelle inscription
+    $entry = [
+        'firstName' => $firstName,
+        'lastName' => $lastName,
+        'email' => strtolower(trim($email)),
+        'registrationType' => $registrationType,
+        'timestamp' => date('Y-m-d H:i:s'),
+    ];
+    if ($registrationType === 'benevole') {
+        $benevoles[] = $entry;
+    } else {
+        $participants[] = $entry;
+    }
+
+    // Réécrit le fichier CSV avec les deux sections
+    if (rewriteEventCSV($filePath, $existingEventName, $participants, $benevoles)) {
+        wp_send_json_success([
+            'success' => true,
+            'message' => 'Inscription enregistrée.',
+            'file' => $folderName . '/event_registrations.csv'
+        ]);
+    } else {
+        wp_send_json_error('Erreur lors de l\'écriture du fichier d\'inscription.');
+    }
     exit;
 }
 
-$storyId          = sanitize_text_field($registrationData['storyId']);
-$registrationType = sanitize_text_field($registrationData['registrationType']); // "participant" or "benevole"
-$firstName        = isset($registrationData['firstName']) ? sanitize_text_field($registrationData['firstName']) : '';
-$lastName         = isset($registrationData['lastName'])  ? sanitize_text_field($registrationData['lastName'])  : '';
-$email            = isset($registrationData['email'])     ? sanitize_email($registrationData['email']) : '';
+/* ---------------------- ANNULATION ------------------------- */
+if (isset($_POST['action']) && $_POST['action'] == 'cancel_registration') {
+    $storyId = sanitize_text_field($_POST['storyId'] ?? '');
+    $email = sanitize_email($_POST['email'] ?? '');
+    $eventSlug = sanitize_title($_POST['eventSlug'] ?? '');
 
-// -----------------------------------------------------------------
-// 3. Determine the event folder name using the event title if provided.
-// -----------------------------------------------------------------
-if (isset($registrationData['eventTitle']) && !empty($registrationData['eventTitle'])) {
-    $eventName = $registrationData['eventTitle'];
-} else {
-    $eventName = (function_exists('get_event_name') && get_event_name($storyId)) ? get_event_name($storyId) : 'event_' . $storyId;
-}
-$folderName = sanitize_title($eventName);
-
-// -----------------------------------------------------------------
-// 4. Create the event folder inside your theme's assets/forms folder if it doesn't exist
-// -----------------------------------------------------------------
-$formsDir = get_template_directory() . '/assets/forms';
-$eventDir = $formsDir . '/' . $folderName;
-
-if (!file_exists($eventDir)) {
-    if (!mkdir($eventDir, 0755, true)) {
-        echo json_encode(['success' => false, 'message' => 'Could not create event folder.']);
+    if (empty($storyId) || empty($email)) {
+        wp_send_json_error("Données manquantes.");
         exit;
     }
-}
-
-// -----------------------------------------------------------------
-// 5. Determine the CSV file name based on registration type.
-// -----------------------------------------------------------------
-$fileSuffix = ($registrationType === 'benevole') ? 'benevole' : 'participant';
-$filePath   = $eventDir . '/registrations_' . $fileSuffix . '.csv';
-
-// -----------------------------------------------------------------
-// 6. Prepare the data to be recorded
-// -----------------------------------------------------------------
-$timestamp = date('Y-m-d H:i:s');
-$header    = ['firstName', 'lastName', 'email', 'registrationType', 'timestamp'];
-$data      = [$firstName, $lastName, $email, $registrationType, $timestamp];
-
-// If the file does not exist or is empty, we will write the header first.
-$writeHeader = !file_exists($filePath) || filesize($filePath) === 0;
-
-// -----------------------------------------------------------------
-// 7. Write the registration data into the CSV file
-// -----------------------------------------------------------------
-if (($fp = fopen($filePath, 'a')) !== false) {
-    if ($writeHeader) {
-        fputcsv($fp, $header);
+    if (empty($eventSlug)) {
+        $eventSlug = 'event_' . $storyId;
     }
-    fputcsv($fp, $data);
-    fclose($fp);
-    echo json_encode([
-        'success' => true,
-        'message' => 'Registration saved.',
-        'file'    => $folderName . '/registrations_' . $fileSuffix . '.csv'
-    ]);
-} else {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error writing registration file.'
-    ]);
+    $formsDir = get_template_directory() . '/assets/forms';
+    $eventDir = $formsDir . '/' . $eventSlug;
+    $filePath = $eventDir . '/event_registrations.csv';
+    if (!file_exists($filePath)) {
+        wp_send_json_error("Fichier d’inscription introuvable pour cet événement.");
+        exit;
+    }
+    list($eventName, $participants, $benevoles) = parseEventCSV($filePath);
+    removeByEmail($participants, $email);
+    removeByEmail($benevoles, $email);
+    if (rewriteEventCSV($filePath, $eventName, $participants, $benevoles)) {
+        wp_send_json_success("Inscription supprimée.");
+    } else {
+        wp_send_json_error("Erreur lors de la suppression de l'inscription (rewrite failed).");
+    }
+    exit;
 }
+
+/* ------------------ FONCTIONS UTILITAIRES ------------------ */
+
+/**
+ * parseEventCSV($filePath)
+ *
+ * Lit le fichier CSV organisé en deux sections :
+ *   - Participants
+ *   - Bénévoles
+ *
+ * Retourne : [ $eventTitle, $participantsArray, $benevolesArray ]
+ */
+function parseEventCSV($filePath)
+{
+    if (!file_exists($filePath)) {
+        return [null, [], []];
+    }
+    $fp = fopen($filePath, 'r');
+    if (!$fp) {
+        return [null, [], []];
+    }
+    $eventTitle = null;
+    $participants = [];
+    $benevoles = [];
+    $currentSection = null;
+    while (($line = fgets($fp)) !== false) {
+        $line = trim($line);
+        if ($line === '')
+            continue;
+        if (stripos($line, 'Événement:') === 0) {
+            $eventTitle = trim(substr($line, strlen('Événement:')));
+            continue;
+        }
+        if (stripos($line, 'Titre de la liste: Participants') === 0) {
+            $currentSection = 'participants';
+            continue;
+        }
+        if (stripos($line, 'Titre de la liste: Bénévoles') === 0) {
+            $currentSection = 'benevoles';
+            continue;
+        }
+        if (stripos($line, 'Description:') === 0)
+            continue;
+        $parts = str_getcsv($line);
+        if (count($parts) >= 5 && $currentSection) {
+            $row = [
+                'firstName' => $parts[0],
+                'lastName' => $parts[1],
+                'email' => strtolower(trim($parts[2])),
+                'registrationType' => $parts[3],
+                'timestamp' => $parts[4],
+            ];
+            if ($currentSection === 'participants') {
+                $participants[] = $row;
+            } else {
+                $benevoles[] = $row;
+            }
+        }
+    }
+    fclose($fp);
+    return [$eventTitle, $participants, $benevoles];
+}
+
+/**
+ * rewriteEventCSV($filePath, $eventName, $participants, $benevoles)
+ *
+ * Réécrit le fichier CSV avec la structure suivante :
+ *
+ *   Événement: $eventName
+ *
+ *   Titre de la liste: Participants
+ *   Description: firstName,lastName,email,registrationType,timestamp
+ *   <lignes pour les participants>
+ *
+ *   Titre de la liste: Bénévoles
+ *   Description: firstName,lastName,email,registrationType,timestamp
+ *   <lignes pour les bénévoles>
+ */
+function rewriteEventCSV($filePath, $eventName, $participants, $benevoles)
+{
+    $fp = fopen($filePath, 'w');
+    if (!$fp) {
+        return false;
+    }
+    fwrite($fp, "Événement: {$eventName}\n\n");
+    fwrite($fp, "Titre de la liste: Participants\n");
+    fwrite($fp, "Description: firstName,lastName,email,registrationType,timestamp\n");
+    foreach ($participants as $p) {
+        $line = implode(',', [
+            $p['firstName'],
+            $p['lastName'],
+            $p['email'],
+            $p['registrationType'],
+            $p['timestamp']
+        ]);
+        fwrite($fp, $line . "\n");
+    }
+    fwrite($fp, "\n");
+    fwrite($fp, "Titre de la liste: Bénévoles\n");
+    fwrite($fp, "Description: firstName,lastName,email,registrationType,timestamp\n");
+    foreach ($benevoles as $b) {
+        $line = implode(',', [
+            $b['firstName'],
+            $b['lastName'],
+            $b['email'],
+            $b['registrationType'],
+            $b['timestamp']
+        ]);
+        fwrite($fp, $line . "\n");
+    }
+    fwrite($fp, "\n");
+    fclose($fp);
+    return true;
+}
+
+/**
+ * removeByEmail(&$array, $email)
+ *
+ * Supprime de l'array toute entrée dont l'email correspond (insensible à la casse).
+ */
+function removeByEmail(&$array, $email)
+{
+    $emailLower = strtolower(trim($email));
+    foreach ($array as $i => $row) {
+        if (strtolower(trim($row['email'])) === $emailLower) {
+            unset($array[$i]);
+        }
+    }
+}
+?>

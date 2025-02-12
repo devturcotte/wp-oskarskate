@@ -1,5 +1,11 @@
 .main_activites {
   gap: 2rem;
+
+  b {
+    display: none;
+
+    text-indent: -9999px;
+  }
 }
 
 /* Bouton pour afficher/cacher les activités passées */
@@ -8,15 +14,14 @@
   border: none;
   color: $black;
   padding: 0.5em 1em;
-  font-size:large;
+  font-size: large;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
 }
 .toggle-passed-button:hover {
-text-decoration: underline;
+  text-decoration: underline;
 }
 .toggle-passed-button.active {
-
   color: $blue;
 }
 
@@ -27,82 +32,82 @@ text-decoration: underline;
 .ctrl-btn-filters {
   left: 0;
   top: 0;
-.filter-button {
-  background-color: transparent;
-  border: none;
-  color: Gray;
-  font-size: 1em;
-  cursor: pointer;
-  padding: 0.5em;
-  transition: color 0.3s;
-}
-.filter-button:hover {
-  color: #000;
-  text-decoration: underline;
-}
+  .filter-button {
+    background-color: transparent;
+    border: none;
+    color: Gray;
+    font-size: 1em;
+    cursor: pointer;
+    padding: 0.5em;
+    transition: color 0.3s;
+  }
+  .filter-button:hover {
+    color: #000;
+    text-decoration: underline;
+  }
 
-/* Dropdown pour le filtre de type d'activité */
-.filter-dropdown {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px;
-  background-color: $white;
-  border: 1px solid $beige-fonce;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-
-  .filter-item {
+  /* Dropdown pour le filtre de type d'activité */
+  .filter-dropdown {
+    position: absolute;
     display: flex;
-    align-self: start;
-    width: 100%;
+    flex-direction: column;
+    align-items: start;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: $white;
+    border: 1px solid $beige-fonce;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+
+    .filter-item {
+      display: flex;
+      align-self: start;
+      width: 100%;
+      padding: 0.5em 1em;
+      font-size: medium;
+      font-weight: 400;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.3s;
+    }
+
+    .close-dropdown {
+      float: right;
+      align-self: flex-end;
+      background-color: transparent;
+      border: none;
+      color: $black;
+      font-size: 24px;
+      border-radius: 10px;
+      padding: 5px;
+    }
+
+    .reset-button {
+      align-self: center;
+      background-color: $yellow;
+      border: none;
+      color: $black;
+      font-size: 16px;
+      border-radius: 10px;
+      padding: 5px;
+      -webkit-box-shadow: 4px 4px 1px 1px #4a4a4a;
+      box-shadow: 4px 4px 1px 1px #4a4a4a;
+    }
+  }
+
+  /* Chaque élément du dropdown */
+  .filter-item {
     padding: 0.5em 1em;
     font-size: medium;
-    font-weight: 400;
     cursor: pointer;
     white-space: nowrap;
     transition: background-color 0.3s;
   }
-
-  .close-dropdown {
-    float: right;
-    align-self: flex-end;
-    background-color: transparent;
-    border: none;
-    color: $black;
-    font-size: 24px;
-    border-radius: 10px;
-    padding: 5px;
+  .filter-item:hover {
+    background-color: #f2f2f2;
   }
-
-  .reset-button {
-    align-self: center;
-    background-color: $yellow;
-    border: none;
-    color: $black;
-    font-size: 16px;
-    border-radius: 10px;
-    padding: 5px;
-    -webkit-box-shadow: 4px 4px 1px 1px #4A4A4A; 
-box-shadow: 4px 4px 1px 1px #4A4A4A;
-  }
-}
-
-/* Chaque élément du dropdown */
-.filter-item {
-  padding: 0.5em 1em;
-  font-size: medium;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.3s;
-}
-.filter-item:hover {
-  background-color: #f2f2f2;
-}
 }
 .hidden {
   display: none !important;
@@ -159,6 +164,7 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
   position: relative;
 
   .story-modal {
+    z-index: 500 !important;
   }
   .story-date-mobile {
     display: hidden !important;
@@ -510,7 +516,7 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
 .my-modal-overlay {
   display: none;
   position: absolute;
-  z-index: 500;
+  z-index: 500 !important;
   margin: 0;
   justify-content: center;
   align-items: center;
@@ -567,6 +573,7 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
     }
     .modal-footer {
       display: flex;
+      flex-direction: column-reverse;
       justify-content: space-between;
       align-items: center;
       padding-top: 20px;
@@ -575,7 +582,7 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
       .modal-footer-social {
         display: flex;
         justify-content: flex-start;
-        padding-top: 0px;
+        padding-top: 20px;
 
         .modal-btn-social {
           background: none;
@@ -607,8 +614,8 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
         border-radius: 10px;
         text-align: center;
         padding: 10px 40px 10px 40px;
-        -webkit-box-shadow: 4px 4px 1px 1px #4A4A4A; 
-        box-shadow: 4px 4px 1px 1px #4A4A4A;
+        -webkit-box-shadow: 4px 4px 1px 1px #4a4a4a;
+        box-shadow: 4px 4px 1px 1px #4a4a4a;
 
         .registrer-link {
           color: $black;
@@ -632,45 +639,47 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
     gap: 10px !important;
     width: 100% !important;
     padding: 10px;
-    border: 1px solid #4A4A4A;
+    border: 1px solid #4a4a4a;
     border-radius: 5px;
     flex-wrap: nowrap !important;
+    label {
+      font-size: 16px;
+      font-weight: 400;
+      padding-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid $beige-fonce;
+      border-radius: 5px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid $beige-fonce;
+      border-radius: 5px;
+    }
+
+    .form-checkbox {
+      display: flex;
+      flex-direction: row;
+      align-self: center;
+      gap: 10px;
+      padding-top: 10px;
       label {
-        font-size: 16px;
-        font-weight: 400;
-        padding-bottom: 5px;
+        display: flex !important;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 20px;
       }
+    }
 
-      input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid $beige-fonce;
-        border-radius: 5px;
-      }
-
-      select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid $beige-fonce;
-        border-radius: 5px;
-      }
-
-      .form-checkbox {
-        display: flex;
-        align-self: center;
-        gap: 10px;
-        padding-top: 10px;
-        .label {
-          display: flex!important;
-          flex-direction: row;
-          align-items: center;
-        }
-      }
-
-      .ctrl-form-buttons {
-        display: flex;
-        justify-content: space-evenly;
-        width: 100%;
+    .ctrl-form-buttons {
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
       button {
         background-color: $yellow;
         color: $black;
@@ -687,11 +696,9 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
         color: $white;
         background-color: $red !important;
       }
-
     }
   }
 }
-
 
 .modal-close {
   position: absolute;
@@ -809,6 +816,9 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
 @media (max-width: $m-screen) {
 }
 @media (min-width: 1024px) {
+  .main_activites {
+    max-width: 1280px;
+  }
   .timeline-main-title {
     position: relative;
   }
@@ -816,53 +826,53 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
     position: absolute;
     left: 0;
     top: 0;
-  .filter-button {
-    background-color: transparent;
-    border: none;
-    color: Gray;
-    font-size: 1em;
-    cursor: pointer;
-    padding: 0.5em;
-    margin-left: 1em;
-    transition: color 0.3s;
-  }
-  .filter-button:hover {
-    color: #000;
-    text-decoration: underline;
-  }
-  
-  /* Dropdown pour le filtre de type d'activité */
-  .filter-dropdown {
-    position: absolute;
-    left: 30px;
-    transform: translateX(0);
-    background-color: $light-blue;
-    border: 1px solid $beige-fonce;
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-
-    .reset-button {
-      margin-top: 10px;
+    .filter-button {
+      background-color: transparent;
+      border: none;
+      color: Gray;
+      font-size: 1em;
+      cursor: pointer;
+      padding: 0.5em;
+      margin-left: 1em;
+      transition: color 0.3s;
     }
-  }
-  
-  /* Chaque élément du dropdown */
-  .filter-item {
-    padding: 0.5em 1em;
-    font-size: medium;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background-color 0.3s;
-  }
-  .filter-item:hover {
-    background-color: #f2f2f2;
-  }
+    .filter-button:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    /* Dropdown pour le filtre de type d'activité */
+    .filter-dropdown {
+      position: absolute;
+      left: 30px;
+      transform: translateX(0);
+      background-color: $light-blue;
+      border: 1px solid $beige-fonce;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+
+      .reset-button {
+        margin-top: 10px;
+      }
+    }
+
+    /* Chaque élément du dropdown */
+    .filter-item {
+      padding: 0.5em 1em;
+      font-size: medium;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.3s;
+    }
+    .filter-item:hover {
+      background-color: #f2f2f2;
+    }
   }
 
   .my-story-rebuilt {
     .my-story-content {
-      width: 40vw;
+      width: auto;
     }
 
     .story-date {
@@ -877,30 +887,68 @@ box-shadow: 4px 4px 1px 1px #4A4A4A;
     .modal-content {
       width: 100% !important;
       .modal-body {
-        flex-direction: row;
+        flex-direction: column;
         width: 100% !important;
-        img {
-          width: 50% !important;
-        }
-        .modal-infos {
-          padding-left: 20px;
-          padding-right: 20px;
-          width: 50% !important;
-          .registration-form-overlay {
-            padding-top: 0px;
-            .registration-form {
-              padding-left: 25px!important;
-              padding: 0px;
-              gap: 0px;
-              .ctrl-form-buttons {
-                button {
-                  padding: 5px;
+        .ctrl-modal-content {
+          display: flex;
+          flex-direction: row;
+          padding-bottom: 20px !important;
+          img {
+            width: 50% !important;
+          }
+          .modal-infos {
+            padding-left: 20px;
+            padding-right: 20px;
+            width: 50% !important;
+            .modal-header {
+              flex-direction: row !important;
+              align-items: center;
+              h2 {
+                width: 100% !important;
+              }
+              .ctrl-header-date {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-evenly;
+                flex-direction: row-reverse;
+                .modal-date {
+                  .dynamic-atcb-button {
+                    padding: 0 !important;
+                  }
                 }
+              }
+            }
+            .modal-footer {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              padding-top: 20px;
+              width: 100%;
+        
+              .modal-footer-social {
+
+              }
+            }
+          }
+        }
+        .registration-form-overlay {
+          width: 100% !important;
+          padding-top: 0px;
+          .registration-form {
+            width: 100% !important;
+            padding: 0px;
+            gap: 0px;
+            .ctrl-form-buttons {
+              button {
+                padding: 5px;
               }
             }
           }
           .modal-header {
             flex-direction: row !important;
+            align-items: center;
             width: 100%;
             h2 {
               display: flex;

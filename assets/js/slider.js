@@ -5,25 +5,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnNext = document.querySelector(".control--next");
 
     let currentIndex = 0;
+    let isAnimating = false; 
 
     function updateSlideClasses() {
         slides.forEach((slide, index) => {
-            slide.classList.remove('active');
-            if (index === currentIndex) {
-                slide.classList.add('active');
-            }
+            slide.classList.toggle('active', index === currentIndex);
         });
     }
 
-    function moveSlider(index) {
-        currentIndex = (index + slides.length) % slides.length;
+    function moveSlider(newIndex) {
+        if (isAnimating) return; 
+        isAnimating = true;
 
+        currentIndex = (newIndex + slides.length) % slides.length;
         const activeSlide = slides[currentIndex];
+
+        slider.style.scrollBehavior = "smooth"; 
         slider.scrollTo({
             left: activeSlide.offsetLeft - (slider.clientWidth - activeSlide.clientWidth) / 2,
-            behavior: 'smooth'
         });
+
         updateSlideClasses();
+
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
     }
 
     updateSlideClasses();

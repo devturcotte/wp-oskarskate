@@ -2,15 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
   /*******************************************
    * VARIABLES GLOBALES
    *******************************************/
-  // Contrôle pour afficher ou non les événements passés (uniquement pour l'année en cours).
+  // Contrôle l'affichage des événements passés
   let showPassed = false;
-  // Ensemble des types d'activités sélectionnés pour le filtre (ex.: "atelier", "mentorat", etc.).
+  // Ensemble des types d'activités sélectionnés pour le filtre
   let selectedTypes = new Set();
 
   /*******************************************
    * FONCTIONS UTILES
    *******************************************/
-  // Formater une date ISO en "jour mois année" (ex. : 2 octobre 2024).
+  // Formate une date ISO en format lisible (ex. : "2 octobre 2024")
   function formatDateReadable(dateStr) {
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return "Date inconnue";
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Ajouter ou enlever la classe "my-story-content-passed" si l'événement est passé.
+  // Ajoute ou enlève la classe indiquant qu'un événement est passé
   function markPassedEvents() {
     const today = new Date();
     document.querySelectorAll(".ctl-story").forEach((story) => {
@@ -30,20 +30,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const eventDate = new Date(eventDateStr);
         const contentEl = story.querySelector(".my-story-content");
         if (contentEl) {
-          if (eventDate < today) {
-            contentEl.classList.add("my-story-content-passed");
-          } else {
-            contentEl.classList.remove("my-story-content-passed");
-          }
+          if (eventDate < today) contentEl.classList.add("my-story-content-passed");
+          else contentEl.classList.remove("my-story-content-passed");
         }
       }
     });
   }
 
   /*******************************************
-   * FONCTIONS GÉNÉRIQUES POUR LES MODALS
+   * FONCTIONS DE GESTION DES MODALS
    *******************************************/
-  // Fermer tous les modals existants.
+  // Ferme tous les modals ouverts
   function closeAllModals() {
     document.querySelectorAll(".story-modal.open").forEach((modalEl) => {
       const parentStoryId = modalEl.getAttribute("data-parent-story");
@@ -54,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Créer un « placeholder » transparent pour conserver la hauteur de la story quand on affiche le modal.
+  // Crée un placeholder pour conserver la hauteur de la story pendant l'affichage du modal
   function createPlaceholder(storyEl) {
     const storyCard = storyEl.querySelector(".my-story-rebuilt");
     if (!storyCard) return null;
@@ -65,29 +62,31 @@ document.addEventListener("DOMContentLoaded", function () {
     return placeholder;
   }
 
-  // Ajuster la hauteur du placeholder pour qu'elle corresponde à la hauteur du modal.
+  // Ajuste la hauteur du placeholder pour qu'elle corresponde à celle du modal
   function adjustPlaceholderHeight(modalEl, placeholder) {
     if (placeholder && modalEl) {
       placeholder.style.height = modalEl.offsetHeight + "px";
     }
   }
 
-  // Ouvrir le modal associé à une story précise et le positionner correctement.
+  /*******************************************
+   * FONCTION PRINCIPALE : OUVERTURE DU MODAL
+   *******************************************/
   function openStoryModal(storyEl, storyData) {
-    // Close any other modals first.
+    // Ferme tous les autres modals
     closeAllModals();
-  
+
     const modalEl = storyEl.querySelector(".story-modal");
     if (!modalEl) {
-      console.warn("No .story-modal found for this story.");
+      console.warn("Aucun .story-modal trouvé pour cette story.");
       return null;
     }
-  
-    // Set necessary attributes on the modal.
+
+    // Définir les attributs essentiels sur le modal
     modalEl.setAttribute("data-parent-story", storyEl.id);
     modalEl.setAttribute("data-event-title", storyData.title);
-  
-    // Build dynamic modal header (title, dates, etc.)
+
+    // Construction de l'en-tête du modal
     const displayStartDate = storyData.date ? formatDateReadable(storyData.date) : "Date à venir";
     const calURLs = CalendarUtils.generateCalendarURLs({
       title: storyData.title || "Titre Inconnu",
@@ -99,8 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
       location: storyData.locationAddress || ""
     });
     const calendarOptionsHTML = CalendarUtils.buildCalendarDropdown(calURLs);
-  
-    // Build social links if available.
+
+    // Construction des liens sociaux (si disponibles)
     let socialHTMLModal = "";
     if (storyData.evenementFacebook && storyData.lienFacebook) {
       socialHTMLModal += `
@@ -118,9 +117,12 @@ document.addEventListener("DOMContentLoaded", function () {
           </button>
         </a>`;
     }
-  
-    // Build the main modal content.
-    modalEl.querySelector(".modal-body").innerHTML = `
+
+    /*****************************************************
+     * CONSTRUCTION DU CONTENU PRINCIPAL DU MODAL
+     * Vous pouvez modifier ici l'HTML pour changer le style.
+     *****************************************************/
+    let modalContentHTML = `
       <div class="ctrl-modal-content">
         <img src="${storyData.imageUrl || ""}" alt="Story ${storyData.id}" class="modal-image" />
         <div class="modal-infos">
@@ -157,45 +159,55 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="modal-footer-social">
               ${socialHTMLModal}
             </div>
+    `;
+
+    /*****************************************************
+     * DÉTERMINATION DE L'AFFICHAGE DU BOUTON "PARTICIPER"
+     * Le bouton s'affichera uniquement si :
+     *   - L'attribut data-besoin-inscriptions vaut "Oui"
+     *   - Et qu'au moins une des capacités (participants ou bénévoles) est > 0
+     *****************************************************/
+    const besoinInscriptions = (storyEl.getAttribute("data-besoin-inscriptions") || "Non").trim();
+    const maxParticipants = parseInt(storyEl.getAttribute("data-nb-places-participants") || "0", 10);
+    const maxBenevoles = parseInt(storyEl.getAttribute("data-nb-places-benevoles") || "0", 10);
+    let showRegistrationButton = false;
+    if (besoinInscriptions === "Oui" && (maxParticipants > 0 || maxBenevoles > 0)) {
+      showRegistrationButton = true;
+    }
+    if (showRegistrationButton) {
+      modalContentHTML += `
             <div class="footer-btn-participer">
               <a href="#" class="registrer-link">Participer</a>
             </div>
+      `;
+    }
+    // Fin du pied de page
+    modalContentHTML += `
           </div>
         </div>
       </div>
     `;
+    // Insertion du contenu complet dans le modal
+    modalEl.querySelector(".modal-body").innerHTML = modalContentHTML;
+
+    /*****************************************************
+     * FIN DE LA CONSTRUCTION DU MODAL
+     *****************************************************/
   
-    const maxParticipants = storyEl.getAttribute("data-nb-places-participants") || "0";
-    const maxBenevoles = storyEl.getAttribute("data-nb-places-benevoles") || "0";
-    const currentParticipants = 0;
-    const currentBenevoles = 0;
-    const registrationInfoHTML = `
-      <div class="registration-info">
-        <p>Places disponibles: <span id="current-participants">${currentParticipants}</span> / ${maxParticipants}</p>
-        <p>Bénévoles demandés: <span id="current-benevoles">${currentBenevoles}</span> / ${maxBenevoles}</p>
-      </div>
-    `;
-    // Append the registration info block at the end of the modal body.
-    const modalBody = modalEl.querySelector(".modal-infos-content");
-    if (modalBody) {
-      modalBody.insertAdjacentHTML("beforeend", registrationInfoHTML);
-    }
-    // --- End NEW BLOCK ---
-  
-    // Setup modal backdrop click to close.
+    // Configuration du clic sur le fond pour fermer le modal.
     modalEl.addEventListener("click", function modalBackdropHandler(e) {
       if (e.target === modalEl) {
         closeStoryModal(storyEl);
-        console.log("Modal closed by clicking the backdrop.");
+        console.log("Modal fermé en cliquant sur le fond.");
       }
     }, { once: true });
   
-    // Create a placeholder to preserve the layout.
+    // Création d'un placeholder pour préserver la mise en page.
     const placeholder = createPlaceholder(storyEl);
     const storyCard = storyEl.querySelector(".my-story-rebuilt");
     if (storyCard) storyCard.style.visibility = "hidden";
   
-    // Position the modal.
+    // Positionnement du modal.
     const rect = storyEl.getBoundingClientRect();
     const absoluteTop = rect.top + window.scrollY;
     const modalWidth = window.innerWidth * 0.8;
@@ -206,19 +218,18 @@ document.addEventListener("DOMContentLoaded", function () {
     modalEl.style.width = modalWidth + "px";
     modalEl.style.zIndex = "1000";
   
-    // Append the modal to the body.
+    // Ajout du modal au body et affichage.
     document.body.appendChild(modalEl);
     modalEl.style.display = "block";
     modalEl.classList.remove("hidden");
     modalEl.classList.add("open");
-    console.log(`Modal opened for story #${storyData.id}, Title: ${storyData.title}`);
+    console.log(`Modal ouvert pour story #${storyData.id}, Titre: ${storyData.title}`);
   
-    // Adjust placeholder height after modal is open.
     setTimeout(() => {
       adjustPlaceholderHeight(modalEl, placeholder);
     }, 50);
   
-    // Set up calendar dropdown.
+    // Configuration du dropdown du calendrier.
     const calendarButton = modalEl.querySelector(".dynamic-atcb-button");
     const dropdown = modalEl.querySelector(".calendar-dropdown");
     if (calendarButton && dropdown) {
@@ -228,69 +239,88 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   
-    // When "Participer" is clicked, show the registration overlay.
-    const registerBtn = modalEl.querySelector(".registrer-link");
-    if (registerBtn) {
-      registerBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleRegistrationOverlay(modalEl, storyData);
-      });
+    // Mise en place de l'overlay d'inscription si le bouton "Participer" est affiché.
+    if (showRegistrationButton) {
+      const registerBtn = modalEl.querySelector(".registrer-link");
+      if (registerBtn) {
+        registerBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          // L'overlay d'inscription ne s'affichera que lorsque l'utilisateur cliquera sur "Participer"
+          toggleRegistrationOverlay(modalEl, storyData);
+        });
+      }
     }
   
     return modalEl;
   }
 
-  // Fermer un modal et restaurer la story (retirer le placeholder, etc.).
+  /*******************************************
+   * FONCTION : FERMETURE DU MODAL
+   *******************************************/
   function closeStoryModal(storyEl) {
-    const modalEl = document.querySelector(
-      `.story-modal[data-parent-story="${storyEl.id}"]`
-    );
+    const modalEl = document.querySelector(`.story-modal[data-parent-story="${storyEl.id}"]`);
     if (modalEl) {
       modalEl.classList.remove("open");
       modalEl.classList.add("hidden");
       modalEl.style.display = "none";
-
-      // Rendre la story visible de nouveau
       const storyCard = storyEl.querySelector(".my-story-rebuilt");
       if (storyCard) storyCard.style.visibility = "visible";
-
-      // Supprimer le placeholder
       const placeholder = storyEl.querySelector(".story-placeholder");
       if (placeholder) placeholder.remove();
-
-      // Ré-insérer le modal dans la story d'origine pour un futur usage
       storyEl.appendChild(modalEl);
       console.log("Modal fermé et story restaurée.");
     }
   }
 
-  /**
-   * Au lieu de créer un second formulaire, on crée ou affiche un conteneur (.registration-form-overlay).
-   * C'est le script reg_form.js qui va insérer le vrai <form> dedans si nécessaire.
-   */
+  /*******************************************
+   * FONCTION : TOGGLE DE L'OVERLAY D'INSCRIPTION
+   *******************************************/
+  // Cette fonction crée ou affiche l'overlay qui contient le formulaire d'inscription.
+  // Dans cet overlay, on insère également le bloc d'informations d'inscription,
+  // qui affiche uniquement les lignes dont la capacité est non nulle.
   function toggleRegistrationOverlay(modalEl, storyData) {
     let overlay = modalEl.querySelector(".registration-form-overlay");
     if (overlay) {
-      // toggle visible/invisible
+      // Si l'overlay existe déjà, on le bascule
       overlay.style.display = (overlay.style.display === "flex") ? "none" : "flex";
       return;
     }
     overlay = document.createElement("div");
     overlay.className = "registration-form-overlay";
     overlay.style.display = "flex";
+    // Insère l'overlay dans le modal (vous pouvez changer l'emplacement si nécessaire)
     modalEl.querySelector(".modal-body").appendChild(overlay);
   
-    // ICI on appelle la fonction globale
+    // Insertion du formulaire d'inscription via la fonction globale définie dans reg_form.js
     if (window.afficherFormulaireVide) {
       window.afficherFormulaireVide(overlay, storyData.id, storyData.title);
     } else {
-      console.log("renderEmptyForm n'est pas défini dans window.");
+      console.log("afficherFormulaireVide n'est pas défini dans window.");
+    }
+  
+    // Insère le bloc d'informations d'inscription dans l'overlay.
+    // On affiche une ligne pour "Places disponibles" uniquement si maxParticipants > 0,
+    // et une ligne pour "Bénévoles demandés" uniquement si maxBenevoles > 0.
+    const storyEl = document.getElementById(modalEl.getAttribute("data-parent-story"));
+    const maxParticipants = parseInt(storyEl.getAttribute("data-nb-places-participants") || "0", 10);
+    const maxBenevoles = parseInt(storyEl.getAttribute("data-nb-places-benevoles") || "0", 10);
+    let registrationInfoHTML = "";
+    if (maxParticipants > 0) {
+      registrationInfoHTML += `<p>Places disponibles: <span id="current-participants">0</span> / ${maxParticipants}</p>`;
+    }
+    if (maxBenevoles > 0) {
+      registrationInfoHTML += `<p>Bénévoles demandés: <span id="current-benevoles">0</span> / ${maxBenevoles}</p>`;
+    }
+    if (registrationInfoHTML) {
+      registrationInfoHTML = `<div class="registration-info" style="padding:10px; background:#f9f9f9; border:1px solid #ddd; margin-bottom:10px;">${registrationInfoHTML}</div>`;
+      // Insère le bloc d'infos au-dessus du formulaire
+      overlay.insertAdjacentHTML("afterbegin", registrationInfoHTML);
     }
   }
 
   /*******************************************
-   * FONCTIONS DE FILTRAGE & NAVIGATION
+   * FONCTIONS DE FILTRAGE & NAVIGATION ET RESPONSIVE
    *******************************************/
   // Récupère les années uniques à partir des stories.
   const yearsSet = new Set();

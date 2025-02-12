@@ -33,11 +33,6 @@ function my_force_load_cool_timeline_css() {
 add_action('wp_enqueue_scripts', 'my_force_load_cool_timeline_css', 20);
 
 /**
- * Include the registration handler (AJAX actions).
- */
-require_once get_template_directory() . '/assets/php/registration_handler.php';
-
-/**
  * (Optional) Enqueue the ics library.
  */
 function enqueue_ics_library() {
@@ -337,3 +332,9 @@ function re_enqueue_acf_scripts_after_cooltimeline() {
         }
     }
 }
+
+
+/**
+ * Include the registration handler (AJAX actions).
+ */
+require_once get_template_directory() . '/assets/php/registration_handler.php';

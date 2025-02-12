@@ -31,8 +31,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'my_registration') {
     $storyId = sanitize_text_field($_POST['storyId']);
     $registrationType = sanitize_text_field($_POST['registrationType']); // "participant" ou "benevole"
     $firstName = isset($_POST['firstName']) ? sanitize_text_field($_POST['firstName']) : '';
-    $lastName = isset($_POST['lastName']) ? sanitize_text_field($_POST['lastName']) : '';
-    $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+    $lastName  = isset($_POST['lastName'])  ? sanitize_text_field($_POST['lastName'])  : '';
+    $email     = isset($_POST['email'])     ? sanitize_email($_POST['email'])           : '';
 
     // Détermination du nom de l'événement et du dossier associé
     if (!empty($_POST['eventTitle'])) {
@@ -55,14 +55,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'my_registration') {
     $besoin_dinscriptions = get_field('besoin_dinscriptions', $storyId);
     error_log("DEBUG besoin_dinscriptions for post $storyId: " . print_r($besoin_dinscriptions, true));
     
-    // Determine if inscriptions are open.
     $inscriptions_open = false;
     if ( is_array($besoin_dinscriptions) ) {
-        // If it returns an array, check if "Oui" or "1" is present.
         foreach ( $besoin_dinscriptions as $item ) {
             if ( is_array($item) ) {
-                // In case of "Both" return type (an array with keys "value" and "label")
-                if ( isset($item['value']) && ( $item['value'] === 'Oui' || $item['value'] === '1' ) ) {
+                if ( isset($item['value']) && ($item['value'] === 'Oui' || $item['value'] === '1') ) {
                     $inscriptions_open = true;
                     break;
                 }
@@ -74,7 +71,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'my_registration') {
             }
         }
     } else {
-        // If it's not an array, compare directly.
         $inscriptions_open = ( trim($besoin_dinscriptions) === 'Oui' || trim($besoin_dinscriptions) === '1' );
     }
     
@@ -83,17 +79,28 @@ if (isset($_POST['action']) && $_POST['action'] == 'my_registration') {
         exit;
     }
 
+    // Lecture du fichier CSV existant (s'il existe)
+    $existingEventName = $eventName;
+    $participants = [];
+    $benevoles = [];
+    if (file_exists($filePath)) {
+        list($existingEventName, $participants, $benevoles) = parseEventCSV($filePath);
+        if (!$existingEventName) {
+            $existingEventName = $eventName;
+        }
+    }
+
     // Évite les doublons en supprimant toute inscription existante pour cet email
     removeByEmail($participants, $email);
     removeByEmail($benevoles, $email);
 
     // Prépare la nouvelle inscription
     $entry = [
-        'firstName' => $firstName,
-        'lastName' => $lastName,
-        'email' => strtolower(trim($email)),
+        'firstName'        => $firstName,
+        'lastName'         => $lastName,
+        'email'            => strtolower(trim($email)),
         'registrationType' => $registrationType,
-        'timestamp' => date('Y-m-d H:i:s'),
+        'timestamp'        => date('Y-m-d H:i:s'),
     ];
     if ($registrationType === 'benevole') {
         $benevoles[] = $entry;
@@ -106,7 +113,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'my_registration') {
         wp_send_json_success([
             'success' => true,
             'message' => 'Inscription enregistrée.',
-            'file' => $folderName . '/event_registrations.csv'
+            'file'    => $folderName . '/event_registrations.csv'
         ]);
     } else {
         wp_send_json_error('Erreur lors de l\'écriture du fichier d\'inscription.');
@@ -156,8 +163,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'cancel_registration') {
  *
  * Retourne : [ $eventTitle, $participantsArray, $benevolesArray ]
  */
-function parseEventCSV($filePath)
-{
+function parseEventCSV($filePath) {
     if (!file_exists($filePath)) {
         return [null, [], []];
     }
@@ -171,8 +177,7 @@ function parseEventCSV($filePath)
     $currentSection = null;
     while (($line = fgets($fp)) !== false) {
         $line = trim($line);
-        if ($line === '')
-            continue;
+        if ($line === '') continue;
         if (stripos($line, 'Événement:') === 0) {
             $eventTitle = trim(substr($line, strlen('Événement:')));
             continue;
@@ -185,16 +190,15 @@ function parseEventCSV($filePath)
             $currentSection = 'benevoles';
             continue;
         }
-        if (stripos($line, 'Description:') === 0)
-            continue;
+        if (stripos($line, 'Description:') === 0) continue;
         $parts = str_getcsv($line);
         if (count($parts) >= 5 && $currentSection) {
             $row = [
-                'firstName' => $parts[0],
-                'lastName' => $parts[1],
-                'email' => strtolower(trim($parts[2])),
+                'firstName'        => $parts[0],
+                'lastName'         => $parts[1],
+                'email'            => strtolower(trim($parts[2])),
                 'registrationType' => $parts[3],
-                'timestamp' => $parts[4],
+                'timestamp'        => $parts[4],
             ];
             if ($currentSection === 'participants') {
                 $participants[] = $row;
@@ -222,8 +226,7 @@ function parseEventCSV($filePath)
  *   Description: firstName,lastName,email,registrationType,timestamp
  *   <lignes pour les bénévoles>
  */
-function rewriteEventCSV($filePath, $eventName, $participants, $benevoles)
-{
+function rewriteEventCSV($filePath, $eventName, $participants, $benevoles) {
     $fp = fopen($filePath, 'w');
     if (!$fp) {
         return false;
@@ -264,8 +267,7 @@ function rewriteEventCSV($filePath, $eventName, $participants, $benevoles)
  *
  * Supprime de l'array toute entrée dont l'email correspond (insensible à la casse).
  */
-function removeByEmail(&$array, $email)
-{
+function removeByEmail(&$array, $email) {
     $emailLower = strtolower(trim($email));
     foreach ($array as $i => $row) {
         if (strtolower(trim($row['email'])) === $emailLower) {

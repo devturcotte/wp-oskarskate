@@ -5,30 +5,27 @@
  * 2) Évite les doublons en vérifiant le localStorage ET en demandant au serveur d'écraser l'entrée précédente.
  * 3) Permet d'annuler l'inscription (annule sur le serveur ET dans le localStorage).
  *
- * NOTE: On suppose que cct.js (ou custom-cool-timeline.js) appelle window.afficherFormulaireVide(...)
- *       pour insérer le <form> dans un overlay. Aussi, en cliquant sur "Participer", on appelle la fonction
- *       toggleRegistrationOverlay(...) qui appelle window.afficherFormulaireVide().
+ * NOTE : On suppose que cct.js (ou custom-cool-timeline.js) appelle window.afficherFormulaireVide(...)
+ *        pour insérer le <form> dans un overlay. En cliquant sur "Participer", on appelle la fonction
+ *        toggleRegistrationOverlay(...) qui appelle window.afficherFormulaireVide().
  */
 document.addEventListener("DOMContentLoaded", function () {
   /*******************************************
-   * FONCTIONS LOCAL STORAGE
+   * FONCTIONS POUR LE LOCAL STORAGE
    *******************************************/
   function getRegistrations() {
     const regData = localStorage.getItem("registrationData");
     return regData ? JSON.parse(regData) : {};
   }
-
   function getRegistrationForEvent(eventId) {
     const regs = getRegistrations();
     return regs[eventId] || null;
   }
-
   function saveRegistrationForEvent(eventId, data) {
     const regs = getRegistrations();
     regs[eventId] = data;
     localStorage.setItem("registrationData", JSON.stringify(regs));
   }
-
   function clearRegistrationForEvent(eventId) {
     const regs = getRegistrations();
     delete regs[eventId];
@@ -36,24 +33,23 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /*******************************************
-   * MESSAGE "VOUS ÊTES DÉJÀ INSCRIT" + BOUTONS
+   * AFFICHAGE DU MESSAGE "VOUS ÊTES DÉJÀ INSCRIT" + BOUTONS
    *******************************************/
   function afficherMessageDejaInscrit(container, regData, eventId) {
+    // On précise le type d'inscription déjà enregistrée dans le message
     container.innerHTML = `
-      <p>Vous êtes déjà inscrit avec l'adresse : ${regData.email}</p>
+      <p>Vous êtes déjà inscrit en tant que <strong>${regData.registrationType}</strong> avec l'adresse : ${regData.email}</p>
       <button id="cancelParticipation">Annuler ma participation</button>
       <button id="registerOther">Inscrire un autre nom ?</button>
     `;
-
     const btnCancel = container.querySelector("#cancelParticipation");
     btnCancel.addEventListener("click", function () {
       const formData = new FormData();
       formData.set("storyId", eventId);
       formData.set("email", regData.email);
       formData.set("eventSlug", regData.eventSlug || "");
-      // IMPORTANT: on ajoute l'action dans le POST
+      // IMPORTANT : on ajoute l'action dans le POST
       formData.set("action", "cancel_registration");
-
       fetch("/wp-oskarskate/wp-admin/admin-ajax.php", {
         method: "POST",
         body: formData,
@@ -72,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
           console.error("Erreur AJAX lors de l'annulation :", err);
         });
     });
-
     const btnOther = container.querySelector("#registerOther");
     btnOther.addEventListener("click", function () {
       clearRegistrationForEvent(eventId);
@@ -81,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /*******************************************
-   * AFFICHAGE D'UN FORMULAIRE VIDE
+   * AFFICHAGE D'UN FORMULAIRE D'INSCRIPTION VIDE
    *******************************************/
   function afficherFormulaireVide(container, eventId, eventTitle) {
     container.innerHTML = `
@@ -98,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <div class="form-checkbox">
           <label>
-            <p>Bénévole</p>
+            <p>S'inscrire comme bénévole ?</p>
             <input type="checkbox" name="benevolat" value="1">
           </label>
         </div>
@@ -111,6 +106,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   window.afficherFormulaireVide = afficherFormulaireVide;
 
+  /*******************************************
+   * FONCTION POUR "SLUGIFIER" UN TITRE
+   *******************************************/
   function assainirTitre(str) {
     return (str || "")
       .toLowerCase()
@@ -120,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /*******************************************
-   * SOUMISSION DU FORMULAIRE
+   * SOUMISSION DU FORMULAIRE D'INSCRIPTION
    *******************************************/
   document.addEventListener("submit", function (e) {
     if (!e.target.matches(".registration-form")) return;
@@ -133,10 +131,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const eventId = modalEl.getAttribute("data-parent-story") || "";
+    // EXTRACTION DE L'ID NUMÉRIQUE DE L'ÉVÉNEMENT (ex. "ctl-story-159" → "159")
+    const rawId = modalEl.getAttribute("data-parent-story") || "";
+    const eventId = rawId.replace("ctl-story-", "");
+
+    // IMPORTANT : Récupération du titre de l'événement depuis l'attribut du modal
     const rawTitle = modalEl.getAttribute("data-event-title") || `Event_${eventId}`;
     const eventSlug = assainirTitre(rawTitle);
 
+    // Mise à jour de l'input caché "eventTitle" dans le formulaire
     const hiddenTitle = form.querySelector('input[name="eventTitle"]');
     if (hiddenTitle) {
       hiddenTitle.value = rawTitle;
@@ -146,19 +149,30 @@ document.addEventListener("DOMContentLoaded", function () {
     const formObj = Object.fromEntries(formData.entries());
     const emailLower = (formObj.email || "").trim().toLowerCase();
 
+    // Vérifie si l'utilisateur est déjà inscrit
     const existingReg = getRegistrationForEvent(eventId);
     if (existingReg && (existingReg.email || "").toLowerCase() === emailLower) {
-      const container = form.closest(".registration-form-overlay") || form.parentNode;
-      afficherMessageDejaInscrit(container, existingReg, eventId);
-      return;
+      // Si inscrit, vérifie si le type d'inscription diffère
+      const newType = formData.get("benevolat") === "1" ? "benevole" : "participant";
+      if (existingReg.registrationType !== newType) {
+        if (!confirm("Vous êtes déjà inscrit en tant que " + existingReg.registrationType +
+          " avec l'adresse " + existingReg.email +
+          ". Voulez-vous vous inscrire en tant que " + newType + " (cela remplacera votre inscription actuelle) ?")) {
+          return; // Abandon de l'inscription
+        }
+      } else {
+        const container = form.closest(".registration-form-overlay") || form.parentNode;
+        afficherMessageDejaInscrit(container, existingReg, eventId);
+        return;
+      }
     }
 
+    // Détermine le type d'inscription et complète le FormData
     const isBenevole = formData.get("benevolat") === "1";
     formData.set("registrationType", isBenevole ? "benevole" : "participant");
     formData.set("storyId", eventId);
     formData.set("eventSlug", eventSlug);
-    // IMPORTANT: ajouter l'action dans le POST pour que le handler la détecte
-    formData.set("action", "my_registration");
+    formData.set("action", "my_registration"); // Action pour le handler AJAX
 
     formObj.email = emailLower;
     formObj.eventSlug = eventSlug;
@@ -178,6 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
             email: emailLower,
             eventSlug: eventSlug,
             eventTitle: rawTitle,
+            registrationType: isBenevole ? "benevole" : "participant"
           });
           const overlay = form.closest(".registration-form-overlay") || form.parentNode;
           afficherMessageDejaInscrit(overlay, formObj, eventId);

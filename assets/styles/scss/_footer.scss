@@ -53,6 +53,7 @@ footer {
           }
 
           a {
+            font-size: 1.1rem;
             font-weight: 300;
             text-transform: uppercase;
             transition: 0.3s;
@@ -78,7 +79,7 @@ footer {
       width: 100%;
 
       h2 {
-        font-size: 1.8rem;
+        font-size: 2rem;
       }
 
       ul {
@@ -87,9 +88,9 @@ footer {
         gap: 1rem;
 
         li {
-          font-size: 1.1rem;
+          font-size: 1.2rem;
           font-weight: 300;
-          letter-spacing: 1px;
+          letter-spacing: 2px;
         }
       }
 
@@ -118,6 +119,10 @@ footer {
       nav {
         align-items: flex-start;
         text-align: left;
+
+        img {
+          transform: translate(-0.5rem, 0);
+        }
       }
 
       .footer-contact {
@@ -149,7 +154,7 @@ footer {
 
     .copyright {
       font-size: 0.8rem;
-      font-weight: 300;
+      font-weight: 200;
       letter-spacing: 1px;
       width: 100%;
     }

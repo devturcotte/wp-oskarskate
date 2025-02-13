@@ -32,12 +32,13 @@
     padding: 0 1rem;
 
     h2 {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       text-align: center;
     }
 
     p {
-      font-size: 1.1rem;
+      font-family: $nunito;
+      font-size: 1.2rem;
       font-weight: 300;
       line-height: 1.5;
       max-width: 960px;
@@ -96,7 +97,7 @@
     }
 
     h2 {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       padding: 1rem 2.5rem;
       position: absolute;
       text-transform: uppercase;
@@ -109,7 +110,9 @@
   }
 
   p {
+    font-family: $nunito;
     font-size: 1.1rem;
+    font-weight: 300;
     line-height: 1.5;
     padding: 0 1rem;
     text-align: center;

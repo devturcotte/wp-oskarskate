@@ -147,7 +147,7 @@
           height: 20dvh;
           position: absolute;
           max-width: 35dvw;
-          top: -22dvh;
+          top: -35%;
           width: 100%;
 
           .membre-photo {
@@ -290,7 +290,7 @@
         }
       }
 
-      @media screen and (min-width: 768px) {
+      @include media-query("tablet") {
         flex-direction: row;
         figure {
           height: 100%;
@@ -307,7 +307,7 @@
         }
       }
 
-      @media screen and (min-width: 1280px) {
+      @include media-query("desktop-xl") {
         figure {
           img {
             border-radius: 0 0 0 0.5rem;
@@ -335,10 +335,10 @@
       z-index: 1;
     }
 
-    @media screen and (min-width: 768px) {
+    @include media-query("tablet") {
     }
 
-    @media screen and (min-width: 1280px) {
+    @include media-query("desktop-xl") {
       .membres-nav {
         border-radius: 0.5rem 0.5rem 0 0;
       }

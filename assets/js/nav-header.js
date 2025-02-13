@@ -7,7 +7,7 @@ const content = document.querySelector("body");
   btn.addEventListener("click", () => {
     openBtn.classList.toggle("hidden");
     closeBtn.classList.toggle("hidden");
-    navItems.classList.toggle("hidden");
+    navItems.classList.toggle("nav-hidden");
     content.classList.toggle("no-scroll");
   });
 });

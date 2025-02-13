@@ -140,6 +140,7 @@
             </li>
             
             <?php
+            wp_reset_postdata();
             $j++;
             wp_reset_postdata();
             };

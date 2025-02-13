@@ -11,8 +11,10 @@ function slider() {
     const btnNext = document.querySelector(".control--next");
 
     let currentIndex = 0;
+    let isAnimating = false; 
 
     function updateSlideClasses() {
+
       slides.forEach((slide, index) => {
         slide.classList.remove("active");
         if (index === currentIndex) {
@@ -32,6 +34,29 @@ function slider() {
         behavior: "smooth",
       });
       updateSlideClasses();
+      
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    function moveSlider(newIndex) {
+        if (isAnimating) return; 
+        isAnimating = true;
+
+        currentIndex = (newIndex + slides.length) % slides.length;
+        const activeSlide = slides[currentIndex];
+
+        slider.style.scrollBehavior = "smooth"; 
+        slider.scrollTo({
+            left: activeSlide.offsetLeft - (slider.clientWidth - activeSlide.clientWidth) / 2,
+        });
+
+        updateSlideClasses();
+
+        setTimeout(() => {
+            isAnimating = false;
+        }, 500);
     }
 
     updateSlideClasses();

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="modal-specs"
+        <div class="modal-header">
+          <h2>${storyData.title || "Titre Inconnu"}</h2>
+          <!-- Bouton Add to Calendar -->
+          <div class="modal-date"></div>
+        </div>
+        <div class="modal-infos">
+          <!-- Heures de Début et de Fin -->
+          <div class="modal-times">
+            <p><strong>De :</strong> ${storyData.startTime || "N/A"}</p>
+            <p><strong>À :</strong> ${storyData.endTime || "N/A"}</p>
+          </div>
+          <!-- Organisateur -->
+          <p>${storyData.organizer || "N/A"}</p>
+          <!-- Nom du Lieu -->
+          <p>${storyData.locationName || "?"}</p>
+          <div class="modal-ctrl-adresse">
+            <p>${storyData.locationAddress || "?"}</p>
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>${storyData.descriptionHtml || ""}</div>
+      </div>
+    </div>
+</body>
+</html>

@@ -25,6 +25,7 @@
             <p class="copyright">© <?php echo date("Y");?> OSKAR Skate & ART - Tous droits réservés</p>
         </div>
     </footer>
-    
+    <?php get_template_part('assets/templates/modal-activites'); ?>
+    <?php wp_footer(); ?>
 </body>
 </html>

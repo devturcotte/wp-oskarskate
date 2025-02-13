@@ -24,6 +24,7 @@
         <?php
             wp_reset_postdata();
         };
+            };
         } 
         else{ ?>
             <li class="aucune-question">
@@ -33,4 +34,6 @@
         };
         ?>
     </ul>
+</section>
+
 </section>

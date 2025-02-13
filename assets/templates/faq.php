@@ -22,7 +22,8 @@
                 <p class="reponse hidden"><?php echo $reponse; ?></p>
             </li>
         <?php
-            };
+            wp_reset_postdata();
+        };
         } 
         else{ ?>
             <li class="aucune-question">
@@ -32,5 +33,4 @@
         };
         ?>
     </ul>
-
 </section>

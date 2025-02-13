@@ -5,9 +5,9 @@
   display: flex;
   flex-direction: column;
   gap: 8rem;
-  padding: 0 1.5rem;
-  @include media-query("desktop-xl"){
-    padding: 0 ;
+
+  @include media-query("desktop-xl") {
+    padding: 0;
   }
 
   img {
@@ -35,7 +35,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      >div{
+      > div {
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -51,7 +51,7 @@
       }
 
       .control--next {
-        color:$red;
+        color: $red;
       }
     }
 
@@ -85,15 +85,15 @@
         gap: 1rem;
       }
     }
-    figure{
+    figure {
       width: 22.625rem;
       height: 15.625rem;
       flex-shrink: 0;
     }
-    img{
+    img {
       object-fit: cover;
       height: 100%;
-      border-radius: 1.25rem ;
+      border-radius: 1.25rem;
     }
   }
 

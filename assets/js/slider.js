@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnPrev = document.querySelector(".control--previous");
   const btnNext = document.querySelector(".control--next");
 
-  let isAnimating = false;
-  let currentIndex = getRandomIndex();
+  let currentIndex = 0;
 
   function getRandomIndex() {
       return Math.floor(Math.random() * slides.length);
@@ -18,19 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function moveSlider(newIndex) {
-      if (isAnimating) return;
-      isAnimating = true;
 
       currentIndex = (newIndex + slides.length) % slides.length;
       const activeSlide = slides[currentIndex];
 
-      slider.style.scrollBehavior = "smooth";
-      slider.scrollLeft = activeSlide.offsetLeft;
-      updateSlideClasses();
+      slider.scrollTo({
+        left: activeSlide.offsetLeft - (slider.offsetWidth - activeSlide.offsetWidth) 
+    });
 
-      setTimeout(() => {
-          isAnimating = false;
-      }, 500);
+      updateSlideClasses();
   }
 
   moveSlider(currentIndex);

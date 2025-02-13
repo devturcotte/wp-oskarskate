@@ -6,10 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentIndex = 0;
 
-  function getRandomIndex() {
-      return Math.floor(Math.random() * slides.length);
-  }
-
   function updateSlideClasses() {
       slides.forEach((slide, index) => {
           slide.classList.toggle("active", index === currentIndex);

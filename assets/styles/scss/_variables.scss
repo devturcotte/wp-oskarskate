@@ -1,4 +1,5 @@
-@import "fonts";
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 
 /* ------ COULEURS ------ */
 $black: #000;
@@ -16,14 +17,15 @@ $yellow: #ffde34;
 $pink: #d4819d;
 $light-pink: #fedfe9;
 $green: #8ab194;
-$fb-blue: #1877F2;
-$insta-purple: linear-gradient(45deg, 
-  #405DE6, /* Indigo Bleu */
-  #5851DB, /* Violet */
-  #833AB4, /* Purple */
-  #C13584, /* Rose */
-  #E1306C, /* Rouge */
-  #FD1D1D  /* Orange */
+$fb-blue: #1877f2;
+$insta-purple: linear-gradient(
+  45deg,
+  #405de6,
+  /* Indigo Bleu */ #5851db,
+  /* Violet */ #833ab4,
+  /* Purple */ #c13584,
+  /* Rose */ #e1306c,
+  /* Rouge */ #fd1d1d /* Orange */
 );
 
 /* ------ FONTS ------ */

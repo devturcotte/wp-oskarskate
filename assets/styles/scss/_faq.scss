@@ -32,21 +32,8 @@
       width: 100%;
 
       .question {
-        cursor: pointer;
-
-        &:hover {
-          h3 {
-            transform: scale(1.1) translate(1rem, 0);
-          }
-
-          i {
-            transform: scale(1.15);
-          }
-        }
-      }
-
-      .question {
         align-items: center;
+        cursor: pointer;
         display: flex;
         gap: 0.5rem;
         justify-content: space-between;
@@ -62,9 +49,20 @@
           font-size: 1.3rem;
           transition: 0.3s;
         }
+
+        &:hover {
+          h3 {
+            transform: scale(1.1) translate(1rem, 0);
+          }
+
+          i {
+            transform: scale(1.15);
+          }
+        }
       }
 
       p {
+        font-family: $nunito;
         font-size: 1rem;
         font-weight: 300;
         padding-bottom: 2rem;

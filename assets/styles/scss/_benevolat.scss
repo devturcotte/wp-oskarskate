@@ -27,13 +27,13 @@
     flex-direction: column;
     gap: 0.5rem;
     justify-content: space-between;
-    padding: 1rem 0;
 
     h2 {
       font-size: 1.8rem;
     }
 
     p {
+      font-family: $nunito;
       font-size: 1.1rem;
       font-weight: 300;
       padding-bottom: 1rem;

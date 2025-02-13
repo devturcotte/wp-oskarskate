@@ -22,7 +22,7 @@
                 <?php
                     wp_nav_menu( $arg = array (
                         'menu' => 'Header',
-                        'menu_class' => 'nav-items hidden',
+                        'menu_class' => 'nav-items nav-hidden',
                         'theme_location' => 'primary'
                     ));
                 ?>

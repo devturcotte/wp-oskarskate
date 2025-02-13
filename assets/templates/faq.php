@@ -24,8 +24,7 @@
         <?php
             wp_reset_postdata();
         };
-            };
-        } 
+        }
         else{ ?>
             <li class="aucune-question">
                 Aucune questions dans la FAQ

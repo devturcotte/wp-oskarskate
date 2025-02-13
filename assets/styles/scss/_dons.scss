@@ -73,38 +73,31 @@
       .control--previous,
       .control--next {
         color: $red;
-        transition: color 0.3s ease;
       }
 
       .control--next {
         color: $red;
-        .control--previous:hover,
-        .control--next:hover {
-          color: darken($red, 10%);
-        }
       }
 
       .slider_slides {
         display: flex;
-        overflow-x: auto;
+        overflow-x: hidden;
         padding: 2rem 1rem;
-        scroll-behavior: smooth;
         width: 100%;
-        max-width: 1280px;
         gap: 2rem;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
+        scroll-behavior: smooth;
+      
 
         .slider_slide {
-          scroll-snap-align: start;
-          flex: 0 0 350px;
-          max-width: 350px;
+          flex: 0 0 350px; 
+          max-width: 380px; 
           background-color: $beige-oskar;
           border-radius: 0.625rem;
           border: 1px solid $black;
           user-select: none;
           padding: 2rem 1rem;
           display: flex;
+          margin: 0.5rem;
           gap: 1rem;
           flex-direction: column;
           box-shadow: 6px 6px 0px 0px $blue-navy;

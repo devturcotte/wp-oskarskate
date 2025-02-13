@@ -33,9 +33,11 @@
     width: 100%;
 
     .sticker {
-      display: none;
+      bottom: -17%;
+      left: 1rem;
       position: absolute;
-      transform: rotate(20deg);
+      transform: scale(0.65) rotate(-5deg);
+      z-index: 10;
     }
 
     .membres-nav {
@@ -298,6 +300,10 @@
         /* Image de background */
         figure {
           height: 60dvh;
+
+          img {
+            border-radius: 0 0 0 0.5rem;
+          }
         }
 
         .membre {
@@ -310,18 +316,12 @@
           }
 
           .contenu {
-            border-radius: 0 0 0 0.5rem;
+            border-radius: 0 0 0.5rem 0.5rem;
           }
         }
       }
 
       @include media-query("desktop-xl") {
-        figure {
-          img {
-            border-radius: 0 0 0 0.5rem;
-          }
-        }
-
         .membre {
           figure {
             height: 45dvh;
@@ -343,6 +343,20 @@
       z-index: 1;
     }
 
+    @include media-query("tablet") {
+      padding: 0 1rem;
+
+      .sticker {
+        bottom: -20%;
+        left: 10%;
+        transform: scale(1) rotate(-8deg);
+      }
+
+      .membres-nav {
+        border-radius: 0.5rem 0.5rem 0 0;
+      }
+    }
+
     @include media-query("desktop") {
       .membres-nav {
         padding: 1rem 2rem;
@@ -350,12 +364,6 @@
         i {
           transform: scale(1.5);
         }
-      }
-    }
-
-    @include media-query("desktop-xl") {
-      .membres-nav {
-        border-radius: 0.5rem 0.5rem 0 0;
       }
     }
   }

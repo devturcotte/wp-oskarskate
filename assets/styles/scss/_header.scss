@@ -80,7 +80,7 @@ header {
           }
         }
 
-        @media screen and (max-width: 1024px) {
+        @include media-query("desktop") {
           &.hidden {
             display: none;
           }
@@ -106,7 +106,7 @@ header {
     }
   }
 
-  @media screen and (min-width: 1024px) {
+  @include media-query("desktop") {
     padding: 2rem 0;
 
     nav {

@@ -1,6 +1,3 @@
-@import "variables";
-@import "mixins";
-
 .banner-homepage {
   align-items: center;
   align-self: center;
@@ -18,7 +15,7 @@
     object-fit: cover;
     width: 100%;
 
-    @media screen and (min-width: 1024px) {
+    @include media-query("desktop") {
       height: 50dvh;
     }
   }
@@ -63,7 +60,7 @@
   padding: 0;
   width: 100%;
 
-  @media screen and (min-width: 1024px) {
+  @include media-query("desktop") {
     section {
       h2 {
         font-size: 1.8rem;
@@ -79,7 +76,8 @@
       font-size: 2rem;
     }
   }
-  @media screen and (min-width: 1280px) {
+
+  @include media-query("desktop-xl") {
     img {
       border-radius: 1rem;
     }
@@ -103,7 +101,7 @@
       text-transform: uppercase;
       width: 80%;
 
-      @media screen and (min-width: 1024px) {
+      @include media-query("desktop") {
         width: 60%;
       }
     }

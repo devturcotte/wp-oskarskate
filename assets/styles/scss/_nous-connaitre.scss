@@ -13,7 +13,7 @@
     padding: 0;
     width: 100%;
 
-    @media screen and (min-width: 768px) {
+    @include media-query("tablet") {
       gap: 4rem;
     }
 
@@ -58,7 +58,7 @@
         }
       }
 
-      @media screen and (min-width: 768px) {
+      @include media-query("tablet") {
         flex-direction: row;
 
         figure {
@@ -103,13 +103,13 @@
         top: -4.2rem;
         transform: rotate(25deg) scale(0.4);
 
-        @media screen and (min-width: 768px) {
+        @include media-query("tablet") {
           right: -16rem;
           top: -4.5rem;
           transform: rotate(25deg) scale(0.5);
         }
 
-        @media screen and (min-width: 1024px) {
+        @include media-query("desktop") {
           right: -20rem;
         }
       }

@@ -1,5 +1,4 @@
-import "./banners.js";
-import "./dialog.js";
-/*import "./equipe.js";*/
+import "./equipe.js";
 import "./faq.js";
+import "./nav-header.js";
 import "./slider.js";

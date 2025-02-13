@@ -12,7 +12,7 @@ Template Name: Nous Connaitre
         get_template_part('/assets/templates/cards_nous-connaitre');
         get_template_part('/assets/templates/equipe');
         get_template_part('/assets/templates/faq');
-        get_template_part('/assets/templates/discuter');
+        get_template_part('/assets/templates/discuter');  
     ?>
 </main>
 

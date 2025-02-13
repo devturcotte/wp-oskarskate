@@ -97,10 +97,10 @@
                 </figure>
 
                 <section class="membre <?php echo $themeMembre; ?>">
-                    <h3 class="nom"><?php echo $nom; ?></h3>
                     <figure>
                         <img src="<?php echo esc_url($photoUrl); ?>" alt="Team Oskar" class="membre-photo">
                     </figure>
+                    <h3 class="nom"><?php echo $nom; ?></h3>
                     <div class="contenu"> 
                         <section class="fun-stats">
                             <h4><?php echo $statsTitre; ?></h4>
@@ -142,7 +142,8 @@
             <?php
             wp_reset_postdata();
             $j++;
-                };
+            wp_reset_postdata();
+            };
             ?>
         </ul>
         <?php

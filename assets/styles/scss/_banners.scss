@@ -6,26 +6,38 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
   max-width: 1280px;
+  justify-content: center;
+  padding-bottom: 4rem;
+  width: 100%;
 
   img {
+    height: 40dvh;
     max-width: 1280px;
+    object-fit: cover;
     width: 100%;
+
+    @media screen and (min-width: 1024px) {
+      height: 50dvh;
+    }
   }
 
   section {
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 0 1rem 4rem 1rem;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0 1rem;
 
     h2 {
-      font-size: 2rem;
+      font-size: 2.2rem;
+      text-align: center;
     }
 
     p {
+      font-size: 1.1rem;
       font-weight: 300;
       line-height: 1.5;
       max-width: 960px;
@@ -34,15 +46,8 @@
 
     button {
       @include button-reset;
-      background-color: $red;
-      color: $white;
-      border: 1px solid $beige-oskar;
-      border-radius: 5px;
-      box-shadow: 4px 4px 0 0 $black;
-      font-size: 1.2rem;
-      padding: 0.8rem 2.5rem;
+      @include btn-red;
       text-transform: uppercase;
-      width: fit-content;
     }
   }
 }
@@ -55,46 +60,60 @@
   gap: 1rem;
   max-width: 1280px;
   padding: 0;
-  width: 85%;
+  width: 100%;
+
+  @media screen and (min-width: 1024px) {
+    section {
+      h2 {
+        font-size: 1.8rem;
+        padding: 1.5rem 3.5rem;
+      }
+
+      img {
+        height: 40dvh;
+      }
+    }
+
+    p {
+      font-size: 2rem;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    img {
+      border-radius: 1rem;
+    }
+  }
 
   section {
+    padding: 0;
     position: relative;
     width: 100%;
 
     img {
-      border-radius: 1rem;
-      height: 330px;
+      height: 30dvh;
       object-fit: cover;
       width: 100%;
     }
 
     h2 {
-      font-size: 1.6rem;
-      padding: 2rem 4.5rem;
+      font-size: 1.4rem;
+      padding: 1rem 2.5rem;
       position: absolute;
       text-transform: uppercase;
-      width: fit-content;
+      width: 80%;
+
+      @media screen and (min-width: 1024px) {
+        width: 60%;
+      }
     }
   }
 
   p {
-    font-size: 1.2rem;
-    line-height: 1.5;
-    text-align: center;
-    width: 90%;
-
-    &.hidden {
-      display: none;
-    }
-  }
-
-  button {
-    @include button-reset;
-    border: 1px solid $beige-oskar;
-    border-radius: 0.5rem;
-    box-shadow: 4px 4px 0 0 $black;
     font-size: 1.1rem;
-    padding: 1rem 2.2rem;
+    line-height: 1.5;
+    padding: 0 1rem;
+    text-align: center;
+    width: 100%;
 
     &.hidden {
       display: none;
@@ -105,15 +124,11 @@
     h2 {
       background-color: $yellow;
       border-radius: 0 0.5rem 0.5rem 0;
-      bottom: 6rem;
+      bottom: 7.5rem;
       left: 0;
+      margin-right: 1rem;
+      text-align: right;
       transform: skew(0, -14deg);
-    }
-
-    button {
-      background-color: $yellow;
-      border-color: $black;
-      color: $black;
     }
   }
 
@@ -122,13 +137,9 @@
       background-color: $pink;
       border-radius: 0.5rem 0 0 0.5rem;
       bottom: 6rem;
+      margin-left: 1rem;
       right: 0;
       transform: skew(0deg, 10deg);
-    }
-
-    button {
-      background-color: $pink;
-      color: $beige-oskar;
     }
   }
 
@@ -139,13 +150,9 @@
       bottom: 8rem;
       color: $beige-oskar;
       left: 0;
+      margin-right: 1rem;
+      text-align: right;
       transform: skew(0, -16deg);
-    }
-
-    button {
-      background-color: $red;
-      border-color: $beige-oskar;
-      color: $beige-oskar;
     }
   }
 
@@ -153,16 +160,11 @@
     h2 {
       background-color: $blue;
       border-radius: 0.5rem 0 0 0.5rem;
-      bottom: 4rem;
+      bottom: 5rem;
       color: $beige-oskar;
+      margin-left: 1rem;
       right: 0;
       transform: skew(0deg, 8deg);
-    }
-
-    button {
-      background-color: $blue;
-      border-color: $beige-oskar;
-      color: $beige-oskar;
     }
   }
 }

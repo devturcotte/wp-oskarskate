@@ -14,6 +14,19 @@
         <li class="courriel"><?php the_field('courriel'); ?></li>
         <li class="telephone"><?php the_field('telephone'); ?></li>
     </ul>
+
+    <ul class="socials">
+        <li>
+            <a href="https://www.facebook.com/magogskateplaza" target="_blank">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://youtube.com" target="_blank">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </li>
+    </ul>
     <?php
         endwhile;
         endif;

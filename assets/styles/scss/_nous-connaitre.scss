@@ -1,58 +1,73 @@
 .main_nous-connaitre {
   display: flex;
   flex-direction: column;
-  gap: 8rem;
+  gap: 6rem;
+  width: 100%;
 
   .cards-container {
     align-self: center;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 3rem;
     max-width: 1280px;
-    padding: 0 4rem;
-    width: 90%;
+    padding: 0;
+    width: 100%;
+
+    @media screen and (min-width: 768px) {
+      gap: 4rem;
+    }
 
     .card {
       display: flex;
-
-      section {
-        padding: 4rem 0 0 3rem;
-      }
-
-      &._2 {
-        flex-direction: row-reverse;
-
-        section {
-          padding: 4rem 3rem 0 0;
-        }
-      }
-
-      h3 {
-        font-size: 1.5rem;
-      }
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1rem;
+      width: 100%;
 
       figure {
+        height: 20dvh;
+        width: 100%;
+
         img {
           border: 1px solid $black;
           border-radius: 0.5rem;
           box-shadow: 6px 6px 0 0 $black;
-          height: 340px;
+          height: 100%;
           object-fit: cover;
-          width: 340px;
+          width: 100%;
         }
       }
-    }
 
-    section {
-      display: flex;
-      flex-direction: column;
-    }
+      section {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem;
+        width: 100%;
 
-    p {
-      font-size: 1.1rem;
-      font-weight: 300;
-      line-height: 1.5;
-      padding: 1rem 0;
+        h3 {
+          font-size: 1.5rem;
+        }
+
+        p {
+          font-size: 1.1rem;
+          font-weight: 300;
+          line-height: 1.5;
+          width: 100%;
+        }
+      }
+
+      @media screen and (min-width: 768px) {
+        flex-direction: row;
+
+        figure {
+          height: 35dvh;
+        }
+
+        &._2 {
+          flex-direction: row-reverse;
+        }
+      }
     }
   }
 
@@ -62,23 +77,41 @@
     display: flex;
     flex-direction: column;
     gap: 3rem;
-    padding: 2rem 0 8rem 0;
-    position: relative;
+    padding: 2rem 1rem 8rem 1rem;
+    width: 100%;
 
     h2 {
       font-size: 1.8rem;
+      text-align: center;
     }
 
-    button {
-      @include button-reset;
-      @include btn-blue;
-    }
+    div {
+      height: fit-content;
+      position: relative;
+      width: fit-content;
 
-    .sticker {
-      position: absolute;
-      right: -16rem;
-      top: -6rem;
-      transform: rotate(20deg);
+      button {
+        @include button-reset;
+        @include btn-blue;
+        font-size: 1.2rem;
+      }
+
+      .sticker {
+        right: -10rem;
+        position: absolute;
+        top: -4.2rem;
+        transform: rotate(25deg) scale(0.4);
+
+        @media screen and (min-width: 768px) {
+          right: -16rem;
+          top: -4.5rem;
+          transform: rotate(25deg) scale(0.5);
+        }
+
+        @media screen and (min-width: 1024px) {
+          right: -20rem;
+        }
+      }
     }
   }
 }

@@ -56,6 +56,8 @@
         transition: color 0.3s ease;
       }
 
+      .control--next {
+        color: $red;
       .control--previous:hover,
       .control--next:hover {
         color: darken($red, 10%);
@@ -95,6 +97,13 @@
       }
 
     }
+      
+    figure {
+      width: 22.625rem;
+      height: 15.625rem;
+      flex-shrink: 0;
+    }
+
 
     figure {
       max-width: 22.625rem;

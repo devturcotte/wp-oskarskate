@@ -3,27 +3,28 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  gap: 6rem;
+  gap: 2rem;
   max-width: 1024px;
+  padding: 0 1rem;
+  width: 100%;
 
   h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    text-align: center;
+    width: 100%;
   }
 
   .images {
-    display: flex;
+    display: grid;
     gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
 
     img {
+      border: 0.2rem solid $black;
+      border-radius: 1rem;
       object-fit: cover;
-    }
-
-    .img-1 {
-      transform: rotate(-10deg);
-    }
-
-    .img-2 {
-      transform: rotate(10deg);
+      width: 100%;
     }
   }
 
@@ -31,7 +32,7 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
     justify-content: center;
 
     p {

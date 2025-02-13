@@ -6,7 +6,7 @@
   flex-direction: column;
   gap: 8rem;
   padding: 0 1.5rem;
-  
+
   @include media-query("desktop-xl") {
     padding: 0;
   }
@@ -58,88 +58,87 @@
 
       .control--next {
         color: $red;
-      .control--previous:hover,
-      .control--next:hover {
-        color: darken($red, 10%);
-      }
-    }
-
-    .slider_slides {
-      display: flex;
-      overflow: hidden;
-      padding: 2rem 1rem;
-      scroll-behavior: smooth;
-      width: 100%;
-      max-width: 1280px;
-      gap: 2rem;
-
-      .slider_slide {
-        flex: 0 0 350px;
-        max-width: 350px;
-        background-color: $beige-oskar;
-        border-radius: 0.625rem;
-        border: 1px solid $black;
-        user-select: none;
-        padding: 2rem 1rem;
-        display: flex;
-        gap: 1rem;
-        flex-direction: column;
-        box-shadow: 6px 6px 0px 0px $blue-navy;
-        transition: transform 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
-        h3{
-          padding-bottom: .5rem ;
+        .control--previous:hover,
+        .control--next:hover {
+          color: darken($red, 10%);
         }
       }
 
-      .slider_slide.active {
-        transform: scale(1.05);
-        box-shadow: 8px 8px 0px 0px lighten($blue-navy, 10%);
+      .slider_slides {
+        display: flex;
+        overflow: hidden;
+        padding: 2rem 1rem;
+        scroll-behavior: smooth;
+        width: 100%;
+        max-width: 1280px;
+        gap: 2rem;
+
+        .slider_slide {
+          flex: 0 0 350px;
+          max-width: 350px;
+          background-color: $beige-oskar;
+          border-radius: 0.625rem;
+          border: 1px solid $black;
+          user-select: none;
+          padding: 2rem 1rem;
+          display: flex;
+          gap: 1rem;
+          flex-direction: column;
+          box-shadow: 6px 6px 0px 0px $blue-navy;
+          transition: transform 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
+          h3 {
+            padding-bottom: 0.5rem;
+          }
+        }
+
+        .slider_slide.active {
+          transform: scale(1.05);
+          box-shadow: 8px 8px 0px 0px lighten($blue-navy, 10%);
+        }
       }
 
-    }
-      
-    figure {
-      width: 22.625rem;
-      height: 15.625rem;
-      flex-shrink: 0;
-    }
+      figure {
+        width: 22.625rem;
+        height: 15.625rem;
+        flex-shrink: 0;
+      }
 
+      figure {
+        max-width: 22.625rem;
+        width: 100%;
+        height: 15.625rem;
+        flex-shrink: 0;
+      }
 
-    figure {
-      max-width: 22.625rem;
-      width: 100%;
-      height: 15.625rem;
-      flex-shrink: 0;
-    }
-
-    img {
-      object-fit: cover;
-      height: 100%;
-      border-radius: 1.25rem;
-    }
-  }
-
-  .module-investir {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-    max-width: 1280px;
-    align-items: center;
-    align-self: center;
-
-    h2 {
-      font-size: 2rem;
+      img {
+        object-fit: cover;
+        height: 100%;
+        border-radius: 1.25rem;
+      }
     }
 
-    p {
-      font-weight: 300;
-      line-height: 1.5;
-      max-width: 960px;
-      text-align: center;
-    }
+    .module-investir {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      max-width: 1280px;
+      align-items: center;
+      align-self: center;
 
-    .btn-investir {
-      @include btn-red;
+      h2 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-weight: 300;
+        line-height: 1.5;
+        max-width: 960px;
+        text-align: center;
+      }
+
+      .btn-investir {
+        @include btn-red;
+      }
     }
   }
 }

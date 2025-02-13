@@ -19,34 +19,9 @@
         </nav>
         <?php get_template_part('/assets/templates/footer-contact'); ?>
     </div>
-
     <div class="footer-bottom">
-        <div class="hr"></div>
-        <div class="content">
-            <p class="copyright">© <?php echo date("Y"); ?> OSKAR Skate & ART - Tous droits réservés</p>
-            <a href="<?php echo site_url(); ?>" class="logo-desktop">
-                <img src="<?php bloginfo('template_url'); ?>/assets/images/logo-footer.png"
-                    alt="Logo Oskar Skate & Art">
-            </a>
-            <ul class="socials">
-                <li>
-                    <a href="https://www.facebook.com/magogskateplaza" target="_blank">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://youtube.com" target="_blank">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                </li>
-            </ul>
-            <?php get_template_part('/assets/templates/footer-contact'); ?>
-        </div>
-        
-        <div class="footer-bottom">
             <div class="hr"></div>
             <p class="copyright">© <?php echo date("Y");?> OSKAR Skate & ART - Tous droits réservés</p>
-        </div>
     </div>
 </footer>
 <?php get_template_part('assets/templates/modal-activites'); ?>

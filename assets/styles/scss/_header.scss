@@ -14,7 +14,12 @@ header {
     img {
       max-height: 120px;
       padding: 1rem;
+      transition: 0.3s;
       width: 100%;
+
+      &:hover {
+        transform: scale(0.98);
+      }
     }
 
     .content {

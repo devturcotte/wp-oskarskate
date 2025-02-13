@@ -29,7 +29,6 @@
     display: flex;
     flex-direction: column;
     max-width: 1280px;
-    padding: 0 1rem;
     position: relative;
     width: 100%;
 
@@ -42,7 +41,6 @@
     .membres-nav {
       align-items: center;
       background-color: $black-shadow;
-      border-radius: 0.5rem 0.5rem 0 0;
       display: flex;
       gap: 1rem;
       justify-content: center;
@@ -79,6 +77,8 @@
         flex-direction: row-reverse;
         gap: 1rem;
         list-style: none;
+        overflow: scroll;
+        width: 100%;
 
         li {
           cursor: pointer;
@@ -117,16 +117,12 @@
       }
 
       figure {
-        align-items: center;
-        align-self: center;
-        display: flex;
-        justify-content: center;
+        height: 35dvh;
         width: 100%;
 
         img {
-          border-radius: 0;
-          object-fit: cover;
           height: 100%;
+          object-fit: cover;
           width: 100%;
         }
       }
@@ -147,8 +143,10 @@
         }
 
         figure {
+          align-self: center;
           height: 20dvh;
           position: absolute;
+          max-width: 35dvw;
           top: -22dvh;
           width: 100%;
 
@@ -162,7 +160,6 @@
         .contenu {
           align-items: center;
           align-self: flex-end;
-          border-radius: 0 0 0.5rem 0.5rem;
           display: flex;
           flex-direction: column;
           gap: 3rem;
@@ -303,7 +300,25 @@
           max-width: 480px;
 
           figure {
-            display: none;
+            height: 40dvh;
+            left: -90%;
+            top: 25%;
+          }
+        }
+      }
+
+      @media screen and (min-width: 1280px) {
+        figure {
+          img {
+            border-radius: 0 0 0 0.5rem;
+          }
+        }
+
+        .membre {
+          figure {
+            height: 45dvh;
+            left: -120%;
+            top: 25%;
           }
 
           .contenu {
@@ -311,14 +326,6 @@
           }
         }
       }
-    }
-
-    .logo {
-      display: none;
-      bottom: 2rem;
-      left: 2rem;
-      position: absolute;
-      width: 200px;
     }
 
     .aucun-membre {
@@ -329,6 +336,12 @@
     }
 
     @media screen and (min-width: 768px) {
+    }
+
+    @media screen and (min-width: 1280px) {
+      .membres-nav {
+        border-radius: 0.5rem 0.5rem 0 0;
+      }
     }
   }
 }

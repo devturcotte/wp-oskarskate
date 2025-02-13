@@ -2,8 +2,6 @@
     <?php 
         $equipe = get_field("equipe");
         $sticker1 = $equipe["sticker-1"];
-        $logo = $equipe["logo"];
-        $logoUrl = $logo["url"];
     ?>
     <h2><?php echo $equipe["titre"] ?></h2>
     <div class="hr"></div>
@@ -153,7 +151,5 @@
         <?php
         };
         ?>
-        
-        <img src="<?php echo esc_url($logoUrl); ?>" alt="Logo Oskar" class="logo">
     </div>
 </section>

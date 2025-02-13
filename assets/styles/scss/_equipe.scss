@@ -73,9 +73,11 @@
       }
 
       ul {
+        align-items: center;
         display: flex;
         flex-direction: row-reverse;
         gap: 1rem;
+        justify-content: center;
         list-style: none;
         overflow: scroll;
         width: 100%;
@@ -292,8 +294,10 @@
 
       @include media-query("tablet") {
         flex-direction: row;
+
+        /* Image de background */
         figure {
-          height: 100%;
+          height: 60dvh;
         }
 
         .membre {
@@ -302,7 +306,11 @@
           figure {
             height: 40dvh;
             left: -90%;
-            top: 25%;
+            top: 15%;
+          }
+
+          .contenu {
+            border-radius: 0 0 0 0.5rem;
           }
         }
       }
@@ -318,11 +326,11 @@
           figure {
             height: 45dvh;
             left: -120%;
-            top: 25%;
+            top: 10%;
           }
 
           .contenu {
-            border-radius: 0 0 0.5rem 0;
+            border-radius: 0 0 0.5rem 0.5rem;
           }
         }
       }
@@ -335,7 +343,14 @@
       z-index: 1;
     }
 
-    @include media-query("tablet") {
+    @include media-query("desktop") {
+      .membres-nav {
+        padding: 1rem 2rem;
+
+        i {
+          transform: scale(1.5);
+        }
+      }
     }
 
     @include media-query("desktop-xl") {

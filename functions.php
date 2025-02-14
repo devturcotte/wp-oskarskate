@@ -207,6 +207,8 @@ $div_open_tag .= ' data-besoin-inscriptions="' . esc_attr($inscriptions_needed) 
 add_filter('the_content', 'inject_acf_preview_url_in_cool_timeline', 20);
 
 /**
+
+/**
  * Enqueue custom Cool Timeline JavaScript.
  */
 function my_cool_timeline_custom_scripts() {
@@ -335,6 +337,9 @@ function re_enqueue_acf_scripts_after_cooltimeline() {
 
 
 /**
- * Include the registration handler (AJAX actions).
+ * Inclus le registration handler (AJAX actions).
  */
-require_once get_template_directory() . '/assets/php/registration_handler.php';
+function include_registration_handler() {
+    require_once get_template_directory() . '/assets/php/registration_handler.php';
+}
+add_action('init', 'include_registration_handler');

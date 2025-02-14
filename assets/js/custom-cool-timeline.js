@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
    *******************************************/
   // Formate une date ISO en format lisible (ex. : "2 octobre 2024")
   function formatDateReadable(dateStr) {
+    // Si la chaîne ne contient pas de "T", on ajoute "T00:00:00" pour forcer le format ISO
+    if (dateStr && !dateStr.includes("T")) {
+      dateStr = dateStr + "T00:00:00";
+    }
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return "Date inconnue";
     return d.toLocaleDateString("fr-FR", {
@@ -30,10 +34,36 @@ document.addEventListener("DOMContentLoaded", function () {
         const eventDate = new Date(eventDateStr);
         const contentEl = story.querySelector(".my-story-content");
         if (contentEl) {
-          if (eventDate < today) contentEl.classList.add("my-story-content-passed");
+          if (eventDate < today)
+            contentEl.classList.add("my-story-content-passed");
           else contentEl.classList.remove("my-story-content-passed");
         }
       }
+    });
+  }
+
+  function fetchRegistrationsForEvent(eventId) {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("action", "get_registrations");
+      formData.append("storyId", eventId);
+
+      // Update this path if you localize admin-ajax URL or use a subfolder
+      fetch("/wp-oskarskate/wp-admin/admin-ajax.php", {
+        method: "POST",
+        body: formData,
+        credentials: "same-origin",
+      })
+        .then((r) => r.json())
+        .then((resp) => {
+          if (resp.success) {
+            // resp.data = { countParticipants, countBenevoles, maxParticipants, maxBenevoles }
+            resolve(resp.data);
+          } else {
+            reject(resp.data || "Erreur get_registrations");
+          }
+        })
+        .catch(reject);
     });
   }
 
@@ -87,7 +117,9 @@ document.addEventListener("DOMContentLoaded", function () {
     modalEl.setAttribute("data-event-title", storyData.title);
 
     // Construction de l'en-tête du modal
-    const displayStartDate = storyData.date ? formatDateReadable(storyData.date) : "Date à venir";
+    const displayStartDate = storyData.date
+    ? formatDateReadable(storyData.date)
+    : "Date à venir";
     const calURLs = CalendarUtils.generateCalendarURLs({
       title: storyData.title || "Titre Inconnu",
       startDate: storyData.date,
@@ -95,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
       endDate: storyData.endDate,
       endTime: storyData.endTime || "23:30",
       description: storyData.descriptionHtml || "",
-      location: storyData.locationAddress || ""
+      location: storyData.locationAddress || "",
     });
     const calendarOptionsHTML = CalendarUtils.buildCalendarDropdown(calURLs);
 
@@ -124,7 +156,9 @@ document.addEventListener("DOMContentLoaded", function () {
      *****************************************************/
     let modalContentHTML = `
       <div class="ctrl-modal-content">
-        <img src="${storyData.imageUrl || ""}" alt="Story ${storyData.id}" class="modal-image" />
+        <img src="${storyData.imageUrl || ""}" alt="Story ${
+      storyData.id
+    }" class="modal-image" />
         <div class="modal-infos">
           <div class="modal-header">
             <h2>${storyData.title || "Titre Inconnu"}</h2>
@@ -167,11 +201,22 @@ document.addEventListener("DOMContentLoaded", function () {
      *   - L'attribut data-besoin-inscriptions vaut "Oui"
      *   - Et qu'au moins une des capacités (participants ou bénévoles) est > 0
      *****************************************************/
-    const besoinInscriptions = (storyEl.getAttribute("data-besoin-inscriptions") || "Non").trim();
-    const maxParticipants = parseInt(storyEl.getAttribute("data-nb-places-participants") || "0", 10);
-    const maxBenevoles = parseInt(storyEl.getAttribute("data-nb-places-benevoles") || "0", 10);
+    const besoinInscriptions = (
+      storyEl.getAttribute("data-besoin-inscriptions") || "Non"
+    ).trim();
+    const maxParticipants = parseInt(
+      storyEl.getAttribute("data-nb-places-participants") || "0",
+      10
+    );
+    const maxBenevoles = parseInt(
+      storyEl.getAttribute("data-nb-places-benevoles") || "0",
+      10
+    );
     let showRegistrationButton = false;
-    if (besoinInscriptions === "Oui" && (maxParticipants > 0 || maxBenevoles > 0)) {
+    if (
+      besoinInscriptions === "Oui" &&
+      (maxParticipants > 0 || maxBenevoles > 0)
+    ) {
       showRegistrationButton = true;
     }
     if (showRegistrationButton) {
@@ -193,20 +238,24 @@ document.addEventListener("DOMContentLoaded", function () {
     /*****************************************************
      * FIN DE LA CONSTRUCTION DU MODAL
      *****************************************************/
-  
+
     // Configuration du clic sur le fond pour fermer le modal.
-    modalEl.addEventListener("click", function modalBackdropHandler(e) {
-      if (e.target === modalEl) {
-        closeStoryModal(storyEl);
-        console.log("Modal fermé en cliquant sur le fond.");
-      }
-    }, { once: true });
-  
+    modalEl.addEventListener(
+      "click",
+      function modalBackdropHandler(e) {
+        if (e.target === modalEl) {
+          closeStoryModal(storyEl);
+          console.log("Modal fermé en cliquant sur le fond.");
+        }
+      },
+      { once: true }
+    );
+
     // Création d'un placeholder pour préserver la mise en page.
     const placeholder = createPlaceholder(storyEl);
     const storyCard = storyEl.querySelector(".my-story-rebuilt");
     if (storyCard) storyCard.style.visibility = "hidden";
-  
+
     // Positionnement du modal.
     const rect = storyEl.getBoundingClientRect();
     const absoluteTop = rect.top + window.scrollY;
@@ -217,28 +266,31 @@ document.addEventListener("DOMContentLoaded", function () {
     modalEl.style.left = absoluteLeft + "px";
     modalEl.style.width = modalWidth + "px";
     modalEl.style.zIndex = "1000";
-  
+
     // Ajout du modal au body et affichage.
     document.body.appendChild(modalEl);
     modalEl.style.display = "block";
     modalEl.classList.remove("hidden");
     modalEl.classList.add("open");
-    console.log(`Modal ouvert pour story #${storyData.id}, Titre: ${storyData.title}`);
-  
+    console.log(
+      `Modal ouvert pour story #${storyData.id}, Titre: ${storyData.title}`
+    );
+
     setTimeout(() => {
       adjustPlaceholderHeight(modalEl, placeholder);
     }, 50);
-  
+
     // Configuration du dropdown du calendrier.
     const calendarButton = modalEl.querySelector(".dynamic-atcb-button");
     const dropdown = modalEl.querySelector(".calendar-dropdown");
     if (calendarButton && dropdown) {
       calendarButton.addEventListener("click", (e) => {
         e.stopPropagation();
-        dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+        dropdown.style.display =
+          dropdown.style.display === "flex" ? "none" : "flex";
       });
     }
-  
+
     // Mise en place de l'overlay d'inscription si le bouton "Participer" est affiché.
     if (showRegistrationButton) {
       const registerBtn = modalEl.querySelector(".registrer-link");
@@ -251,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
     }
-  
+
     return modalEl;
   }
 
@@ -259,7 +311,9 @@ document.addEventListener("DOMContentLoaded", function () {
    * FONCTION : FERMETURE DU MODAL
    *******************************************/
   function closeStoryModal(storyEl) {
-    const modalEl = document.querySelector(`.story-modal[data-parent-story="${storyEl.id}"]`);
+    const modalEl = document.querySelector(
+      `.story-modal[data-parent-story="${storyEl.id}"]`
+    );
     if (modalEl) {
       modalEl.classList.remove("open");
       modalEl.classList.add("hidden");
@@ -282,41 +336,82 @@ document.addEventListener("DOMContentLoaded", function () {
   function toggleRegistrationOverlay(modalEl, storyData) {
     let overlay = modalEl.querySelector(".registration-form-overlay");
     if (overlay) {
-      // Si l'overlay existe déjà, on le bascule
       overlay.style.display = (overlay.style.display === "flex") ? "none" : "flex";
       return;
     }
+  
     overlay = document.createElement("div");
     overlay.className = "registration-form-overlay";
     overlay.style.display = "flex";
-    // Insère l'overlay dans le modal (vous pouvez changer l'emplacement si nécessaire)
     modalEl.querySelector(".modal-body").appendChild(overlay);
   
-    // Insertion du formulaire d'inscription via la fonction globale définie dans reg_form.js
-    if (window.afficherFormulaireVide) {
-      window.afficherFormulaireVide(overlay, storyData.id, storyData.title);
-    } else {
-      console.log("afficherFormulaireVide n'est pas défini dans window.");
-    }
-  
-    // Insère le bloc d'informations d'inscription dans l'overlay.
-    // On affiche une ligne pour "Places disponibles" uniquement si maxParticipants > 0,
-    // et une ligne pour "Bénévoles demandés" uniquement si maxBenevoles > 0.
+    // read data attributes for max
     const storyEl = document.getElementById(modalEl.getAttribute("data-parent-story"));
     const maxParticipants = parseInt(storyEl.getAttribute("data-nb-places-participants") || "0", 10);
     const maxBenevoles = parseInt(storyEl.getAttribute("data-nb-places-benevoles") || "0", 10);
-    let registrationInfoHTML = "";
-    if (maxParticipants > 0) {
-      registrationInfoHTML += `<p>Places disponibles: <span id="current-participants">0</span> / ${maxParticipants}</p>`;
-    }
-    if (maxBenevoles > 0) {
-      registrationInfoHTML += `<p>Bénévoles demandés: <span id="current-benevoles">0</span> / ${maxBenevoles}</p>`;
-    }
-    if (registrationInfoHTML) {
-      registrationInfoHTML = `<div class="registration-info" style="padding:10px; background:#f9f9f9; border:1px solid #ddd; margin-bottom:10px;">${registrationInfoHTML}</div>`;
-      // Insère le bloc d'infos au-dessus du formulaire
-      overlay.insertAdjacentHTML("afterbegin", registrationInfoHTML);
-    }
+  
+    // 1) We do an AJAX call to get the current count from the CSV
+    fetchRegistrationsForEvent(storyData.id)
+      .then((respData) => {
+        // respData => { countParticipants, countBenevoles, maxParticipants, maxBenevoles }
+  
+        const countParticipants = respData.countParticipants || 0;
+        const countBenevoles = respData.countBenevoles || 0;
+  
+        // Option A: show “count / max”
+        //   let registrationInfoHTML = `
+        //       <p>Participants: <span id="current-participants">${countParticipants}</span> / ${maxParticipants}</p>
+        //       <p>Bénévoles: <span id="current-benevoles">${countBenevoles}</span> / ${maxBenevoles}</p>
+        //   `;
+  
+        // Option B: compute "remaining" if you prefer
+        let remainingPart = Math.max(0, maxParticipants - countParticipants);
+        let remainingBene = Math.max(0, maxBenevoles - countBenevoles);
+        let registrationInfoHTML = "";
+        if (maxParticipants > 0) {
+          registrationInfoHTML += `<p>Places restantes (participants): <span id="current-participants">${remainingPart}</span> / ${maxParticipants}</p>`;
+        }
+        if (maxBenevoles > 0) {
+          registrationInfoHTML += `<p>Places restantes (bénévoles): <span id="current-benevoles">${remainingBene}</span> / ${maxBenevoles}</p>`;
+        }
+  
+        if (registrationInfoHTML) {
+          overlay.insertAdjacentHTML(
+            "afterbegin",
+            `<div class="registration-info" style="padding:10px; background:#f9f9f9; border:1px solid #ddd; margin-bottom:10px;">
+              ${registrationInfoHTML}
+            </div>`
+          );
+        }
+  
+        // Now insert your form
+        if (window.afficherFormulaireVide) {
+          window.afficherFormulaireVide(overlay, storyData.id, storyData.title);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching event registrations:", err);
+        overlay.innerHTML = `<p style="color:red;">Impossible de charger les données d'inscription.</p>`;
+      });
+  }
+  
+  function fetchRegistrationsForEvent(eventId) {
+    const formData = new FormData();
+    formData.append("action", "get_registrations");
+    formData.append("storyId", eventId);
+  
+    return fetch("/wp-oskarskate/wp-admin/admin-ajax.php", {  // or myAjax.ajax_url
+      method: "POST",
+      body: formData,
+    })
+      .then((r) => r.json())
+      .then((resp) => {
+        if (resp.success) {
+          return resp.data;
+        } else {
+          throw new Error(resp.data || "Unknown error from get_registrations");
+        }
+      });
   }
 
   /*******************************************
@@ -756,275 +851,265 @@ document.addEventListener("DOMContentLoaded", function () {
     { rootMargin: "0px 0px -10% 0px", threshold: 0.1 }
   );
 
-  /*******************************************
-   * CONSTRUCTION DU HTML POUR CHAQUE STORY
-   *******************************************/
-  document.querySelectorAll(".ctl-story").forEach(function (storyEl) {
-    const storyIdFull = storyEl.id;
-    const storyId = storyIdFull.replace("ctl-story-", "");
-    const dateLabelsEl = storyEl.querySelector(".ctl-labels");
-    const dateLabelsHtml = dateLabelsEl ? dateLabelsEl.outerHTML : "";
-    const iconEl = storyEl.querySelector(".ctl-icon");
-    const iconHtml = iconEl ? iconEl.outerHTML : "";
+ /*******************************************
+ * CONSTRUCTION DU HTML POUR CHAQUE STORY
+ *******************************************/
+ document.querySelectorAll(".ctl-story").forEach(function (storyEl) {
+  // 1) Récupération de l'ID de la story
+  const storyIdFull = storyEl.id;
+  const storyId = storyIdFull.replace("ctl-story-", "");
 
-    const storyDate = storyEl.getAttribute("data-event-date") || "";
-    const startDate =
-      storyEl.getAttribute("data-start-date") || new Date().toISOString();
-    const endDate = storyEl.getAttribute("data-end-date") || startDate;
-    const startTime = storyEl.getAttribute("data-start-time") || "10:15";
-    const endTime = storyEl.getAttribute("data-end-time") || "23:30";
-    const timeZone =
-      storyEl.getAttribute("data-timezone") || "America/New_York";
-    const organizer = storyEl.getAttribute("data-organizer") || "N/A";
+  // 2) Récupération des éléments de labels et d'icônes (pour affichage sur la timeline)
+  const dateLabelsEl = storyEl.querySelector(".ctl-labels");
+  const dateLabelsHtml = dateLabelsEl ? dateLabelsEl.outerHTML : "";
+  const iconEl = storyEl.querySelector(".ctl-icon");
+  const iconHtml = iconEl ? iconEl.outerHTML : "";
 
-    let titleText = "";
-    let titleHref = "#";
-    const titleLink = storyEl.querySelector(".ctl-title a");
-    if (titleLink) {
-      titleText = titleLink.textContent.trim();
-      titleHref = titleLink.getAttribute("href");
-    } else {
-      const titleEl = storyEl.querySelector(".ctl-title");
-      if (titleEl) titleText = titleEl.textContent.trim();
+  // 3) Lecture des attributs de début générés par Cool Timeline
+  //    (ces attributs proviennent du champ "ctl_story_date" traité dans functions.php)
+  const pluginDate = storyEl.getAttribute("data-event-date") || ""; // ex. "2025-03-04"
+  const pluginStartTime = storyEl.getAttribute("data-start-time") || "10:15"; // ex. "16:24"
+
+  // 4) Lecture des attributs de fin (provenant d'ACF dans votre cas)
+  const acfEndDate = storyEl.getAttribute("data-end-date") || "";
+  const acfEndTime = storyEl.getAttribute("data-end-time") || "";
+  // Pour la fin, si rien n'est défini, on reprend la date de début et on fixe l'heure par défaut
+  const finalEndDate = acfEndDate || pluginDate;
+  const finalEndTime = acfEndTime || "23:30";
+
+  // 5) On définit les valeurs finales pour le modal :
+  //    Pour le début, on utilise les valeurs du plugin.
+  const finalDate = pluginDate;
+  const finalStartTime = pluginStartTime;
+
+  // 6) Lecture d'autres attributs (timezone, organisateur, etc.)
+  const timeZone = storyEl.getAttribute("data-timezone") || "America/New_York";
+  const organizer = storyEl.getAttribute("data-organizer") || "N/A";
+
+  // 7) Récupération du titre, du lien et de la description
+  let titleText = "";
+  let titleHref = "#";
+  const titleLink = storyEl.querySelector(".ctl-title a");
+  if (titleLink) {
+    titleText = titleLink.textContent.trim();
+    titleHref = titleLink.getAttribute("href");
+  } else {
+    const titleEl = storyEl.querySelector(".ctl-title");
+    if (titleEl) titleText = titleEl.textContent.trim();
+  }
+  const descEl = storyEl.querySelector(".ctl-description");
+  const descHtml = descEl ? descEl.innerHTML.trim() : "";
+
+  // 8) Récupération des autres informations (aperçu, localisation)
+  const previewUrl = storyEl.getAttribute("data-preview-url") || "";
+  const locationName = storyEl.getAttribute("data-location-name") || "";
+  const locationAddress = storyEl.getAttribute("data-location-address") || "";
+  const googleMapsUrl = locationAddress
+    ? "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(locationAddress)
+    : "#";
+
+  // 9) Récupération et traitement des types d'activité
+  const typeData = storyEl.getAttribute("data-type_dactivite") || "";
+  let storyTypes = [];
+  try {
+    storyTypes = JSON.parse(typeData);
+    if (!Array.isArray(storyTypes)) {
+      storyTypes = [storyTypes];
     }
-    const descEl = storyEl.querySelector(".ctl-description");
-    const descHtml = descEl ? descEl.innerHTML.trim() : "";
-    const previewUrl = storyEl.getAttribute("data-preview-url") || "";
-    const locationName = storyEl.getAttribute("data-location-name") || "";
-    const locationAddress = storyEl.getAttribute("data-location-address") || "";
-    const googleMapsUrl = locationAddress
-      ? "https://www.google.com/maps/search/?api=1&query=" +
-        encodeURIComponent(locationAddress)
-      : "#";
-    // Récupère le tableau des types d'activité depuis data-type_dactivite (format JSON)
-    const typeData = storyEl.getAttribute("data-type_dactivite") || "";
-    let storyTypes = [];
-    try {
-      storyTypes = JSON.parse(typeData);
-      if (!Array.isArray(storyTypes)) {
-        storyTypes = [storyTypes];
-      }
-    } catch (e) {
-      storyTypes = typeData
-        .split(",")
-        .map((t) => t.trim())
-        .filter((t) => t.length > 0);
-    }
-    const isRight = storyEl.classList.contains("ctl-story-right");
-    const position = isRight ? "right" : "left";
+  } catch (e) {
+    storyTypes = typeData.split(",").map((t) => t.trim()).filter((t) => t.length > 0);
+  }
 
-    let modifiedDateLabelsHtml = dateLabelsHtml;
-    if (position === "left") {
-      modifiedDateLabelsHtml = dateLabelsHtml
-        .replace(
-          '<div class="ctl-labels">',
-          '<div class="ctl-labels ctl-labels-left">'
-        )
-        .replace(
-          '<div class="ctl-label-big story-date">',
-          '<div class="triangle-left"></div><div class="ctl-label-big story-date ctl-label-big-left">'
-        );
-    } else {
-      modifiedDateLabelsHtml = dateLabelsHtml
-        .replace(
-          '<div class="ctl-labels">',
-          '<div class="ctl-labels ctl-labels-right">'
-        )
-        .replace(
-          '<div class="ctl-label-big story-date">',
-          '<div class="ctl-label-big story-date ctl-label-big-right">'
-        )
-        .replace("</div>", '</div><div class="triangle-right"></div>');
-    }
+  // 10) Détermination de la position (gauche ou droite)
+  const isRight = storyEl.classList.contains("ctl-story-right");
+  const position = isRight ? "right" : "left";
 
-    const mobileDateHtml = `<div class="story-date-mobile hidden"><p>${formatDateReadable(
-      storyDate
-    )}</p></div>`;
-    const desktopDateHtml = `<div class="story-date hiddenAtStart ${
-      position === "left" ? "story-date-left" : "story-date-right"
-    }">
+  // 11) Modification du HTML des labels de date selon la position
+  let modifiedDateLabelsHtml = dateLabelsHtml;
+  if (position === "left") {
+    modifiedDateLabelsHtml = dateLabelsHtml
+      .replace('<div class="ctl-labels">', '<div class="ctl-labels ctl-labels-left">')
+      .replace('<div class="ctl-label-big story-date">',
+               '<div class="triangle-left"></div><div class="ctl-label-big story-date ctl-label-big-left">');
+  } else {
+    modifiedDateLabelsHtml = dateLabelsHtml
+      .replace('<div class="ctl-labels">', '<div class="ctl-labels ctl-labels-right">')
+      .replace('<div class="ctl-label-big story-date">',
+               '<div class="ctl-label-big story-date ctl-label-big-right">')
+      .replace("</div>", '</div><div class="triangle-right"></div>');
+  }
+
+  // 12) Construction de la date pour l'affichage mobile
+  //     Ici, on utilise la date du plugin, afin de conserver la logique des événements passés.
+  const mobileDateHtml = `<div class="story-date-mobile hidden"><p>${formatDateReadable(pluginDate)}</p></div>`;
+
+  // 13) Construction du HTML de la date pour l'affichage sur desktop
+  const desktopDateHtml = `<div class="story-date hiddenAtStart ${position === "left" ? "story-date-left" : "story-date-right"}">
                                 ${modifiedDateLabelsHtml}
                               </div>`;
 
-    let socialHTMLCard = "";
-    if (
-      storyEl.getAttribute("data-evenement-facebook") &&
-      storyEl.getAttribute("data-lien-facebook")
-    ) {
-      socialHTMLCard += `<a href="${storyEl.getAttribute(
-        "data-lien-facebook"
-      )}" target="_blank">
+  // 14) Construction du HTML pour les réseaux sociaux
+  let socialHTMLCard = "";
+  if (storyEl.getAttribute("data-evenement-facebook") && storyEl.getAttribute("data-lien-facebook")) {
+    socialHTMLCard += `<a href="${storyEl.getAttribute("data-lien-facebook")}" target="_blank">
                            <button class="btn-social fb">
                              <i class="fa-brands fa-facebook"></i>
                            </button>
                          </a>`;
-    }
-    if (
-      storyEl.getAttribute("data-evenement-instagram") &&
-      storyEl.getAttribute("data-lien-instagram")
-    ) {
-      socialHTMLCard += `<a href="${storyEl.getAttribute(
-        "data-lien-instagram"
-      )}" target="_blank">
+  }
+  if (storyEl.getAttribute("data-evenement-instagram") && storyEl.getAttribute("data-lien-instagram")) {
+    socialHTMLCard += `<a href="${storyEl.getAttribute("data-lien-instagram")}" target="_blank">
                            <button class="btn-social insta">
                              <i class="fa-brands fa-instagram"></i>
                            </button>
                          </a>`;
-    }
+  }
 
-    const newHtml = `
-      <div class="my-story-rebuilt ${
-        position === "left" ? "swing-in-right-fwd" : "swing-in-left-fwd"
-      }">
-        ${mobileDateHtml}
-        ${desktopDateHtml}
-        <div class="my-icon-centered">
-          ${iconHtml}
+  // 15) Construction du HTML final de la story
+  const newHtml = `
+    <div class="my-story-rebuilt ${position === "left" ? "swing-in-right-fwd" : "swing-in-left-fwd"}">
+      ${mobileDateHtml}
+      ${desktopDateHtml}
+      <div class="my-icon-centered">
+        ${iconHtml}
+      </div>
+      <div class="my-story-content hiddenAtStart ${position}">
+        ${previewUrl ? `<div class="my-story-img" style="position: relative;">
+                          <img src="${previewUrl}" alt="Story #${storyId}" class="story-image" />
+                          <div class="img-overlay hidden">
+                            <button class="overlay-close">✕</button>
+                            <p>Voir l’adresse sur Google Maps ?</p>
+                            <a href="${googleMapsUrl}" class="btn-aller-voir" target="_blank">Aller voir</a>
+                          </div>
+                        </div>` : ""}
+        <div class="my-story-header">
+          <h3 class="my-story-title">${titleText || "Événement sans titre"}</h3>
+          <p class="my-story-completed">Complété</p>
         </div>
-        <div class="my-story-content hiddenAtStart ${position}">
-          ${
-            previewUrl
-              ? `<div class="my-story-img" style="position: relative;">
-                  <img src="${previewUrl}" alt="Story #${storyId}" class="story-image" />
-                  <div class="img-overlay hidden">
-                    <button class="overlay-close">✕</button>
-                    <p>Voir l’adresse sur Google Maps ?</p>
-                    <a href="${googleMapsUrl}" class="btn-aller-voir" target="_blank">Aller voir</a>
-                  </div>
-                </div>`
-              : ""
-          }
-          <div class="my-story-header">
-            <h3 class="my-story-title">${
-              titleText || "Événement sans titre"
-            }</h3>
-            <p class="my-story-completed">Complété</p>
+        ${locationName ? `<p class="my-location-name">${locationName}</p>` : ""}
+        ${locationAddress ? `<div class="story-ctrl-adresse">
+                              <p class="my-location-address">${locationAddress}</p>
+                              <i class="fa-solid fa-location-dot"></i>
+                            </div>` : ""}
+        ${descHtml ? `<div class="my-story-description">${descHtml}</div>` : `<p>(Aucune description)</p>`}
+        <div class="my-story-footer">
+          <div class="footer-social">
+            ${socialHTMLCard}
           </div>
-          ${
-            locationName
-              ? `<p class="my-location-name">${locationName}</p>`
-              : ""
-          }
-          ${
-            locationAddress
-              ? `<div class="story-ctrl-adresse">
-                  <p class="my-location-address">${locationAddress}</p>
-                  <i class="fa-solid fa-location-dot"></i>
-                </div>`
-              : ""
-          }
-          ${
-            descHtml
-              ? `<div class="my-story-description">${descHtml}</div>`
-              : `<p>(Aucune description)</p>`
-          }
-          <div class="my-story-footer">
-            <div class="footer-social">
-              ${socialHTMLCard}
-            </div>
-            <div class="footer-btn-savoir hiddenAtStart">
-              <a href="${titleHref}" class="readmore-link">En savoir plus ▸</a>
-            </div>
-          </div>
-        </div>
-        <div class="story-modal my-modal-overlay hidden">
-          <div class="modal-content">
-            <button class="modal-close">✕</button>
-            <div class="modal-body">
-              <!-- Contenu dynamique du modal -->
-            </div>
+          <div class="footer-btn-savoir hiddenAtStart">
+            <a href="${titleHref}" class="readmore-link">En savoir plus ▸</a>
           </div>
         </div>
       </div>
-    `;
-    storyEl.innerHTML = newHtml;
-    storyEl.style.cursor = "pointer";
+      <div class="story-modal my-modal-overlay hidden">
+        <div class="modal-content">
+          <button class="modal-close">✕</button>
+          <div class="modal-body">
+            <!-- Contenu dynamique du modal -->
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  // Insertion du nouveau HTML dans la story
+  storyEl.innerHTML = newHtml;
+  storyEl.style.cursor = "pointer";
 
-    const newLabelsEl = storyEl.querySelector(".ctl-labels");
-    if (newLabelsEl) {
-      newLabelsEl.dataset.originalLabels = storyEl.classList.contains(
-        "ctl-story-right"
-      )
-        ? "right"
-        : "left";
+  // 16) Ajustement des classes originales pour les labels
+  const newLabelsEl = storyEl.querySelector(".ctl-labels");
+  if (newLabelsEl) {
+    newLabelsEl.dataset.originalLabels = storyEl.classList.contains("ctl-story-right") ? "right" : "left";
+  }
+
+  // 17) Ajout d'un événement "click" pour ouvrir le modal
+  storyEl.addEventListener("click", (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    // Préparation des données pour le modal :
+    // - Pour le début, on utilise les valeurs du plugin (pour rester cohérent avec les filtres)
+    // - Pour la fin, on utilise les valeurs ACF
+    const storyData = {
+      id: storyId,
+      title: titleText,
+      imageUrl: previewUrl,
+      locationName: locationName,
+      locationAddress: locationAddress,
+      descriptionHtml: descHtml,
+      // Date/heure de début (du plugin)
+      date: finalDate,           // ex. "2025-03-04"
+      startTime: finalStartTime, // ex. "16:24"
+      // Date/heure de fin (ACF)
+      endDate: finalEndDate,     // ex. "2025-03-05"
+      endTime: finalEndTime,     // ex. "23:30"
+      timeZone: timeZone,
+      organizer: organizer,
+      // Réseaux sociaux
+      evenementFacebook: storyEl.getAttribute("data-evenement-facebook") || "",
+      lienFacebook: storyEl.getAttribute("data-lien-facebook") || "",
+      evenementInstagram: storyEl.getAttribute("data-evenement-instagram") || "",
+      lienInstagram: storyEl.getAttribute("data-lien-instagram") || "",
+    };
+
+    console.log("Données de la story pour le modal :", storyData);
+
+    // Ouverture du modal avec les données préparées
+    const modalElement = openStoryModal(storyEl, storyData);
+    if (modalElement) {
+      modalElement.setAttribute("data-parent-story", storyEl.id);
+      modalElement.setAttribute("data-event-title", storyData.title);
     }
+  });
 
-    storyEl.addEventListener("click", (evt) => {
-      evt.preventDefault();
-      evt.stopPropagation();
-      const storyData = {
-        id: storyId,
-        title: titleText,
-        imageUrl: previewUrl,
-        locationName: locationName,
-        locationAddress: locationAddress,
-        descriptionHtml: descHtml,
-        date: storyDate,
-        startDate: startDate,
-        endDate: endDate,
-        startTime: startTime,
-        endTime: endTime,
-        timeZone: timeZone,
-        organizer: organizer,
-        evenementFacebook:
-          storyEl.getAttribute("data-evenement-facebook") || "",
-        lienFacebook: storyEl.getAttribute("data-lien-facebook") || "",
-        evenementInstagram:
-          storyEl.getAttribute("data-evenement-instagram") || "",
-        lienInstagram: storyEl.getAttribute("data-lien-instagram") || "",
-      };
-      console.log("Données de la story pour le modal :", storyData);
-      const modalElement = openStoryModal(storyEl, storyData);
-      if (modalElement) {
-        modalElement.setAttribute("data-parent-story", storyEl.id);
-        modalElement.setAttribute("data-event-title", storyData.title);
+  // 18) Gestion des interactions sur l'image (overlay adresse)
+  const newOverlay = storyEl.querySelector(".img-overlay");
+  const closeOverlayBtn = newOverlay?.querySelector(".overlay-close");
+  const addressLink = newOverlay?.querySelector(".btn-aller-voir");
+  const locNameEl = storyEl.querySelector(".my-location-name");
+  const locAddrEl = storyEl.querySelector(".my-location-address");
+  function toggleOverlay(e) {
+    e.stopPropagation();
+    if (!newOverlay) return;
+    newOverlay.classList.toggle("hidden");
+  }
+  if (locNameEl) locNameEl.addEventListener("click", toggleOverlay);
+  if (locAddrEl) locAddrEl.addEventListener("click", toggleOverlay);
+  if (closeOverlayBtn) {
+    closeOverlayBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      newOverlay.classList.add("hidden");
+    });
+  }
+  if (addressLink) {
+    addressLink.addEventListener("click", (e) => {
+      e.stopPropagation();
+      console.log("Lien Google Maps :", addressLink.href);
+    });
+  }
+
+  // 19) Fermeture du modal via le bouton ou en cliquant en dehors
+  const modalCloseBtn = storyEl.querySelector(".modal-close");
+  const modalDiv = storyEl.querySelector(".story-modal");
+  if (modalCloseBtn && modalDiv) {
+    modalCloseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeStoryModal(storyEl);
+      console.log("Modal fermé via le bouton de fermeture.");
+    });
+  }
+  if (modalDiv) {
+    modalDiv.addEventListener("click", function (e) {
+      if (e.target === modalDiv) {
+        closeStoryModal(storyEl);
+        console.log("Modal fermé en cliquant sur le fond.");
       }
     });
+  }
 
-    const newOverlay = storyEl.querySelector(".img-overlay");
-    const closeOverlayBtn = newOverlay?.querySelector(".overlay-close");
-    const addressLink = newOverlay?.querySelector(".btn-aller-voir");
-    const locNameEl = storyEl.querySelector(".my-location-name");
-    const locAddrEl = storyEl.querySelector(".my-location-address");
-    function toggleOverlay(e) {
-      e.stopPropagation();
-      if (!newOverlay) return;
-      newOverlay.classList.toggle("hidden");
-    }
-    if (locNameEl) locNameEl.addEventListener("click", toggleOverlay);
-    if (locAddrEl) locAddrEl.addEventListener("click", toggleOverlay);
-    if (closeOverlayBtn) {
-      closeOverlayBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        newOverlay.classList.add("hidden");
-      });
-    }
-    if (addressLink) {
-      addressLink.addEventListener("click", (e) => {
-        e.stopPropagation();
-        console.log("Lien Google Maps :", addressLink.href);
-      });
-    }
+  // 20) Observation pour les animations d'intersection
+  observer.observe(storyEl);
+});
 
-    const modalCloseBtn = storyEl.querySelector(".modal-close");
-    const modalDiv = storyEl.querySelector(".story-modal");
-    if (modalCloseBtn && modalDiv) {
-      modalCloseBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        closeStoryModal(storyEl);
-        console.log("Modal fermé via le bouton de fermeture.");
-      });
-    }
-    if (modalDiv) {
-      modalDiv.addEventListener("click", function (e) {
-        if (e.target === modalDiv) {
-          closeStoryModal(storyEl);
-          console.log("Modal fermé en cliquant sur le fond.");
-        }
-      });
-    }
-    observer.observe(storyEl);
-  });
 
   /*******************************************
    * FONCTIONS RESPONSIVES

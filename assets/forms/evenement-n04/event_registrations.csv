@@ -1,10 +1,8 @@
-Événement: Événement N01
+Événement: Événement N04
 
 Titre de la liste: Participants
 Description: firstName,lastName,email,registrationType,timestamp,regCount
 
 Titre de la liste: Bénévoles
 Description: firstName,lastName,email,registrationType,timestamp,regCount
-gabriel,taca,gabrieltaca117@gmail.com,benevole,2025-02-14 04:04:57,1
-gabriel,taca,gabrieltaca1172@gmail.com,benevole,2025-02-14 04:05:44,2
 

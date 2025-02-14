@@ -90,24 +90,6 @@
             "allow_in_bindings": 0
         },
         {
-            "key": "field_679cc72bb336b",
-            "label": "Heure de commencement",
-            "name": "startTime",
-            "aria-label": "",
-            "type": "time_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "g:i a",
-            "return_format": "g:i a",
-            "allow_in_bindings": 0
-        },
-        {
             "key": "field_679cc7e1b336c",
             "label": "Heure de fin",
             "name": "endTime",
@@ -228,7 +210,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": 0,
             "min": "",
             "max": "",
             "allow_in_bindings": 0,
@@ -258,7 +240,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": 0,
             "min": "",
             "max": "",
             "allow_in_bindings": 0,
@@ -388,5 +370,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1738695961
+    "modified": 1739545433
 }

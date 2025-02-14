@@ -256,7 +256,13 @@
   .my-story-img {
     position: relative;
     display: flex;
-    align-items: center;
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+
+    img {
+      
+    }
 
     .story-image {
       object-fit: contain;
@@ -515,7 +521,10 @@
 
 .my-modal-overlay {
   display: none;
+  max-width: 1280px;
   position: absolute;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
   z-index: 500 !important;
   margin: 0;
   justify-content: center;
@@ -581,8 +590,9 @@
 
       .modal-footer-social {
         display: flex;
-        justify-content: flex-start;
+        justify-content: flex-end;
         padding-top: 20px;
+        width: 100%;
 
         .modal-btn-social {
           background: none;
@@ -592,10 +602,12 @@
             display: flex;
             color: $fb-blue;
             font-size: 30px;
+            justify-self: flex-end !important;
           }
 
           .fa-instagram {
             display: flex;
+            justify-self: flex-end !important;
             background: $insta-purple !important;
             background-clip: text !important;
             -webkit-background-clip: text !important;
@@ -631,6 +643,39 @@
   flex-direction: column !important;
   align-items: flex-start !important;
   padding-top: 15px;
+  p { 
+    font-size: 20px;
+    font-weight: 300;
+  }
+  #cancelParticipation {
+    margin-top: 15px;
+    background-color: $red;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px 5px 15px;
+    -webkit-box-shadow: 4px 4px 1px 1px #4a4a4a;
+    box-shadow: 4px 4px 1px 1px #4a4a4a;
+    transition: background-color 0.3s;
+  }
+  #switchNo {
+    margin-top: 20px;
+    background-color: $red;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px 5px 15px;
+    -webkit-box-shadow: 4px 4px 1px 1px #4a4a4a;
+    box-shadow: 4px 4px 1px 1px #4a4a4a;
+    transition: background-color 0.3s;
+  }
+  #switchYes {
+    background-color: $green;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px 5px 15px;
+    -webkit-box-shadow: 4px 4px 1px 1px #4a4a4a;
+    box-shadow: 4px 4px 1px 1px #4a4a4a;
+    transition: background-color 0.3s;
+  }
   .registration-form {
     display: flex !important;
     flex-direction: column !important;
@@ -905,8 +950,10 @@
   }
   .story-modal {
     width: 90vw;
+    
     .modal-content {
       width: 100% !important;
+      max-width: 1280px;
       .modal-body {
         flex-direction: column;
         width: 100% !important;
@@ -949,6 +996,7 @@
               width: 100%;
 
               .modal-footer-social {
+                justify-content: flex-start !important;
               }
             }
           }

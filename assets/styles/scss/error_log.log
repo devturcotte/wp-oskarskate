@@ -1,3 +1,5 @@
 01/29/25 4:14:09: main.scss - `annimations` file not found for @import: main.scss on line 22, at column 1
 02/01/25 7:51:15: main.scss - parse error: failed at `<<<<<<< HEAD` C:\xampp\htdocs\wp-oskarskate\wp-content\themes\wp-oskarskate\assets\styles\scss\main.scss on line 20, at column 1
 02/08/25 9:58:54: main.scss - parse error: failed at `display: ;` C:\xampp\htdocs\wp-oskarskate\wp-content\themes\wp-oskarskate\assets\styles\scss/_activites.scss on line 532, at column 5
+02/14/25 4:09:42: main.scss - unclosed block: failed at `` C:\xampp\htdocs\wp-oskarskate\wp-content\themes\wp-oskarskate\assets\styles\scss/_dons.scss on line 145, at column 2
+02/14/25 4:11:43: main.scss - unclosed block: failed at `` C:\xampp\htdocs\wp-oskarskate\wp-content\themes\wp-oskarskate\assets\styles\scss/_dons.scss on line 145, at column 2

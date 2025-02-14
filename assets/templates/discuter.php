@@ -4,6 +4,8 @@
                 $sticker2 = $discuter["sticker-2"];
         ?>
         <h2><?php echo $discuter["texte"]; ?></h2>
-        <button><?php echo $discuter["bouton"]; ?></button>
-        <img src="<?php echo $sticker2; ?>" alt="Sticker" class="sticker">
+        <div>
+                <button><?php echo $discuter["bouton"]; ?></button>
+                <img src="<?php echo $sticker2; ?>" alt="Sticker" class="sticker">
+        </div>
 </section>

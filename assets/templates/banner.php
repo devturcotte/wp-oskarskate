@@ -14,5 +14,4 @@
         <h2><?php echo $titre; ?></h2>
     </section>
     <p class="banner-texte"><?php echo $texte; ?></p>
-    <button class="banner-btn"><?php echo $bouton; ?></button>
 </section>

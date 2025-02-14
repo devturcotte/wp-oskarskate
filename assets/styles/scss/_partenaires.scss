@@ -3,25 +3,32 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  padding: 2.5rem;
+  padding: 4rem 1rem;
 
   h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    text-align: center;
     text-transform: uppercase;
   }
 
   ul {
     align-items: center;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 4rem;
+    flex-direction: column;
+    gap: 2rem;
     justify-content: center;
     list-style: none;
     max-width: 1280px;
     width: 100%;
 
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
+
     a {
+      img {
+        transform: scale(0.8);
+      }
       &:hover {
         img {
           transform: scale(0.9);

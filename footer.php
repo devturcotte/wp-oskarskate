@@ -17,7 +17,6 @@
             ));
             ?>
         </nav>
-
         <?php get_template_part('/assets/templates/footer-contact'); ?>
     </div>
 
@@ -41,6 +40,12 @@
                     </a>
                 </li>
             </ul>
+            <?php get_template_part('/assets/templates/footer-contact'); ?>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="hr"></div>
+            <p class="copyright">© <?php echo date("Y");?> OSKAR Skate & ART - Tous droits réservés</p>
         </div>
     </div>
 </footer>
